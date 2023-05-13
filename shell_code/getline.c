@@ -11,7 +11,7 @@
  * 0 if input is empty | -1 if error occured
  */
 
-ssize_t mygetline(char **lineptr, size_t *n, FILE *stream)
+ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 {
 
 }
