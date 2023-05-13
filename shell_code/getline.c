@@ -13,5 +13,49 @@
 
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 {
+	static char buffer[BUFFER_SIZE];
+	size_t pos = 0;
+	ssize_t num_read;
+	size_t i = 0;
+	char c, *new_lineptr;
 
+	if (!*lineptr)
+	{
+	*lineptr = malloc(BUFFER_SIZE);
+	if (!*lineptr)
+	return (-1);
+	*n = BUFFER_SIZE;
+	}
+	while (1)
+	{
+	if (pos == 0)
+	{
+	fflush(stdout);
+	num_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
+	if (num_read == -1)
+		return (-1);
+	else if (num_read == 0)
+		return (i);
+	buffer[num_read] = '\0';
+	}
+	c = buffer[pos++];
+	if (c == '\0')
+	{
+	(*lineptr)[i] = '\0';
+	return (i);
+	}
+	else
+	{
+	(*lineptr)[i] = c;
+	i++;
+	}
+	if (i == *n)
+	{
+	new_lineptr = _realloc(*lineptr, *n + BUFFER_SIZE);
+	if (!new_lineptr)
+		return (-1);
+	*lineptr = new_lineptr;
+	*n += BUFFER_SIZE;
+	}
+	}
 }
