@@ -45,17 +45,12 @@ ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 	return (i);
 	}
 	else
-	{
-	(*lineptr)[i] = c;
-	i++;
-	}
+	(*lineptr)[i++] = c;
 	if (i == *n)
 	{
-	new_lineptr = _realloc(*lineptr, *n + BUFFER_SIZE);
-	if (!new_lineptr)
+	*lineptr = _realloc(*lineptr, *n += BUFFER_SIZE);
+	if (!*lineptr)
 		return (-1);
-	*lineptr = new_lineptr;
-	*n += BUFFER_SIZE;
 	}
 	}
 }
