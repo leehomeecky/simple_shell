@@ -18,7 +18,7 @@ int _strlen(char *str)
 /**
  * _strdup - a function that duplicate a string
  *
- * @str - pointer to string to be duplicated
+ * @str: pointer to string to be duplicated
  *
  * Return: pointer to duplicated string
  */
@@ -28,7 +28,7 @@ char *_strdup(char *str)
 	int len, i;
 	char *dup_str;
 
-	if (str == NULL || *str = '\0')
+	if (str == NULL || *str == '\0')
 		return (NULL);
 	len = _strlen(str);
 	dup_str = (char *)malloc(sizeof(char) * len + 1);
@@ -56,8 +56,25 @@ int _strcmp(char *str1, char *str2)
 
 	if (len1 != len2)
 		return (-1);
-	for (i = 0; len1[i]; i++)
-	if (len1[i] != len2[i])
+	for (i = 0; str1[i]; i++)
+	if (str1[i] != str2[i])
 		return (-1);
 	return (0);
+}
+
+/**
+ * _memcpy - a function that copies data from a memory locatin to another
+ *
+ * @src: pointer to the source memory
+ * @dest: pointer to the destination memory
+ * @n: number of element to be copied from @src to @dest
+ */
+
+void _memcpy(void *dest, const void *src, size_t n)
+{
+	char *d;
+	const char *s = src;
+
+	for (d = dest; n >= 0; n--)
+	*d++ = *s++;
 }
