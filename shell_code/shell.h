@@ -9,11 +9,11 @@
 #include <sys/wait.h>
 #define BUFFER_SIZE 1024
 
-ssize_t mygetline(char **lineptr, size_t *n, FILE *stream);
-int _strlen(char *str);
-char *_strdup(char *str);
-int _strcmp(char *str1, char *str2);
-void _memcpy(void *dest, const void *src, size_t n);
+ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
+int str_len(char *str);
+char *str_dup(char *str);
+int str_cmp(char *str1, char *str2);
+void mem_cpy(void *dest, const void *src, size_t n);
 void *_realloc(void *ptr, size_t size);
 
 #endif
