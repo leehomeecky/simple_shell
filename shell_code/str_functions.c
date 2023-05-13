@@ -1,14 +1,14 @@
 #include "shell.h"
 
 /**
- * _strlen - function to count numbers of string
+ * str_len - function to count numbers of string
  *
  * @str: pointer to null terminated string to be counted
  *
  * Return: numbers of characters counted
  */
 
-int _strlen(char *str)
+int str_len(char *str)
 {
 	if (*str == '\0' || str == NULL)
 		return (0);
@@ -16,14 +16,14 @@ int _strlen(char *str)
 }
 
 /**
- * _strdup - a function that duplicate a string
+ * str_dup - a function that duplicate a string
  *
  * @str: pointer to string to be duplicated
  *
  * Return: pointer to duplicated string
  */
 
-char *_strdup(char *str)
+char *str_dup(char *str)
 {
 	int len, i;
 	char *dup_str;
@@ -39,7 +39,7 @@ char *_strdup(char *str)
 }
 
 /**
- * _strcmp - function to compare strings
+ * str_cmp - function to compare strings
  *
  * @str1: string to compare
  * @str2: string to be compared to
@@ -47,7 +47,7 @@ char *_strdup(char *str)
  * Return: 0 if te same else -1
  */
 
-int _strcmp(char *str1, char *str2)
+int str_cmp(char *str1, char *str2)
 {
 	int len1, len2, i;
 
@@ -63,14 +63,14 @@ int _strcmp(char *str1, char *str2)
 }
 
 /**
- * _memcpy - a function that copies data from a memory locatin to another
+ * mem_cpy - a function that copies data from a memory locatin to another
  *
  * @src: pointer to the source memory
  * @dest: pointer to the destination memory
  * @n: number of element to be copied from @src to @dest
  */
 
-void _memcpy(void *dest, const void *src, size_t n)
+void mem_cpy(void *dest, const void *src, size_t n)
 {
 	char *d;
 	const char *s = src;
