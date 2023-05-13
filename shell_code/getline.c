@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * mygetline - a function that get input from standard input, or file
+ * get_line - a function that get input from standard input, or file
  *
  * @lineptr: buffer to write to
  * @n: number of bytes allocated to @lineptr
