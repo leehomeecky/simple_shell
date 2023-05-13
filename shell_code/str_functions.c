@@ -12,7 +12,7 @@ int str_len(char *str)
 {
 	if (*str == '\0' || str == NULL)
 		return (0);
-	return (1 + _strlen(++str));
+	return (1 + str_len(++str));
 }
 
 /**
@@ -30,7 +30,7 @@ char *str_dup(char *str)
 
 	if (str == NULL || *str == '\0')
 		return (NULL);
-	len = _strlen(str);
+	len = str_len(str);
 	dup_str = (char *)malloc(sizeof(char) * len + 1);
 	for (i = 0; str[i]; i++)
 	dup_str[i] = str[i];
@@ -51,8 +51,8 @@ int str_cmp(char *str1, char *str2)
 {
 	int len1, len2, i;
 
-	len1 = _strlen(str1);
-	len2 = _strlen(str2);
+	len1 = str_len(str1);
+	len2 = str_len(str2);
 
 	if (len1 != len2)
 		return (-1);
