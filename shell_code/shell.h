@@ -17,5 +17,6 @@ void mem_cpy(void *dest, const void *src, size_t n);
 void *_realloc(void *ptr, size_t size);
 char *str_chr(const char *s, char c);
 char *str_tok(char *str, const char *delim);
+char **cmd_to_arr(char *cmd);
 
 #endif

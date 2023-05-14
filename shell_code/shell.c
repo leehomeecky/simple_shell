@@ -11,7 +11,7 @@
 
 int main(int argc, char **argv)
 {
-	char *line = NULL, *token, *dlim = " \n", *cp_line;
+	char *line = NULL, *token, *dlim = " \n", *cp_line, **cmd_arr;
 	size_t line_len = 0;
 	ssize_t num_read;
 	int i;
@@ -19,13 +19,9 @@ int main(int argc, char **argv)
 
 	while ((num_read = get_line(&line, &line_len, stdin)) > 0)
 	{
-		cp_line = str_dup(line);
-		token = str_tok(line, dlim);
-		for (i = 0; token; i++)
-		{
-		printf("Read %ld bytes: %s\n", num_read, token);
-		token = str_tok(NULL, dlim);
-		}
+		cmd_arr = cmd_to_arr(line);
+		for (i = 0; cmd_arr[i]; i++)
+		printf("commad %d : %s\n", i, cmd_arr[i]);
 	}
 	free(line);
 	return (0);

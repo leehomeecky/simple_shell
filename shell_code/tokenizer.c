@@ -38,3 +38,41 @@ char *str_tok(char *str, const char *delim)
 	last_token = NULL;
 	return (token_start);
 }
+
+/**
+ * cmd_to_arr - a function that saves all comands to an array of pointers
+ *
+ * @cmd: commands to be splited
+ *
+ * Return: poimter to array of commands
+ */
+
+char **cmd_to_arr(char *cmd)
+{
+	char *cpy_cmd, *delim = ";\n", **cmd_arr, *token;
+	size_t arr_len, i;
+
+	if (cmd == NULL || *cmd == '\0')
+		return (NULL);
+	cpy_cmd = str_dup(cmd);
+	if (cpy_cmd == NULL)
+		return (NULL);
+	token = str_tok(cpy_cmd, delim);
+	for (arr_len = 0; token; arr_len++)
+		token = str_tok(NULL, delim);
+	cmd_arr = (char **)malloc(sizeof(char *) * arr_len);
+	if (cmd_arr == NULL)
+		return (NULL);
+	token = str_tok(cmd, delim);
+	for (i = 0; token; i++)
+	{
+		cmd_arr[i] = token;
+		token = str_tok(NULL, delim);
+	}
+	cmd_arr[i] = NULL;
+	free(cpy_cmd);
+	return (cmd_arr);
+}
+
+
+
