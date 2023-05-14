@@ -78,3 +78,27 @@ void mem_cpy(void *dest, const void *src, size_t n)
 	for (d = dest; n >= 0; n--)
 	*d++ = *s++;
 }
+
+/**
+ * str_chr - a function to check for a character in a string
+ *
+ * @str: string to search through
+ * @c: character to find match
+ *
+ * Return: pointer to match | null
+ */
+
+char *str_chr(const char *str, char c)
+{
+	char ch = c;
+
+	while (*str != '\0')
+	{
+		if (*str == ch)
+			return ((char *)str);
+		str++;
+	}
+	if (ch == '\0')
+		return ((char *)str);
+	return (NULL);
+}

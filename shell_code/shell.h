@@ -15,5 +15,7 @@ char *str_dup(char *str);
 int str_cmp(char *str1, char *str2);
 void mem_cpy(void *dest, const void *src, size_t n);
 void *_realloc(void *ptr, size_t size);
+char *str_chr(const char *s, char c);
+char *str_tok(char *str, const char *delim);
 
 #endif

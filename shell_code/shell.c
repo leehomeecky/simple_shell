@@ -20,11 +20,11 @@ int main(int argc, char **argv)
 	while ((num_read = get_line(&line, &line_len, stdin)) > 0)
 	{
 		cp_line = str_dup(line);
-		token = strtok(line, dlim);
+		token = str_tok(line, dlim);
 		for (i = 0; token; i++)
 		{
 		printf("Read %ld bytes: %s\n", num_read, token);
-		token = strtok(NULL, dlim);
+		token = str_tok(NULL, dlim);
 		}
 	}
 	free(line);
