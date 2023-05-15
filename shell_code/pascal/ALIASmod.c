@@ -287,7 +287,7 @@ int convertStringToArray(char* inputString
     const char* delimiter = " \t\n";
     int count = 0;
     int length;
-    const char* keyword = "alias";
+    char *keyword = "alias";
 char* token = strtok(inputString, delimiter);
 if (strncmp(token, keyword, strlen(keyword)) != 0) {
         return 0;
@@ -296,9 +296,14 @@ if (strncmp(token, keyword, strlen(keyword)) != 0) {
 
     while ((token = strtok(NULL, delimiter)) != NULL) {                                     length = strlen(keyword) + strlen(token) + 1;
 (*commandArray)[count] = malloc(length + 1);  /* Allocate memory for the command*/
-_snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);              count++;                              
-    }
-    return count;
+/*_snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);*/
+_strcpy((*commandArray)[count], keyword);
+_strcat((*commandArray)[count], " ");
+_strcat((*commandArray)[count], token);
+_strcat((*commandArray)[count], "\0");
+count++;
+}
+    return (count);
 }
 
 void handlemultiReg(char **command)

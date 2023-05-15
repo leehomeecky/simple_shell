@@ -24,6 +24,8 @@ extern char **environ;
 
 
 /*prototype for the custom getline function*/
+char *_strcat(char *dest, char *src);
+char *_strcpy(char *dest, char *src);
 int _snprintf(char* buffer, size_t size, const char* format, ...);
 int _rename(const char *oldname, const char *newname);
 char *_strrchr(char *str, int character);
