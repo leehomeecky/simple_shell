@@ -1,0 +1,8 @@
+alias a='a'
+alias control='name'
+alias honor='Alx'
+alias school='betty'
+alias ben='ben'
+alias may='may'
+alias alx='sch'
+alias ALX='SCH'
