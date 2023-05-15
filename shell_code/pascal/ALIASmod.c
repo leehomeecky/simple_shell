@@ -288,13 +288,13 @@ int convertStringToArray(char* inputString
     int count = 0;
     int length;
     char *keyword = "alias";
-char* token = strtok(inputString, delimiter);
-if (strncmp(token, keyword, strlen(keyword)) != 0) {
+char *token = _strtok3(inputString, delimiter);
+if (_strncmp(token, keyword, _strlen(keyword)) != 0) {
         return 0;
 	/*Input string does not start with the keyword "alias"*/
 	}
 
-    while ((token = strtok(NULL, delimiter)) != NULL) {                                     length = strlen(keyword) + strlen(token) + 1;
+    while ((token = _strtok3(NULL, delimiter)) != NULL) {                                     length = strlen(keyword) + strlen(token) + 1;
 (*commandArray)[count] = malloc(length + 1);  /* Allocate memory for the command*/
 /*_snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);*/
 _strcpy((*commandArray)[count], keyword);

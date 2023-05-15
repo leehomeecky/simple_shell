@@ -11,6 +11,7 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <stddef.h>
 
 #define MAX_COMMAND_LENGTH 1024
 #define MAX_ALIAS_NAME 50
@@ -20,10 +21,18 @@
 #define MAX_NUM_ARGS 100
 extern char **environ;
 
-
+/**
+ * struct env_t - env variables
+ * @environ: pointer
+ */
+typedef struct env_t
+{
+	char **envVar;
+} env_t;
 
 
 /*prototype for the custom getline function*/
+char *_strdup(char *str);
 char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
 int _snprintf(char* buffer, size_t size, const char* format, ...);
@@ -37,6 +46,8 @@ char *_strstr(char *haystack, char *needle);
 int is_delim(char c, char *delim);
 char *_strchr(char *str, char ch);
 char *_strtok(char *str, char *delimiters);
+int cmp_chars(char str[], const char *delim);
+char *_strtok3(char str[], const char *delim);
 char **_strtow(char *str, char *d);
 void _writef(const char *format, ...);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
