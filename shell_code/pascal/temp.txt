@@ -1,1 +1,4 @@
 alias a='a'
+alias c='cilia'
+alias b='brother'
+alias d='d'

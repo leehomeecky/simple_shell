@@ -1,2 +1,5 @@
 alias a='a'
-alias b='kola'
+alias c='cilia'
+alias b='brother'
+alias d='d'
+alias e='e'
