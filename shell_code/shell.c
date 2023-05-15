@@ -1,6 +1,16 @@
 #include "shell.h"
 
 /**
+ * _prompt - a fuction to prompt users to give input to the shell
+ */
+
+void _prompt(void)
+{
+	if (isatty(STDIN_FILENO))
+		_puts("($) ");
+}
+
+/**
  * main - entry point
  *
  * @argc: numbers of argument passed
@@ -17,11 +27,13 @@ int main(int argc, char **argv)
 	int i;
 	pid_t pid;
 
+	_prompt(argc);
 	while ((num_read = get_line(&line, &line_len, stdin)) > 0)
 	{
 		cmd_arr = cmd_to_arr(line);
 		for (i = 0; cmd_arr[i]; i++)
 		printf("commad %d : %s\n", i, cmd_arr[i]);
+		_prompt(argc);
 	}
 	free(line);
 	return (0);
