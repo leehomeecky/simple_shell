@@ -162,8 +162,10 @@ lineBreak = _strchr(linePtr, '\n');
     close(tempFile);
 
     if (aliasExists) {
-        remove(filename); /* Remove the original file*/
-        _rename("temp.txt", filename); /* Rename the temporary file to the original filename*/
+        //remove(filename);
+	_rename(filename, "_temp");
+	/* Remove the original file*/
+        _rename("temp.txt","aliases.txt"); /* Rename the temporary file to the original filename*/
     } else {
        /* remove("temp.txt"); Remove the temporary file since no alias was removed*/
     }
