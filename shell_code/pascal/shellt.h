@@ -77,6 +77,8 @@ typedef struct stdinfo
 
 
 // Prototype for the custom getline function
+int _snprintf(char* buffer, size_t size, const char* format, ...);
+int _rename(const char *oldname, const char *newname);
 char *_strrchr(char *str, int character);
 char *_strstr(char *haystack, char *needle);
 char *_strncpy(char *dest, char *src, int n);

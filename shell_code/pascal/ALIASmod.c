@@ -163,9 +163,9 @@ lineBreak = strchr(linePtr, '\n');
 
     if (aliasExists) {
         remove(filename); /* Remove the original file*/
-        rename("temp.txt", filename); /* Rename the temporary file to the original filename*/
+        _rename("temp.txt", filename); /* Rename the temporary file to the original filename*/
     } else {
-        remove("temp.txt"); /*Remove the temporary file since no alias was removed*/
+        remove("temp.txt");/* Remove the temporary file since no alias was removed*/
     }
 
     /*Add the new alias entry*/
@@ -289,7 +289,7 @@ if (strncmp(token, keyword, strlen(keyword)) != 0) {
                                               int count = 0;
     while ((token = strtok(NULL, delimiter)) != NULL) {                                     int length = strlen(keyword) + strlen(token) + 1;
 (*commandArray)[count] = malloc(length + 1);  // Allocate memory for the command
-snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);              count++;                              
+_snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);              count++;                              
     }
     return count;
 }
@@ -326,6 +326,10 @@ if (strncmp(*command, "alias ", 6) == 0 && _strlen(*command) > 6 && equals == 0)
 	_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1); 
 	alias_value[quoteEnd - quoteStart - 1] = '\0';
 	update_alias(alias_name, ALIAS_FILE, alias_value); // Update the alias
+	}
+	else
+	{
+	//	_writef("Wrong Format\n");
 	}
 	}      
 		// Update the alias
@@ -389,6 +393,7 @@ handlemultiReg(commandArray);
 else
 {
 	removeExtraSpaces(command);
+
         if (_strcmp(command, "alias") == 0) {
             load_aliases();
         } else if (_strncmp(command, "alias ", 6) == 0 && _strlen(command) > 6 && equals == 0) {
@@ -401,14 +406,18 @@ else
 	if (equalsSign != NULL) 
 	{
 	quoteStart = _strchr(command, '\'');
-	quoteEnd = _strrchr(command, '\''); 
+	quoteEnd = _strrchr(command, '\'');
 	if (quoteStart != NULL && quoteEnd != NULL && quoteEnd > quoteStart)
 	{
 	_strncpy(alias_name, command + 6, equalsSign - (command + 6));
 	alias_name[equalsSign - (command + 6)] = '\0';
 	_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1); 
 	alias_value[quoteEnd - quoteStart - 1] = '\0';
-	update_alias(alias_name, ALIAS_FILE, alias_value); // Update the alias
+	update_alias(alias_name, ALIAS_FILE, alias_value); /* Update the alias*/
+	}
+	else
+	{
+	//	_writef("wrong format\n");
 	}
 	}
             } else {
@@ -421,7 +430,7 @@ else
         }
 }
 free(commandArray);
-//free(command);
+free(command);
     }
 //free(commandArray);
     return 0;
