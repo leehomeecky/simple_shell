@@ -8,7 +8,7 @@ void load_aliases();                      void retrieve_alias(char* name);
 void removeExtraSpaces(char *str) 
 {
 	int i, j;
-	int len = strlen(str);
+	int len = _strlen(str);
 
     /*Remove leading spaces*/
 	while (len > 0 && str[0] == ' ')
@@ -72,7 +72,7 @@ close(fileDescriptor);
 
 
 /*Function to save an alias to file*/
-void save_alias(const char* name, const char* value) 
+void save_alias(char* name, char* value) 
 {
     int fileDescriptor;
     char *filename = ALIAS_FILE;  
@@ -88,9 +88,9 @@ void save_alias(const char* name, const char* value)
     
     /*Write the formatted string to the file*/
     write(fileDescriptor, "alias ", 6);
-    write(fileDescriptor, name, strlen(name));
+    write(fileDescriptor, name, _strlen(name));
     write(fileDescriptor, "='", 2);
-    write(fileDescriptor, value, strlen(value));
+    write(fileDescriptor, value, _strlen(value));
     write(fileDescriptor, "'\n", 2);
 
     /*Close the file*/
@@ -129,22 +129,22 @@ void update_alias(char* aliasName, char* filename, char* newValue)
         lineEnd = line + bytesRead;
 
         while (linePtr < lineEnd) {
-lineBreak = strchr(linePtr, '\n');
+lineBreak = _strchr(linePtr, '\n');
             if (lineBreak == NULL) {
                 lineBreak = lineEnd;
             }
 
 	    lineLength = lineBreak - linePtr;
-            if (strncmp(linePtr, "alias ", 6) == 0) {
+            if (_strncmp(linePtr, "alias ", 6) == 0) {
                 aliasStart = linePtr + 6;
-                equalsSign = strstr(aliasStart, "=");
+                equalsSign = _strstr(aliasStart, "=");
                 if (equalsSign != NULL) {
                 aliasLength = equalsSign - aliasStart;
               char  alias[aliasLength + 1];
-                    strncpy(alias, aliasStart, aliasLength);
+                    _strncpy(alias, aliasStart, aliasLength);
                     alias[aliasLength] = '\0';
 
-                    if (strcmp(alias, aliasName) == 0) {
+                    if (_strcmp(alias, aliasName) == 0) {
                         aliasExists = 1;
                         linePtr = lineBreak + 1;
                         continue; /*Skip the existing alias line*/
@@ -163,9 +163,9 @@ lineBreak = strchr(linePtr, '\n');
 
     if (aliasExists) {
         remove(filename); /* Remove the original file*/
-        rename("temp.txt", filename); /* Rename the temporary file to the original filename*/
+        _rename("temp.txt", filename); /* Rename the temporary file to the original filename*/
     } else {
-        remove("temp.txt"); /*Remove the temporary file since no alias was removed*/
+       /* remove("temp.txt"); Remove the temporary file since no alias was removed*/
     }
 
     /*Add the new alias entry*/
@@ -176,9 +176,9 @@ lineBreak = strchr(linePtr, '\n');
     }
 
     write(newAliasFile, "alias ", 6);
-    write(newAliasFile, aliasName, strlen(aliasName));
+    write(newAliasFile, aliasName, _strlen(aliasName));
     write(newAliasFile, "='", 2);
-    write(newAliasFile, newValue, strlen(newValue));
+    write(newAliasFile, newValue, _strlen(newValue));
     write(newAliasFile, "'\n", 2);
 
     close(newAliasFile);
@@ -209,22 +209,22 @@ while ((bytesRead = read(fileDescriptor, buffer, BUFFER_SIZE)) > 0)
 	if (buffer[i] == '\n') {
 		line[lineLength] = '\0'; 
 		/* Null-terminate the line*/ 
-		if (strstr(line, "alias") != NULL) 
+		if (_strstr(line, "alias") != NULL) 
 		{
-        equalsSign = strchr(line, '=');
+        equalsSign = _strchr(line, '=');
             if (equalsSign != NULL) {
-	quoteStart = strchr(line, '\'');
-        quoteEnd = strrchr(line, '\'');
+	quoteStart = _strchr(line, '\'');
+        quoteEnd = _strrchr(line, '\'');
 
                 if (quoteStart != NULL && quoteEnd != NULL && quoteEnd > quoteStart) {
 
-strncpy(alias_name, line + 6, equalsSign - (line + 6));
+_strncpy(alias_name, line + 6, equalsSign - (line + 6));
 	alias_name[equalsSign - (line + 6)] = '\0';
-                    strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1);
+                    _strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1);
 		    alias_value[quoteEnd - quoteStart - 1] = '\0';
 
         /* Perform the comparison and write to stdout*/
-                    if (strcmp(alias_name, name) == 0) {
+                    if (_strcmp(alias_name, name) == 0) {
                         _writef("%s='%s'\n", alias_name, alias_value);
 seen = 1;
                     }
@@ -289,7 +289,7 @@ if (strncmp(token, keyword, strlen(keyword)) != 0) {
                                               int count = 0;
     while ((token = strtok(NULL, delimiter)) != NULL) {                                     int length = strlen(keyword) + strlen(token) + 1;
 (*commandArray)[count] = malloc(length + 1);  // Allocate memory for the command
-snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);              count++;                              
+_snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);              count++;                              
     }
     return count;
 }
@@ -326,6 +326,10 @@ if (strncmp(*command, "alias ", 6) == 0 && _strlen(*command) > 6 && equals == 0)
 	_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1); 
 	alias_value[quoteEnd - quoteStart - 1] = '\0';
 	update_alias(alias_name, ALIAS_FILE, alias_value); // Update the alias
+	}
+	else
+	{
+	//	_writef("Wrong Format\n");
 	}
 	}      
 		// Update the alias
@@ -389,6 +393,7 @@ handlemultiReg(commandArray);
 else
 {
 	removeExtraSpaces(command);
+
         if (_strcmp(command, "alias") == 0) {
             load_aliases();
         } else if (_strncmp(command, "alias ", 6) == 0 && _strlen(command) > 6 && equals == 0) {
@@ -401,14 +406,18 @@ else
 	if (equalsSign != NULL) 
 	{
 	quoteStart = _strchr(command, '\'');
-	quoteEnd = _strrchr(command, '\''); 
+	quoteEnd = _strrchr(command, '\'');
 	if (quoteStart != NULL && quoteEnd != NULL && quoteEnd > quoteStart)
 	{
 	_strncpy(alias_name, command + 6, equalsSign - (command + 6));
 	alias_name[equalsSign - (command + 6)] = '\0';
 	_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1); 
 	alias_value[quoteEnd - quoteStart - 1] = '\0';
-	update_alias(alias_name, ALIAS_FILE, alias_value); // Update the alias
+	update_alias(alias_name, ALIAS_FILE, alias_value); /* Update the alias*/
+	}
+	else
+	{
+	//	_writef("wrong format\n");
 	}
 	}
             } else {
@@ -421,7 +430,7 @@ else
         }
 }
 free(commandArray);
-//free(command);
+free(command);
     }
 //free(commandArray);
     return 0;
