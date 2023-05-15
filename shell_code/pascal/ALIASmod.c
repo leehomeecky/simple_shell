@@ -77,9 +77,7 @@ void save_alias(char* name, char* value)
 {
     int fileDescriptor;
     char *filename = ALIAS_FILE;  
-    char buffer[1024];
-   // int size = 0;
-
+    
     /*Open the file in append mode*/
     fileDescriptor = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (fileDescriptor < 0) {
@@ -106,12 +104,14 @@ void update_alias(char* aliasName, char* filename, char* newValue)
 	char *aliasStart,  *lineBreak; 
 	char *linePtr, *lineEnd; 
 	char *equalsSign;
+	char  alias[500];
 /*	char alias[1024];*/
 	size_t aliasLength;
 	int tempFile,  aliasExists = 0;
 	ssize_t bytesRead;
+	int file, newAliasFile;
 /*    int file = open(filename, O_RDONLY);*/
-int file = open(filename, O_CREAT | O_RDWR, 0666);
+file = open(filename, O_CREAT | O_RDWR, 0666);
     if (file == -1) {
         _writef("Error opening file %s\n", filename);
         return;
@@ -141,7 +141,7 @@ lineBreak = _strchr(linePtr, '\n');
                 equalsSign = _strstr(aliasStart, "=");
                 if (equalsSign != NULL) {
                 aliasLength = equalsSign - aliasStart;
-              char  alias[aliasLength + 1];
+             /* char  alias[aliasLength + 1];*/
                     _strncpy(alias, aliasStart, aliasLength);
                     alias[aliasLength] = '\0';
 
@@ -162,8 +162,9 @@ lineBreak = _strchr(linePtr, '\n');
     close(file);
     close(tempFile);
 
-    if (aliasExists) {
-        //remove(filename);
+    if (aliasExists) 
+    {
+        /*remove(filename);*/
 	_rename(filename, "_temp");
 	/* Remove the original file*/
         _rename("temp.txt","aliases.txt"); /* Rename the temporary file to the original filename*/
@@ -172,7 +173,7 @@ lineBreak = _strchr(linePtr, '\n');
     }
 
     /*Add the new alias entry*/
-    int newAliasFile = open(filename, O_WRONLY | O_APPEND);
+    newAliasFile = open(filename, O_WRONLY | O_APPEND);
     if (newAliasFile == -1) {
         printf("Error opening file %s\n", filename);
         return;
@@ -253,8 +254,8 @@ close(fileDescriptor);
 }
 
 void process_command(const char* command) {
-    const int maxArgs = 10;  /*Maximum number of arguments*/
-    char *args[maxArgs];     /*Array to store argument pointers*/
+    const int maxArgs = 50;  /*Maximum number of arguments*/
+    char *args[100];     /*Array to store argument pointers*/
     int numArgs = 0;         /*Number of arguments*/
 char *token;
 int i;
@@ -284,15 +285,17 @@ int i;
 int convertStringToArray(char* inputString
 , char*** commandArray) {
     const char* delimiter = " \t\n";
+    int count = 0;
+    int length;
     const char* keyword = "alias";
 char* token = strtok(inputString, delimiter);
 if (strncmp(token, keyword, strlen(keyword)) != 0) {
         return 0;
-	// Input string does not start with the keyword "alias"
+	/*Input string does not start with the keyword "alias"*/
 	}
-                                              int count = 0;
-    while ((token = strtok(NULL, delimiter)) != NULL) {                                     int length = strlen(keyword) + strlen(token) + 1;
-(*commandArray)[count] = malloc(length + 1);  // Allocate memory for the command
+
+    while ((token = strtok(NULL, delimiter)) != NULL) {                                     length = strlen(keyword) + strlen(token) + 1;
+(*commandArray)[count] = malloc(length + 1);  /* Allocate memory for the command*/
 _snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);              count++;                              
     }
     return count;
@@ -300,22 +303,17 @@ _snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);         
 
 void handlemultiReg(char **command)
 {
-	int i = 0;
 	int equals = 1;
 	char alias_name[1024];
 	char alias_value[1024];
 	char *equalsSign, *quoteEnd, *quoteStart;
 	while(*command)
 	{
-if (strncmp(*command, "alias ", 6) == 0 && _strlen(*command) > 6 && equals == 0) {
-         //   char name[MAX_ALIAS_NAME];
-          //  if (s  f(*command, "alias %s", name) == 1) {
+if (strncmp(*command, "alias ", 6) == 0 && _strlen(*command) > 6 && equals == 0) 
+{
                process_command(*command);
-       //     } else {
-            //    _writef("Invalid command format. Usage: alias name\n");
-          //  }
-        } else if (strncmp(*command, "alias ", 6) == 0 && _strlen(*command) > 7) {
-   //         if (sscanf(*command, "alias %[^=]=\'%[^\']\'", name, value) == 2) {
+        } else if (strncmp(*command, "alias ", 6) == 0 && _strlen(*command) > 7) 
+{
     if (_strstr(*command, "alias") != NULL)
 	  {
 	equalsSign = _strchr(*command, '=');
@@ -329,14 +327,14 @@ if (strncmp(*command, "alias ", 6) == 0 && _strlen(*command) > 6 && equals == 0)
 	alias_name[equalsSign - (*command + 6)] = '\0';
 	_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1); 
 	alias_value[quoteEnd - quoteStart - 1] = '\0';
-	update_alias(alias_name, ALIAS_FILE, alias_value); // Update the alias
+	update_alias(alias_name, ALIAS_FILE, alias_value); /*Update the alias*/
 	}
 	else
 	{
-	//	_writef("Wrong Format\n");
+	/*_writef("Wrong Format\n");*/
 	}
 	}      
-		// Update the alias
+		/*Update the alias*/
 	}
     else 
     {
@@ -357,28 +355,22 @@ int main()
 
 	while(1){
    char *command = NULL;
-// char command[1024];
     size_t bufsize = 0;
     ssize_t len;
-    int n, i = 0;
+    int i = 0;
     int equals = 0;
     char **commandArray;
     char alias_name[1024]; 
     char alias_value[1024];
     char *equalsSign, *quoteEnd, *quoteStart;
-
         _writef("$ ");
 
 	len = getline(&command, &bufsize, stdin);
 if (len == -1)
 	return (-1);
-	// Remove the newline character if present
+	/*Remove the newline character if present*/
 if (command[len - 1] == '\n')
 	command[len - 1] = '\0';
-
-//fgets(command, sizeof(command), stdin);
-  //      command[strcspn(command, "\n")] = '\0';  // Remove trailing newline character
-
 commandArray = malloc(sizeof(char*) * _strlen(command));
 	
         while (command[i]) {
@@ -387,11 +379,11 @@ commandArray = malloc(sizeof(char*) * _strlen(command));
             }
             i++;
         }
-//handle multi registrstion of alias
+/*handle multi registrstion of alias*/
 if (equals >= 2)
 {
-//removeExtraSpaces(command);
-n = convertStringToArray(command, &commandArray);
+/*removeExtraSpaces(command);*/
+convertStringToArray(command, &commandArray);
 handlemultiReg(commandArray);
 }
 else
@@ -421,7 +413,7 @@ else
 	}
 	else
 	{
-	//	_writef("wrong format\n");
+	/*	_writef("wrong format\n");*/
 	}
 	}
             } else {
@@ -436,6 +428,5 @@ else
 free(commandArray);
 free(command);
     }
-//free(commandArray);
     return 0;
 }
