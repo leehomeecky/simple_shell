@@ -47,7 +47,8 @@ void load_aliases()
 	char line[BUFFER_SIZE];
 	int i, fileDescriptor, lineLength = 0;
 
-    fileDescriptor = open(ALIAS_FILE, O_RDONLY);
+/*    fileDescriptor = open(ALIAS_FILE, O_RDONLY);*/
+	fileDescriptor = open(ALIAS_FILE, O_CREAT | O_RDWR, 0666);
     if (fileDescriptor == -1) 
     {
         perror("Error opening aliases file");
@@ -109,8 +110,8 @@ void update_alias(char* aliasName, char* filename, char* newValue)
 	size_t aliasLength;
 	int tempFile,  aliasExists = 0;
 	ssize_t bytesRead;
-    int file = open(filename, O_RDONLY);
-
+/*    int file = open(filename, O_RDONLY);*/
+int file = open(filename, O_CREAT | O_RDWR, 0666);
     if (file == -1) {
         _writef("Error opening file %s\n", filename);
         return;
@@ -197,7 +198,8 @@ void retrieve_alias(char *name)
 	ssize_t bytesRead;
 	char line[BUFFER_SIZE];
 	int seen, i, fileDescriptor, lineLength = 0;
-	fileDescriptor = open(ALIAS_FILE, O_RDONLY);
+/*	fileDescriptor = open(ALIAS_FILE,O_CREAT | O_RDONLY, 0666);*/
+	fileDescriptor = open(ALIAS_FILE, O_CREAT | O_RDWR, 0666);
 	if (fileDescriptor == -1)
 	{
 		perror("Error opening aliases file");
