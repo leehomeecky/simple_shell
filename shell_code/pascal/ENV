@@ -164,3 +164,59 @@ int _unset(char *name, env_t *envdata)
 	environ = _environ;
 	return (1);
 }
+
+
+
+
+int main(void)
+{
+while(1){
+
+env_t e;
+env_t *ev;
+int i, j, len;
+   char *command = NULL;
+char *args[50];
+ssize_t  bufsize;
+   loadenv(&e);
+   int numArgs=0, maxArgs = 4;
+   char *token;
+   ev = &e;
+	 printf("$ ");
+
+	len = getline(&command, &bufsize, stdin);
+if (len == -1)
+	return (-1);
+	/*Remove the newline character if present*/
+if (command[len - 1] == '\n')
+	command[len - 1] = '\0';
+
+
+/*Tokenize the command and store arguments in the array*/
+    token = _strtok3((char*)command, " ");
+    while (token != NULL && numArgs < maxArgs) {
+        args[numArgs] = _strdup(token);
+        numArgs++;
+        token = _strtok3(NULL, " ");
+    }
+
+    if (_strcmp(args[0], "setenv") == 0)
+	    _setenv(args[1], args[2], ev);
+    else if(_strcmp(args[0], "unsetenv") == 0)
+	    _unset(args[1], ev);
+    else
+	    return (1); /* error must be here*/
+
+
+for (i = 0; ev->envVar[i]; i++)                           printf("%s \n",  ev->envVar[i]);
+for (i = 0; environ[i]; i++)
+	printf("%s \n",  environ[i]);
+
+
+free(command);
+    }
+
+
+
+return (0);
+}
