@@ -32,6 +32,7 @@ typedef struct env_t
 
 
 /*prototype for the custom getline function*/
+char *_getenv(char *name);
 char *_strdup(char *str);
 void loadenv(env_t *envdata);
 int _unset(char *name, env_t *envdata);

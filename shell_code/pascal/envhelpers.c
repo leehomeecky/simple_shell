@@ -1,10 +1,12 @@
-
-
-char *_getenv(const char* name) 
+#include "shellt.h"
+/**
+ * _getenv - Getenv
+ * @name: ===
+ * Return: =====
+ */
+char *_getenv(char *name) 
 {
-
-    extern char** environ;
-    size_t namelen = strlen(name);
+    size_t namelen = _strlen(name);
     char** var;
 
     for (var = environ; *var != NULL; ++var) {
@@ -15,10 +17,6 @@ char *_getenv(const char* name)
 
     return (NULL);
 }
-
-
-
-#include "shellt.h"
 
 /**
  * addenvMem - =====

@@ -180,12 +180,12 @@ int execute_command(char *command) {
 
     if (_strcmp(args[0], "cd") == 0) {
         if (args[1] == NULL) {
-            change_directory(getenv("HOME"));
+            change_directory(_getenv("HOME"));
         } else if (_strcmp(args[1], "-") == 0) {
-            change_directory(getenv("OLDPWD"));
+            change_directory(_getenv("OLDPWD"));
         }
 	else if (_strcmp(args[1], "~") == 0) {
-		change_directory(getenv("HOME"));
+		change_directory(_getenv("HOME"));
 	}else {
             change_directory(args[1]);
         }
@@ -209,13 +209,21 @@ int execute_command(char *command) {
 
 int main() {
 
-    char command[MAX_COMMAND_LENGTH];
+	while (1) {
+  /*  char command[MAX_COMMAND_LENGTH];*/
+    ssize_t  bufsize = 0;
+    char *command = NULL;
+    ssize_t len;
 
-    while (1) {
         printf("$ ");
-        fgets(command, sizeof(command), stdin);
+//        fgets(command, sizeof(command), stdin);
+	len = getline(&command, &bufsize, stdin);
+	if (len == -1)
+		return (-1);                              /*Remove the newline character if present*/
+	if (command[len - 1] == '\n')
+		command[len - 1] = '\0';
 
-        if (_strcmp(command, "exit\n") == 0) {
+        if (_strcmp(command, "\0") == 0) {
             break;
         }
 
