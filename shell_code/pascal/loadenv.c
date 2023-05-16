@@ -110,30 +110,54 @@ environ = envdata->envVar;
 
 int main(void)
 {
-	env_t e;
-	loadenv(&e);
-	env_t *ev;
-	int i, j;
 
-	ev = &e;
+//	_setenv("MKEE", "1980", ev);
+//	_setenv("PASCAL", "1989", ev);
+//	_setenv("SADE", "1980", ev);
+ //      	_setenv("UNCLE", "1989", ev);
 
-//for (j = 0; environ[j]; )
-//	j++;
+while(1){
+
+env_t e;
+env_t *ev;
+int i, j, len;
+   char *command = NULL;
+char *args[50];
+ssize_t  bufsize;
+   loadenv(&e);
+   int numArgs=0, maxArgs = 4;
+   char *token;
+   ev = &e;
+	 printf("$ ");
+
+	len = getline(&command, &bufsize, stdin);
+if (len == -1)
+	return (-1);
+	/*Remove the newline character if present*/
+if (command[len - 1] == '\n')
+	command[len - 1] = '\0';
 
 
-	for (i = 0; environ[i]; i++)
-		printf("%s \n",  ev->envVar[i]);
+/*Tokenize the command and store arguments in the array*/
+    token = _strtok3((char*)command, " ");
+    while (token != NULL && numArgs < maxArgs) {
+        args[numArgs] = _strdup(token);
+        numArgs++;
+        token = _strtok3(NULL, " ");
+    }
 
-	_setenv("MKEE", "1980", ev);
-	_setenv("PASCAL", "1989", ev);
-	_setenv("SADE", "1980", ev);
-       	_setenv("UNCLE", "1989", ev);
 
-//for (j = 0; environ[j]; )                    //     j++;
+_setenv(args[1], args[2], ev);
 
 for (i = 0; ev->envVar[i]; i++)                           printf("%s \n",  ev->envVar[i]);
 for (i = 0; environ[i]; i++)
 	printf("%s \n",  environ[i]);
+
+
+free(command);
+    }
+
+
 
 return (0);
 }
