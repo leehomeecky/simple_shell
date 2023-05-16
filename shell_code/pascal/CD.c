@@ -42,82 +42,58 @@ char* strtok_r(char* str, const char* delim, char** saveptr) {
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include <unistd.h>
 
-#define MAX_TOKENS 256
-
 char* _realpath(const char* path, char* resolved_path) {
-    char* cwd;
+    char temp[PATH_MAX];
     char* token;
-    char* saveptr;
-    char* next_token;
+    char* delimiter = "/";
     char* result;
-    char* path_copy;
-    char* tokens[MAX_TOKENS];
-    int num_tokens = 0;
-    int i;
 
     if (path == NULL || resolved_path == NULL) {
         return NULL;
     }
 
-    // Get the current working directory
-    cwd = getcwd(NULL, 0);
-    if (cwd == NULL) {
-        perror("getcwd");
-        return NULL;
-    }
-
-    // Copy the current working directory to the resolved path
-    strcpy(resolved_path, cwd);
-    free(cwd);
-
-    // Make a copy of the input path
-    path_copy = strdup(path);
-    if (path_copy == NULL) {
-        perror("strdup");
-        return NULL;
-    }
-
-    // Tokenize the input path using "/"
-    token = strtok(path_copy, "/");
-    while (token != NULL) {
-        tokens[num_tokens++] = token;
-        if (num_tokens >= MAX_TOKENS) {
-            fprintf(stderr, "Too many path components\n");
-            free(path_copy);
+    // Handle absolute paths
+    if (path[0] == '/') {
+        strncpy(temp, path, sizeof(temp));
+    } else {
+        // Handle relative paths
+        if (getcwd(temp, sizeof(temp)) == NULL) {
+            perror("getcwd");
             return NULL;
         }
-        token = strtok(NULL, "/");
+        strncat(temp, "/", sizeof(temp) - strlen(temp));
+        strncat(temp, path, sizeof(temp) - strlen(temp));
     }
 
-    // Process each token
-    for (i = 0; i < num_tokens; i++) {
-        token = tokens[i];
-        if (strcmp(token, "..") == 0) {
-            // If the token is "..", remove the last directory from the resolved path
-            if (i == 0) {
-                fprintf(stderr, "Invalid path: %s\n", path);
-                free(path_copy);
-                return NULL;
-            }
-            next_token = tokens[i + 1];
-            if (next_token == NULL) {
-                // If there are no more tokens, break out of the loop
-                break;
-            }
-            result = strrchr(resolved_path, '/');
-            if (result != NULL) {
-                *result = '\0';
-            }
-        } else {
-            // Append the token to the resolved path
-            strcat(resolved_path, "/");
-            strcat(resolved_path, token);
+    resolved_path[0] = '\0';  // Initialize resolved_path as an empty string
+
+    result = strtok(temp, delimiter);
+    while (result != NULL) {
+        // Handle "."
+        if (strcmp(result, ".") == 0) {
+            result = strtok(NULL, delimiter);
+            continue;
         }
+
+        // Handle ".."
+        if (strcmp(result, "..") == 0) {
+            char* last_slash = strrchr(resolved_path, '/');
+            if (last_slash != NULL) {
+                *last_slash = '\0';
+            }
+            result = strtok(NULL, delimiter);
+            continue;
+        }
+
+        // Append the directory or filename to the resolved path
+        strncat(resolved_path, "/", PATH_MAX - strlen(resolved_path));
+        strncat(resolved_path, result, PATH_MAX - strlen(resolved_path));
+        result = strtok(NULL, delimiter);
     }
 
-    free(path_copy);
     return resolved_path;
 }
 
@@ -153,7 +129,7 @@ _strcat(new_dir, "\0");
         perror("chdir");
         return;
    }
-    if (realpath(new_dir, resolved_dir) == NULL)
+    if (_realpath(new_dir, resolved_dir) == NULL)
     {
       perror("realpath");
         return;
