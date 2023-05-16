@@ -160,9 +160,9 @@ _strcat(new_dir, "\0");
     }
     
     /*Update PWD and OLDPWD environment variables*/
-    _setenv("OLDPWD", getenv("PWD"), ev);
+    _setenv("OLDPWD", _getenv("PWD"), ev);
     _setenv("PWD", resolved_dir, ev);
-    printf("Changed directory to: %s\n", resolved_dir);
+    _writef("Changed directory to: %s\n", resolved_dir);
 }
 
 
