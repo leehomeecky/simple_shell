@@ -36,7 +36,7 @@ int count_quotes_int(char *str, char quote)
 	int i, count = 0;
 
 	for (i = 0; str[i]; i++)
-		if (cmd_arr[i] == quote && cmd_arr[(i - 1)] != '\\')
+		if (str[i] == quote && str[(i - 1)] != '\\')
 			count++;
 	return (count);
 }
@@ -49,7 +49,7 @@ int count_quotes_int(char *str, char quote)
  * Return: a struct of type arrQut
  */
 
-arrQut count_quotes_arr(char **cmd_arr)
+arrQut *count_quotes_arr(char **cmd_arr)
 {
 	int i, j;
 
@@ -92,7 +92,7 @@ void echo_func(char **cmd_arr)
 	for (i = 0; cmd_arr[i]; i++)
 		arr_len++;
 	arr_qut = count_quotes_arr(cmd_arr);
-	while (arr_qut->len % 2 == 1)
+	/*while (arr_qut->len % 2 == 1)
 	{
 		_puts("\n> ");
 		get_line(&line, &line_len, stdin);
@@ -102,9 +102,10 @@ void echo_func(char **cmd_arr)
 		cmd_arr[arr_len] = NULL;
 		arr_qut->len += count_quotes_int(cp_line, arr_qut->quote);
 		free(line);
-	}
+	}*/
 	for (i = 0; cmd_arr[i]; i++)
 		remove_quotes(cmd_arr[i], arr_qut->quote);
+	free(arr_qut);
 	execve_func(cmd_arr);
 
 }
