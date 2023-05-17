@@ -47,7 +47,7 @@ char* strtok_r(char* str, const char* delim, char** saveptr) {
 
 char* _realpath(const char* path, char* resolved_path) {
     char temp[PATH_MAX];
-    char* token;
+   /* char* token;*/
     char* delimiter = "/";
     char* result;
 
@@ -187,7 +187,7 @@ int main() {
 
 	while (1) {
   /*  char command[MAX_COMMAND_LENGTH];*/
-    ssize_t  bufsize = 0;
+    size_t  bufsize = 0;
     char *command = NULL;
     ssize_t len;
 
