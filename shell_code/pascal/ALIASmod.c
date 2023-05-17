@@ -374,6 +374,7 @@ int main()
     size_t bufsize = 0;
     ssize_t len;
     int i = 0;
+    int size;
     int equals = 0;
     char **commandArray;
     char alias_name[1024]; 
@@ -385,6 +386,17 @@ int main()
 if (len == -1)
 	return (-1);
 	/*Remove the newline character if present*/
+/* convert args to command array poi/nn=y*/
+/*command  = malloc(sizeof(char) * (sizeof(args) + (sizeof(args) - 1) + 1));*/
+/*_strcpy(command, args[0]);*/
+/*for (i = 1; i < sizeof(args); i++)*/
+/*{*/
+/*_strcat(command, " ");*/
+/*_strcat(command, args[i]);*/
+/*}*/
+/*command[i + 1] = '\0';*/
+
+
 if (command[len - 1] == '\n')
 	command[len - 1] = '\0';
 commandArray = malloc(sizeof(char*) * _strlen(command));
