@@ -1,13 +1,42 @@
 #include "shellt.h"
 
 /**
- * cmp_chars - compare chars of strings
- * @str: input string.
- * @delim: delimiter.
+ * _strncat - ========
+ * @dest: ===========
+ * @src: ========
+ * @n: ===========
+ * Return: =========
+ */
+char *_strncat(char *dest, char *src, int n)
+{
+	int i, j;
+
+	i = 0;
+	j = 0;
+
+	while (dest[i] != '\0')
+		i++;
+
+	while (src[j] != '\0' && j < n)
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
+
+	dest[i] = '\0';
+
+	return (dest);
+}
+
+/**
+ * cmp_chars - =========
+ * @str: ===========
+ * @delim: ===========]]]]
  *
  * Return: 1 if are equals, 0 if not.
  */
-int cmp_chars(char str[], const char *delim)
+int strcmp_chars(char str[], const char *delim)
 {
 	unsigned int i, j, k;
 
@@ -46,7 +75,7 @@ char *_strtok3(char str[], const char *delim)
 
 	if (str != NULL)
 	{
-		if (cmp_chars(str, delim))
+		if (strcmp_chars(str, delim))
 			return (NULL);
 		splitted = str; /*Store first address*/
 		i = _strlen(str);

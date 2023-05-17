@@ -32,6 +32,7 @@ typedef struct env_t
 
 
 /*prototype for the custom getline function*/
+char *_strncat(char *dest, char *src, int n);
 char *_getenv(char *name);
 char *_strdup(char *str);
 void loadenv(env_t *envdata);
@@ -51,7 +52,7 @@ char *_strstr(char *haystack, char *needle);
 int is_delim(char c, char *delim);
 char *_strchr(char *str, char ch);
 char *_strtok(char *str, char *delimiters);
-int cmp_chars(char str[], const char *delim);
+int strcmp_chars(char str[], const char *delim);
 char *_strtok3(char str[], const char *delim);
 char **_strtow(char *str, char *d);
 void _writef(const char *format, ...);

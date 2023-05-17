@@ -5,13 +5,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "shellt.h"
+
 #define MAX_COMMAND_LENGTH 1024
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
 #define MAX_TOKENS 256
 
 char* strtok_r(char* str, const char* delim, char** saveptr) {
@@ -39,13 +34,7 @@ char* strtok_r(char* str, const char* delim, char** saveptr) {
     return token;
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <limits.h>
-#include <unistd.h>
-
-char* _realpath(char* path, char* resolved_path) {
+char *_realpath(char* path, char* resolved_path) {
     char temp[PATH_MAX];
    /* char* token;*/
     char* delimiter = "/";
@@ -64,8 +53,8 @@ char* _realpath(char* path, char* resolved_path) {
             perror("getcwd");
             return NULL;
         }
-        strncat(temp, "/", sizeof(temp) - strlen(temp));
-        strncat(temp, path, sizeof(temp) - strlen(temp));
+        _strncat(temp, "/", sizeof(temp) - _strlen(temp));
+        _strncat(temp, path, sizeof(temp) - _strlen(temp));
     }
 
     resolved_path[0] = '\0';  // Initialize resolved_path as an empty string
@@ -89,12 +78,12 @@ char* _realpath(char* path, char* resolved_path) {
         }
 
         // Append the directory or filename to the resolved path
-        strncat(resolved_path, "/", PATH_MAX - strlen(resolved_path));
-        strncat(resolved_path, result, PATH_MAX - _strlen(resolved_path));
+        _strncat(resolved_path, "/", PATH_MAX - _strlen(resolved_path));
+        _strncat(resolved_path, result, PATH_MAX - _strlen(resolved_path));
         result = _strtok3(NULL, delimiter);
     }
 
-    return resolved_path;
+    return (resolved_path);
 }
 
 void change_directory(char *path) {
