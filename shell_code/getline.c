@@ -13,10 +13,8 @@
 
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 {
-	static char buffer[BUFFER_SIZE];
-	size_t pos = 0;
-	ssize_t num_read;
-	size_t i = 0;
+	char buffer[BUFFER_SIZE];
+	ssize_t num_read, i = 0, pos = 0;
 	char c, *new_lineptr;
 
 	if (!*lineptr)

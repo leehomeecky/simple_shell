@@ -19,7 +19,7 @@ void _prompt(void)
  * Return: 0
  */
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	char *line = NULL, *token, *dlim = " \n", *cp_line, **cmd_arr;
 	size_t line_len = 0;
@@ -27,13 +27,17 @@ int main(int argc, char **argv)
 	int i;
 	pid_t pid;
 
-	_prompt(argc);
+	_prompt();
 	while ((num_read = get_line(&line, &line_len, stdin)) > 0)
 	{
-		cmd_arr = cmd_to_arr(line);
+		cmd_arr = str_to_arr(line, ";\n");
 		for (i = 0; cmd_arr[i]; i++)
-		printf("commad %d : %s\n", i, cmd_arr[i]);
-		_prompt(argc);
+		{
+			if (shell_logic(argv, cmd_arr[i]))
+				_puts("exit");
+		}
+		free(cmd_arr);
+		_prompt();
 	}
 	free(line);
 	return (0);
