@@ -38,13 +38,16 @@ int run_shell_interactive() {
     char *token;                              int arg_count = 0;
 
     do {
+	    arg_count = 0;
         printf("$ ");
         line = NULL;
         size_t line_buf_size = 0;
         getline(&line, &line_buf_size, stdin);
+
+
 /*	if (strcmp(line, " "))*/
-	if (line == NULL)
-		break;
+//	if (line == NULL)
+//		break;
         if (strcmp(line, "\n") == 0) {
         //    continue;
         }
@@ -64,7 +67,6 @@ int run_shell_interactive() {
             token = strtok(NULL, " \t\n");
         }
         args[arg_count] = NULL;
-
         status = execute_command(args);
 
         free(line);
@@ -177,7 +179,7 @@ close(fileDescriptor);
 break;
 }/*file handle ends here */
 
-else if (num_args)/*args starts here */
+else if (num_args > 0)/*args starts here */
 {
 
 // Remove newline character from the end of the line
@@ -195,7 +197,7 @@ else if (num_args)/*args starts here */
 
         if (line_length == 0) {
             // Empty line or line with only comments
-  //          continue;
+         continue;
         }
 
         // Split the line into arguments
