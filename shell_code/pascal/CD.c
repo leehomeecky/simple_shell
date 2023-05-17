@@ -45,7 +45,7 @@ char* strtok_r(char* str, const char* delim, char** saveptr) {
 #include <limits.h>
 #include <unistd.h>
 
-char* _realpath(const char* path, char* resolved_path) {
+char* _realpath(char* path, char* resolved_path) {
     char temp[PATH_MAX];
    /* char* token;*/
     char* delimiter = "/";
@@ -57,7 +57,7 @@ char* _realpath(const char* path, char* resolved_path) {
 
     // Handle absolute paths
     if (path[0] == '/') {
-        strncpy(temp, path, sizeof(temp));
+        _strncpy(temp, path, sizeof(temp));
     } else {
         // Handle relative paths
         if (getcwd(temp, sizeof(temp)) == NULL) {
@@ -70,28 +70,28 @@ char* _realpath(const char* path, char* resolved_path) {
 
     resolved_path[0] = '\0';  // Initialize resolved_path as an empty string
 
-    result = strtok(temp, delimiter);
+    result = _strtok3(temp, delimiter);
     while (result != NULL) {
         // Handle "."
-        if (strcmp(result, ".") == 0) {
-            result = strtok(NULL, delimiter);
+        if (_strcmp(result, ".") == 0) {
+            result = _strtok3(NULL, delimiter);
             continue;
         }
 
         // Handle ".."
-        if (strcmp(result, "..") == 0) {
-            char* last_slash = strrchr(resolved_path, '/');
+        if (_strcmp(result, "..") == 0) {
+            char* last_slash = _strrchr(resolved_path, '/');
             if (last_slash != NULL) {
                 *last_slash = '\0';
             }
-            result = strtok(NULL, delimiter);
+            result = _strtok3(NULL, delimiter);
             continue;
         }
 
         // Append the directory or filename to the resolved path
         strncat(resolved_path, "/", PATH_MAX - strlen(resolved_path));
-        strncat(resolved_path, result, PATH_MAX - strlen(resolved_path));
-        result = strtok(NULL, delimiter);
+        strncat(resolved_path, result, PATH_MAX - _strlen(resolved_path));
+        result = _strtok3(NULL, delimiter);
     }
 
     return resolved_path;
@@ -192,7 +192,7 @@ int main() {
     ssize_t len;
 
         printf("$ ");
-//        fgets(command, sizeof(command), stdin);
+
 	len = getline(&command, &bufsize, stdin);
 	if (len == -1)
 		return (-1);                              /*Remove the newline character if present*/
