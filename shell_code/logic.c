@@ -27,7 +27,7 @@ char *full_cmd(char *cmd)
 /**
  * execve_func - a function that runs the execve function
  *
- * cmd_arr: array of command to run
+ * @cmd_arr: array of command to run
  */
 
 void execve_func(char **cmd_arr)
