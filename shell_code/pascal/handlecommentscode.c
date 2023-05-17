@@ -3,12 +3,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
+#include "shellt.h"
 #define MAX_CMD_LENGTH 1024
 #define MAX_ARGS 64
 #define BUFFER_SIZE 1024
 int execute_command(char **args) {
-    pid_t pid, wpid;
+    pid_t pid; /*wpid;*/
     int status;
 
     pid = fork();
@@ -24,7 +24,7 @@ int execute_command(char **args) {
     } else {
         // Parent process
         do {
-            wpid = waitpid(pid, &status, WUNTRACED);
+            waitpid(pid, &status, WUNTRACED);
         } while (!WIFEXITED(status) && !WIFSIGNALED(status));
     }
 
@@ -35,16 +35,18 @@ int run_shell_interactive() {
     char *line;
     char **args;
     int status;
+    char *token;                              int arg_count = 0;
 
     do {
         printf("$ ");
         line = NULL;
         size_t line_buf_size = 0;
         getline(&line, &line_buf_size, stdin);
-	if (strcmp(line, " "))
-			break;
+/*	if (strcmp(line, " "))*/
+	if (line == NULL)
+		break;
         if (strcmp(line, "\n") == 0) {
-            continue;
+        //    continue;
         }
 
         // Handle comments
@@ -54,8 +56,6 @@ int run_shell_interactive() {
         }
 
         args = malloc(MAX_ARGS * sizeof(char *));
-        char *token;
-        int arg_count = 0;
 
         token = strtok(line, " \t\n");
         while (token != NULL) {
@@ -71,16 +71,16 @@ int run_shell_interactive() {
         free(args);
     } while (status);
 
-    return 0;
+    return 1;
 } 
 int run_shell_noninteractive(char *filename, char **command_args, int num_args) {
-    FILE *file = NULL;
+/*    FILE *file = NULL;*/
     char *line = NULL;
     char **args = NULL;
     char *comment_start;
-    int status = 0;
+int status = 0;
     char *token;
-    int arg_count;
+    int arg_count, j;
 char buffer[BUFFER_SIZE];                 ssize_t bytesRead;                        char line2[BUFFER_SIZE];                  int i, lineLength = 0;
 int fileDescriptor;
     // Check if filename is provided
@@ -99,9 +99,9 @@ int fileDescriptor;
        /* }*/
     }
 
-    do {
+   do {
         line = NULL;
-        size_t line_buf_size = 0;
+   /*     size_t line_buf_size = 0;*/
         ssize_t line_length = -1;
 
         // Read from file or command line arguments
@@ -116,14 +116,14 @@ if (fileDescriptor)
 	else if (num_args > 0) {
             // Combine the command line arguments into a single string
             size_t args_len = 0;
-            for (int i = 0; i < num_args; i++) {
+            for (i = 0; i < num_args; i++) {
                 args_len += strlen(command_args[i]) + 1; // +1 for space separator
             }
             line = (char *) malloc(args_len + 1); // +1 for null terminator
             line[0] = '\0';
-            for (int i = 0; i < num_args; i++) {
-                strcat(line, command_args[i]);
-                if (i != num_args - 1) {
+            for (j = 0; j < num_args; j++) {
+                strcat(line, command_args[j]);
+                if (j != num_args - 1) {
                     strcat(line, " ");
                 }
             }
@@ -195,7 +195,7 @@ else if (num_args)/*args starts here */
 
         if (line_length == 0) {
             // Empty line or line with only comments
-            continue;
+  //          continue;
         }
 
         // Split the line into arguments
@@ -221,7 +221,7 @@ else if (num_args)/*args starts here */
      /*   fclose(file);*/
    /* }*/
 
-    return 0;
+    return (status);
 }
 
 
