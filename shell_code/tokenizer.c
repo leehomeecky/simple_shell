@@ -40,16 +40,17 @@ char *str_tok(char *str, const char *delim)
 }
 
 /**
- * cmd_to_arr - a function that saves all comands to an array of pointers
+ * str_to_arr - a function that saves all string to an array of pointers
  *
  * @cmd: commands to be splited
+ * @delim: delimiter to use for spliting
  *
  * Return: poimter to array of commands
  */
 
-char **cmd_to_arr(char *cmd)
+char **str_to_arr(char *cmd, const char *delim)
 {
-	char *cpy_cmd, *delim = ";\n", **cmd_arr, *token;
+	char *cpy_cmd, **cmd_arr, *token;
 	size_t arr_len, i;
 
 	if (cmd == NULL || *cmd == '\0')
