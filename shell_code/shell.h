@@ -20,7 +20,20 @@ typedef struct select_function
 {
 	char *cmd;
 	void (*cmdFunc)(char **cmd_arr);
-}
+} sltFunc;
+
+/**
+ * struct array_quote - a structure to store the quote found, and amount found
+ *
+ * @quote: quote found
+ * @len: number of quote found
+ */
+
+typedef struct array_quote
+{
+	char quote;
+	int len;
+} arrQut;
 
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
 int str_len(char *str);
@@ -37,5 +50,7 @@ char *full_cmd(char *cmd);
 char **shell_logic(const char **argv, char *cmd);
 char *str_cat(char *str1, char *str2);
 void execve_func(char **cmd_arr);
+void remove_quotes(char *str, char quote);
+int count_quotes_int(char *str, char quote);
 
 #endif
