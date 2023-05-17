@@ -27,7 +27,7 @@ char *full_cmd(char *cmd)
 /**
  * execve_func - a function that runs the execve function
  *
- * cmd_arr: array of command to run
+ * @cmd_arr: array of command to run
  */
 
 void execve_func(char **cmd_arr)
@@ -49,7 +49,21 @@ void execve_func(char **cmd_arr)
  * Return: the function to run the command if success else NULL
  */
 
+void (*cmd_func(char *cmd))(char **cmd_arr)
+{
+	sltFunc slt_func[] = {
+				{"/bin/echo", echo_func},
+			};
 
+	if (access(cmd, X_OK) == 0)
+	{
+		if (str_cmp(cmd, "/bin/echo") == 0)
+			return (echo_func);
+		else
+			return (execve_func);
+	}
+	return (NULL);
+}
 
 /**
  * shell_logic - a finction that handles all the shell logics
@@ -63,6 +77,7 @@ void execve_func(char **cmd_arr)
 char **shell_logic(const char **argv, char *cmd)
 {
 	char **cmd_arr, *delim = " \n", *cp_cmd, *alias_cmd = NULL;
+	void (*cmdFunc)(char **cmd_arr);
 
 	cp_cmd = str_dup(cmd);
 	cmd_arr = str_to_arr(cp_cmd, delim);
@@ -74,8 +89,11 @@ char **shell_logic(const char **argv, char *cmd)
 	}
 	else
 	cmd_arr[0] = full_cmd(cmd_arr[0]);
-	_puts(cmd_arr[0]);
-	_puts("\n");
+	cmdFunc = cmd_func(cmd_arr[0]);
+	if (cmdFunc == NULL)
+	_puts("error occured\n");
+	else
+	cmdFunc(cmd_arr);
 	free(cp_cmd);
 	free(cmd_arr[0]);
 	free(cmd_arr);

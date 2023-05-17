@@ -52,5 +52,8 @@ char *str_cat(char *str1, char *str2);
 void execve_func(char **cmd_arr);
 void remove_quotes(char *str, char quote);
 int count_quotes_int(char *str, char quote);
+arrQut *count_quotes_arr(char **cmd_arr);
+void echo_func(char **cmd_arr);
+void (*cmd_func(char *cmd))(char **cmd_arr);
 
 #endif
