@@ -194,7 +194,7 @@ void retrieve_alias(char *name)
 {
 	char alias_name[MAX_ALIAS_NAME];
 	char alias_value[MAX_ALIAS_VALUE];
-	char *equalsSign, *quoteEnd, *quoteStart;
+	char *equalsSign, *quoteEnd, *quoteStart, *alias;
 	char buffer[BUFFER_SIZE];
 	ssize_t bytesRead;
 	char line[BUFFER_SIZE];
@@ -230,7 +230,16 @@ _strncpy(alias_name, line + 6, equalsSign - (line + 6));
 
         /* Perform the comparison and write to stdout*/
                     if (_strcmp(alias_name, name) == 0) {
-                        _writef("%s='%s'\n", alias_name, alias_value);
+/* formatted output with puts*/
+alias = malloc(sizeof(char) * (_strlen(alias_name) +  4 + _strlen(alias_value))); 
+_strcat(alias, alias_name);     
+_strcat(alias, "=");
+_strcat(alias, "'");
+_strcat(alias, alias_value);
+_strcat(alias, "'");
+_strcat(alias, "\0");
+puts(alias);
+free(alias);
 seen = 1;
                     }
 
