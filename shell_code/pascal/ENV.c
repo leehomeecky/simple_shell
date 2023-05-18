@@ -129,7 +129,7 @@ int _unset(char *name, env_t *envdata)
 
 	if (name == NULL)
 	{
-		//get_error(datash, -1);
+		/*get error;*/
 		return (1);
 	}
 	m = -1;
@@ -145,7 +145,7 @@ int _unset(char *name, env_t *envdata)
 	}
 	if (m == -1)
 	{
-	/*	get_error(datash, -1);*/
+	/*	get error*/
 		return (1);
 	}
 	_environ = malloc(sizeof(char *) * (i));
@@ -174,15 +174,16 @@ while(1){
 
 env_t e;
 env_t *ev;
-int i, j, len;
+int len; /*i*/
    char *command = NULL;
 char *args[50];
-ssize_t  bufsize;
+size_t  bufsize;
    loadenv(&e);
    int numArgs=0, maxArgs = 4;
    char *token;
    ev = &e;
-	 printf("$ ");
+	 _putchar('$');
+	 _putchar(' ');
 
 	len = getline(&command, &bufsize, stdin);
 if (len == -1)
@@ -199,18 +200,20 @@ if (command[len - 1] == '\n')
         numArgs++;
         token = _strtok3(NULL, " ");
     }
-
-    if (_strcmp(args[0], "setenv") == 0)
+    if (_strcmp(args[0], "setenv") == 0 && numArgs == 3)
 	    _setenv(args[1], args[2], ev);
-    else if(_strcmp(args[0], "unsetenv") == 0)
+    
+/*	   perror("setenv: too many arguments");*/
+    else if(_strcmp(args[0], "unsetenv") == 0 && numArgs == 2)
 	    _unset(args[1], ev);
     else
-	    return (1); /* error must be here*/
+	    _writef("Not a valid command\n");
+	  /* return (1); error must be here*/
 
 
-for (i = 0; ev->envVar[i]; i++)                           printf("%s \n",  ev->envVar[i]);
-for (i = 0; environ[i]; i++)
-	printf("%s \n",  environ[i]);
+/*for (i = 0; ev->envVar[i]; i++) */             /*             printf("%s \n",  ev->envVar[i]);*/
+/*for (i = 0; environ[i]; i++)*/
+/*	printf("%s \n",  environ[i]);*/
 
 
 free(command);
