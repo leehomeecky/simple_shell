@@ -1,0 +1,38 @@
+/**
+  *removeExtraSpaces - =========
+  *@str: ==========
+  *Return: ==========
+  */
+
+void removeExtraSpaces(char *str) 
+{
+	int i, j;
+	int len = _strlen(str);
+
+    /*Remove leading spaces*/
+	while (len > 0 && str[0] == ' ')
+	{
+        for (i = 0; i < len; i++) {
+            str[i] = str[i + 1];
+        }
+        len--;
+    }
+
+    /*Remove extra spaces*/
+    for (i = 0; i < len - 1; i++) 
+    {
+        if (str[i] == ' ' && str[i + 1] == ' ') {
+            for (j = i; j < len; j++) {
+                str[j] = str[j + 1];
+            }
+            len--;
+            i--;
+        }
+    }
+
+    /*Remove trailing spaces */
+    while (len > 0 && str[len - 1] == ' ') {
+        str[len - 1] = '\0';
+        len--;
+    }
+}
