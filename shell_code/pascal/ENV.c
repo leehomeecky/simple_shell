@@ -1,6 +1,29 @@
 #include "shellt.h"
 
 /**
+ * isValidVariableName - =====
+ * @name: =======
+ * Return: ======
+ */
+int  isValidVariableName(char *name)
+{
+	int i = 0;
+
+    /*Check if the first character is a letter or underscore*/
+    if (!isalpha(name[0]) && name[0] != '_')
+	    return (-1);
+
+    /*Check the rest of the characters*/
+    for (i = 1; name[i] != '\0'; i++) {
+        /* Check if the character is alphanumeric or underscore*/
+        if (!isalnum(name[i]) && name[i] != '_')
+            return (-1);
+    }
+
+    return (0);
+}
+
+/**
  * addenvMem - =====
  * @envptr: ===.
  * @sizeOld: =====
@@ -200,7 +223,12 @@ if (command[len - 1] == '\n')
         numArgs++;
         token = _strtok3(NULL, " ");
     }
-    if (_strcmp(args[0], "setenv") == 0 && numArgs == 3)
+
+    if (isValidVariableName(args[1]) == -1)
+    {
+_writef("hsh: %s: %s: Not a valid identifier\n", args[0], args[1]);
+    }
+    else if (_strcmp(args[0], "setenv") == 0 && numArgs == 3)
 	    _setenv(args[1], args[2], ev);
     
 /*	   perror("setenv: too many arguments");*/

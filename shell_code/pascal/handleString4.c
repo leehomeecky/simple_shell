@@ -1,5 +1,15 @@
 #include "shellt.h"
 
+int _isalpha(int c)
+{
+    return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
+}
+
+int _isalnum(int c)
+{
+    return (isalpha(c) || (c >= '0' && c <= '9'));
+}
+
 /**
  * _strncat - ========
  * @dest: ===========

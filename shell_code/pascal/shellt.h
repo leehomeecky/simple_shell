@@ -2,6 +2,7 @@
 #define _SHELLT_H
 
 #include <stdio.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
@@ -32,6 +33,8 @@ typedef struct env_t
 
 
 /*prototype for the custom getline function*/
+int _isalpha(int c);
+int _isalnun(int c);
 int _putchar(char c);
 char *_strncat(char *dest, char *src, int n);
 char *_getenv(char *name);
