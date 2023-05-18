@@ -98,3 +98,34 @@ void load_aliases()
 close(fileDescriptor);
 
 }
+
+/**
+ *save_alias - ========
+  *@name: ========
+  *@value: ==========
+  *Return: ============
+  */
+/*Function to save an alias to file*/
+void save_alias(char *name, char *value) 
+{
+    int fileDescriptor;
+    char *filename = ALIAS_FILE;  
+    
+    /*Open the file in append mode*/
+    fileDescriptor = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    if (fileDescriptor < 0) {
+        _writef("Error opening the file.\n");
+        return;
+    }
+    
+    /*Write the formatted string to the file*/
+    write(fileDescriptor, "alias ", 6);
+    write(fileDescriptor, name, _strlen(name));
+    write(fileDescriptor, "='", 2);
+    write(fileDescriptor, value, _strlen(value));
+    write(fileDescriptor, "'\n", 2);
+
+    /*Close the file*/
+    close(fileDescriptor);
+
+}
