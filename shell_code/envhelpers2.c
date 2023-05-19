@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * free_env - =======
+ * _freeEnv - =======
  * @e: =========
  * Return: no return
  */
