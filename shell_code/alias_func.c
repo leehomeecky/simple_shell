@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "shell.h"
+
+void alias_func(char **cmdarr, const char *prgname);
 void handlemultiReg(char **command, const char *prgname);
 void update_alias(char *aliasName, char *filename, char *newValue, const char *prgname);
 void process_command(const char *command);
@@ -11,6 +13,7 @@ int convertStringToArray(char *inputString, char ***commandArray);
  * @aliasName: ======
  * @filename: =======
  * @newValue: =======
+ * @prgname: ======
  * Return: ===========
  */
 void update_alias(char *aliasName, char *filename, char *newValue, const char *prgname)
@@ -186,6 +189,7 @@ int convertStringToArray(char *inputString
 /**
  * handlemultiReg - ==========
  * @command: ===========
+ * @prgname: ======
  * Return: =========
  */
 void handlemultiReg(char **command, const char *prgname)
@@ -231,7 +235,7 @@ quoteEnd = _strrchr(*command, '\'');
 	}
 else if (_strcmp(*command, "exit") == 0)
 	{
-	break;
+/*	break;*/
 	}
 	else
 	{
@@ -242,7 +246,7 @@ _writef("Unknown command: %s\n", *command);
 }
 
 /**
- * aliad_func - =====
+ * alias_func - =====
  * @cmdarr: ======
  * @prgname: ========
  * Return: ========
@@ -250,11 +254,7 @@ _writef("Unknown command: %s\n", *command);
 void alias_func(char **cmdarr, const char *prgname)
 {
 		char *command = NULL;
-		/*char *command = *cmd;*/
-	/*	size_t bufsize = 0;*/
-	/*	ssize_t len;*/
 		int i = 0, j = 0;
-		/*    int size; */
 		int equals = 0;
 		char **commandArray;
 		char alias_name[1024];

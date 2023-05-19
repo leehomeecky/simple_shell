@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
-* _strlen - =======
+ * _strlen - =======
  * @s: ========
  * Return: ============
  */
@@ -87,19 +87,21 @@ char *_strdup(char *str)
  * @n: =======
  * Return: ==='
  */
-int _strncmp(char *s1, char *s2, size_t n) {
-    while (*s1 && *s2 && n > 0) {
-        if (*s1 != *s2)
-            return (*s1 - *s2);
-        s1++;
-        s2++;
-        n--;
-    }
-    if (n == 0)
-        return 0;
-    else if (*s1 == *s2)
-        return 0;
-    else
-        return (*s1 < *s2 ? -1 : 1);
+int _strncmp(char *s1, char *s2, size_t n)
+{
+	while (*s1 && *s2 && n > 0)
+	{
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		s1++;
+		s2++;
+		n--;
+	}
+	if (n == 0)
+		return (0);
+	else if (*s1 == *s2)
+		return (0);
+	else
+		return (*s1 < *s2 ? -1 : 1);
 }
 
