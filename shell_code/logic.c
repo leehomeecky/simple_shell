@@ -24,10 +24,27 @@ char *full_cmd(char *cmd)
 	return (str_dup(cmd));
 }
 
+/**
+ * env_func - a function that dsplays the env varable
+ *
+ * @cmd_arr: array of command to run
+ * @prog_name: name of the program
+ */
+
+extern char** environ;
 
 void env_func(char **cmd_arr, const char *prog_name)
 {
+	char** env;
 
+	if (cmd_arr && prog_name)
+		env = environ;
+	while (*env)
+	{
+	_puts(*env);
+	_puts("\n");
+	env++;
+	}
 }
 
 /**
@@ -61,24 +78,21 @@ void execve_func(char **cmd_arr, const char *prog_name)
 
 void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 {
-	int i, len = 3;
+	int i, len = 4;
 
 	sltFunc slt_func[] = {
 				{"/bin/echo", echo_func},
 				{"/bin/alias", alias_func},
 				{"/bin/cd", cd_func},
+				{"/bin/env", env_func},
 			};
 
-	if (access(cmd, X_OK) == 0)
-	{
-		if (str_cmp(cmd, "/bin/echo") == 0)
-			return (echo_func);
-		else
-			return (execve_func);
-	}
 	for (i = 0; i < len; i++)
 	if (str_cmp(cmd, (slt_func + i)->cmd) == 0)
 	return ((slt_func + i)->cmdFunc);
+
+	if (access(cmd, X_OK) == 0)
+		return (execve_func);
 
 	return (NULL);
 }
