@@ -28,7 +28,7 @@ char *full_cmd(char *cmd)
  * execve_func - a function that runs the execve function
  *
  * @cmd_arr: array of command to run
- * @name: name of the program
+ * @prog_name: name of the program
  */
 
 void execve_func(char **cmd_arr, const char *prog_name)
@@ -51,7 +51,7 @@ void execve_func(char **cmd_arr, const char *prog_name)
  * Return: the function to run the command if success else NULL
  */
 
-void (*cmd_func(char *cmd))(char **cmd_arr)
+void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 {
 	int i, len = 1;
 
