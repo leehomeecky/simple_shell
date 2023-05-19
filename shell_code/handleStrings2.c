@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * is_delim - checks if character is a delimeter
- * @c: the char to check
- * @delim: the delimeter string
- * Return: 1 if true, 0 if false
+ * is_delim - =======
+ * @c: =====
+ * @delim: ======
+ * Return: ========
  */
 int is_delim(char c, char *delim)
 {
@@ -15,12 +15,10 @@ int is_delim(char c, char *delim)
 }
 
 /**
- * _strchr - Locates a character in a string.
- * @s: The string to be searched.
- * @c: The character to be located.
- *
- * Return: If c is found - a pointer to the first occurence.
- * If c is not found - NULL.
+ * _strchr - ============
+ * @s: ========
+ * @c: ==============
+ * Return: =============
  */
 
 char *_strchr(char *s, char c)
@@ -36,9 +34,9 @@ char *_strchr(char *s, char c)
 	return (NULL);
 }
 /**
- * _strtok - =====
+ * _strtow - =====
  * @str: ======
- * @delimeters: ======
+ * @d: ======
  * Return: =======
  */
 char **_strtow(char *str, char *d)

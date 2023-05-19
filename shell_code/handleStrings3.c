@@ -90,19 +90,20 @@ char *_strncpy(char *dest, char *src, int n)
  * @character: ========
  * Return: ======
  */
-char *_strrchr(char *str, int character) 
+char *_strrchr(char *str, int character)
 {
-    char *last_occurrence = NULL;
+	char *last_occurrence = NULL;
 
-    while (*str != '\0') {
-        if (*str == character)
-            last_occurrence = str;
-        ++str;
-    }
+	while (*str != '\0')
+	{
+		if (*str == character)
+			last_occurrence = str;
+		++str;
+	}
 
-    if (character == '\0')
-        return (char*)str;
+	if (character == '\0')
+		return ((char *)str);
 
-    return ((char*)last_occurrence);
+	return ((char *)last_occurrence);
 }
 

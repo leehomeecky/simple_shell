@@ -1,13 +1,21 @@
 #include "shell.h"
-
+/**
+ * _isalpha - =======
+ * @c: ========
+ * Return: ========
+ */
 int _isalpha(int c)
 {
-    return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'));
 }
-
+/**
+ * _isalnum - =======
+ * @c: =====
+ * Return: -===
+ */
 int _isalnum(int c)
 {
-    return (_isalpha(c) || (c >= '0' && c <= '9'));
+	return (_isalpha(c) || (c >= '0' && c <= '9'));
 }
 
 /**
@@ -40,7 +48,7 @@ char *_strncat(char *dest, char *src, int n)
 }
 
 /**
- * cmp_chars - =========
+ * strcmp_chars - =========
  * @str: ===========
  * @delim: ===========]]]]
  *
@@ -71,10 +79,9 @@ int strcmp_chars(char str[], const char *delim)
 
 
 /**
- * _strtok - ===============
+ * _strtok3 - ===============
  * @str: ====
  * @delim: ====+
-
  * Return: ======
  */
 char *_strtok3(char str[], const char *delim)
