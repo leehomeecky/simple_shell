@@ -62,6 +62,7 @@ typedef struct env_t
 	char **envVar;
  } env_t;
 
+void _freeEnv(env_t *e);
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
 int str_len(char *str);
 char *str_dup(char *str);

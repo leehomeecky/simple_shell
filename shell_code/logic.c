@@ -108,9 +108,11 @@ void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 
 char **shell_logic(const char **argv, char *cmd)
 {
+	env_t env;
 	char **cmd_arr, *delim = " \n", *cp_cmd, *alias_cmd = NULL;
 	void (*cmdFunc)(char **cmd_arr, const char *prog_name);
-
+	
+	loadenv(&env);
 	cp_cmd = str_dup(cmd);
 	cmd_arr = str_to_arr(cp_cmd, delim);
 	if (str_cmp(cmd_arr[0], "exit") == 0)
@@ -134,6 +136,7 @@ char **shell_logic(const char **argv, char *cmd)
 	free(cp_cmd);
 	free(cmd_arr[0]);
 	free(cmd_arr);
+	_freeEnv(&env);
 	return (NULL);
 
 }
