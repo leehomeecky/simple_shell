@@ -33,6 +33,7 @@ typedef struct env_t
 
 
 /*prototype for the custom getline function*/
+void retrieve_alias(char *name);
 void removeExtraSpaces(char *str);
 void load_aliases(void);
 int _isalpha(int c);
