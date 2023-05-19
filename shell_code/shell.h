@@ -55,5 +55,7 @@ int count_quotes_int(char *str, char quote);
 arrQut *count_quotes_arr(char **cmd_arr);
 void echo_func(char **cmd_arr);
 void (*cmd_func(char *cmd))(char **cmd_arr);
+void comment(char *str);
+void _error(const char *shell, char *cmd, char error_no, char *msg);
 
 #endif

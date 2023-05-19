@@ -51,6 +51,8 @@ void execve_func(char **cmd_arr)
 
 void (*cmd_func(char *cmd))(char **cmd_arr)
 {
+	int i, len = 1;
+
 	sltFunc slt_func[] = {
 				{"/bin/echo", echo_func},
 			};
@@ -62,6 +64,10 @@ void (*cmd_func(char *cmd))(char **cmd_arr)
 		else
 			return (execve_func);
 	}
+	for (i = 0; i < len; i++)
+	if (str_cmp(cmd, (slt_func + i)->cmd) == 0)
+	return ((slt_func + i)->cmdFunc);
+
 	return (NULL);
 }
 
@@ -70,6 +76,7 @@ void (*cmd_func(char *cmd))(char **cmd_arr)
  *
  * @argv: pointer to argument array
  * @cmd: comand to run
+ * @cmd_no: command number
  *
  * Return: NULL || pointer to an array
  */
@@ -81,6 +88,11 @@ char **shell_logic(const char **argv, char *cmd)
 
 	cp_cmd = str_dup(cmd);
 	cmd_arr = str_to_arr(cp_cmd, delim);
+	if (str_cmp(cmd_arr[0], "exit") == 0)
+	{
+		free(cp_cmd);
+		return(cmd_arr);
+	}
 	/*alias_cmd = alias_functio(cmd_arr[0]);*/
 	if (alias_cmd != NULL)
 	{
@@ -91,11 +103,14 @@ char **shell_logic(const char **argv, char *cmd)
 	cmd_arr[0] = full_cmd(cmd_arr[0]);
 	cmdFunc = cmd_func(cmd_arr[0]);
 	if (cmdFunc == NULL)
-	_puts("error occured\n");
+	perror(argv[0]);
 	else
 	cmdFunc(cmd_arr);
+	if (cp_cmd)
 	free(cp_cmd);
+	if (cmd_arr[0])
 	free(cmd_arr[0]);
+	if(cmd_arr)
 	free(cmd_arr);
 	return (NULL);
 

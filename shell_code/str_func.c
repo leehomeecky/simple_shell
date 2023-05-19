@@ -32,3 +32,4 @@ char *str_cat(char *str1, char *str2)
 	str[i] = '\0';
 	return (str);
 }
+
