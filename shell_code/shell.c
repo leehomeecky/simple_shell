@@ -41,15 +41,18 @@ void comment(char *str)
 
 int main(int argc, const char **argv)
 {
-	char *line = NULL, *token, *dlim = " \n", *cp_line, **cmd_arr;
+	char *line = NULL, *dlim = ";\n", **cmd_arr;
 	size_t line_len = 0;
 	ssize_t num_read;
 	int i;
 
+	if (argc > 0)
 	_prompt();
 	while ((num_read = get_line(&line, &line_len, stdin)) > 0)
 	{
-		cmd_arr = str_to_arr(line, ";\n");
+		cmd_arr = str_to_arr(line, dlim);
+		if (cmd_arr == NULL)
+			continue;
 		for (i = 0; cmd_arr[i]; i++)
 		{
 			comment(cmd_arr[i]);
@@ -58,6 +61,7 @@ int main(int argc, const char **argv)
 		}
 		if (cmd_arr)
 		free(cmd_arr);
+		cmd_arr = NULL;
 		_prompt();
 	}
 	if (line)

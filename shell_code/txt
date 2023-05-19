@@ -1,6 +1,7 @@
 /bin/ls -al
-lsswat... hkzxj
+cd hkzxj
 echo kkasknksa
 pwd
-cd "ndka sak"
-alias test
+mkdir we
+rmdir we
+echo "last thing"

@@ -25,6 +25,18 @@ char *full_cmd(char *cmd)
 }
 
 /**
+ * env_func - a function that dsplays the env varable
+ *
+ * @cmd_arr: array of command to run
+ * @prog_name: name of the program
+ */
+
+void env_func(char **cmd_arr, const char *prog_name)
+{
+
+}
+
+/**
  * execve_func - a function that runs the execve function
  *
  * @cmd_arr: array of command to run
@@ -80,7 +92,6 @@ void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
  *
  * @argv: pointer to argument array
  * @cmd: comand to run
- * @cmd_no: command number
  *
  * Return: NULL || pointer to an array
  */
@@ -95,7 +106,7 @@ char **shell_logic(const char **argv, char *cmd)
 	if (str_cmp(cmd_arr[0], "exit") == 0)
 	{
 		free(cp_cmd);
-		return(cmd_arr);
+		return (cmd_arr);
 	}
 	/*alias_cmd = alias_functio(cmd_arr[0]);*/
 	if (alias_cmd != NULL)
@@ -110,11 +121,8 @@ char **shell_logic(const char **argv, char *cmd)
 	perror(argv[0]);
 	else
 	cmdFunc(cmd_arr, argv[0]);
-	if (cp_cmd)
 	free(cp_cmd);
-	if (cmd_arr[0])
 	free(cmd_arr[0]);
-	if(cmd_arr)
 	free(cmd_arr);
 	return (NULL);
 
