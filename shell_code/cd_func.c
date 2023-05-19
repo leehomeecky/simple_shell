@@ -198,11 +198,10 @@ int execute_command(char *command)
 /*int main(void)*/
 void cd_func(char **cmdarr, const char *prgname)
 {
-
 //	while (1)
 //	{
 		/*  char command[MAX_COMMAND_LENGTH];*/
-		size_t  bufsize = 0;
+//		size_t  bufsize = 0;
 		char *command = NULL;
 		int i = 0;
 		int j = 0;
@@ -236,7 +235,8 @@ void cd_func(char **cmdarr, const char *prgname)
 
 		if (execute_command(command) == 0)
 		{
-			_writef("Invalid command\n");
+		
+			_writef("%s: Invalid command\n", prgname);
 		}
 //	}
 

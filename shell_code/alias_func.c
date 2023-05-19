@@ -201,7 +201,8 @@ void handlemultiReg(char **command, const char *prgname)
 	{
 	process_command(*command);
 	}
-	else if (_strncmp(*command, "alias ", 6) == 0 && _strlen(*command) > 7)
+	else if (_strncmp(*command, "alias ", 6) == 0
+			&& _strlen(*command) > 7 && equals >= 1)
 	{
 	if (_strstr(*command, "alias") != NULL)
 	{
@@ -250,8 +251,8 @@ void alias_func(char **cmdarr, const char *prgname)
 {
 		char *command = NULL;
 		/*char *command = *cmd;*/
-		size_t bufsize = 0;
-		ssize_t len;
+	/*	size_t bufsize = 0;*/
+	/*	ssize_t len;*/
 		int i = 0, j = 0;
 		/*    int size; */
 		int equals = 0;
@@ -301,7 +302,8 @@ void alias_func(char **cmdarr, const char *prgname)
 			else if (_strncmp(command, "alias ", 6) == 0 &&  _strlen(command) > 6 && equals == 0)
 			{
 				process_command(command);
-			} else if (_strncmp(command, "alias ", 6) == 0 && _strlen(command) > 7)
+			} else if (_strncmp(command, "alias ", 6) == 0
+					&& _strlen(command) > 7 && equals >= 1)
 			{
 				if (_strstr(command, "alias") != NULL)
 				{
