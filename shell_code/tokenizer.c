@@ -71,6 +71,7 @@ char **str_to_arr(char *cmd, const char *delim)
 		token = str_tok(NULL, delim);
 	}
 	cmd_arr[i] = NULL;
+	if (cpy_cmd)
 	free(cpy_cmd);
 	return (cmd_arr);
 }
