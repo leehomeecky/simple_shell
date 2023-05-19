@@ -1,21 +1,29 @@
 #include "shell.h"
+
+char *_getenv(char *name);
+char **addenvMem(char **envptr, unsigned int sizeOld, unsigned int sizeNew);
+void loadenv(env_t *envdata);
+void _setenv(char *name, char *value, env_t *envdata);
+int _unset(char *name, env_t *envdata);
 /**
  * _getenv - Getenv
  * @name: ===
  * Return: =====
  */
-char *_getenv(char *name) 
+char *_getenv(char *name)
 {
-    size_t namelen = _strlen(name);
-    char** var;
+	size_t namelen = _strlen(name);
+	char **var;
 
-    for (var = environ; *var != NULL; ++var) {
-        if (strncmp(name, *var, namelen) == 0 && (*var)[namelen] == '=') {
-            return (*var + namelen + 1);
-        }
-    }
+	for (var = environ; *var != NULL; ++var)
+	{
+		if (strncmp(name, *var, namelen) == 0 && (*var)[namelen] == '=')
+		{
+			return (*var + namelen + 1);
+		}
+	}
 
-    return (NULL);
+	return (NULL);
 }
 
 /**
@@ -51,7 +59,7 @@ char **addenvMem(char **envptr, unsigned int sizeOld, unsigned int sizeNew)
 
 
 
-/* *
+/**
  * loadenv - Initialize enviromental variables
  * @envdata: data struct
  * Return: void
@@ -63,11 +71,11 @@ void loadenv(env_t *envdata)
 	for (j = 0; environ[j]; )
 		j++;
 
-envdata->envVar = malloc(sizeof(char *) * (j + 1));
-for (j = 0; environ[j]; j++)
+	envdata->envVar = malloc(sizeof(char *) * (j + 1));
+	for (j = 0; environ[j]; j++)
 	{
 		envdata->envVar[j] = _strdup(environ[j]);
-//	printf("%s \n",  envdata->envVar[j]);
+		/*	printf("%s \n",  envdata->envVar[j]);*/
 	}
 	envdata->envVar[j] = NULL;
 }
@@ -91,22 +99,22 @@ void _setenv(char *name, char *value, env_t *envdata)
 		var = _strtok3(dupVar, "=");
 		if (_strcmp(var, name) == 0)
 		{
-		free(envdata->envVar[k]);
-	/*free(environ[k]);*/
-	namelen = _strlen(name);
-	valuelen = _strlen(value);
-	varlen = namelen + valuelen + 2;
-	envdata->envVar[k] = malloc(sizeof(char) * (varlen));
-	_strcpy(envdata->envVar[k], name);
-	_strcat(envdata->envVar[k], "=");
-	_strcat(envdata->envVar[k], value);
-	_strcat(envdata->envVar[k], "\0");
-	/*environ[k] = malloc(sizeof(char) * (varlen));*/
-	/*_strcpy(environ[k], name);*/
-	/*_strcat(environ[k], "=");*/
-	/*_strcat(environ[k], value);*/
-	/*_strcat(environ[k], "\0");*/
-	environ = envdata->envVar;
+			free(envdata->envVar[k]);
+			/*free(environ[k]);*/
+			namelen = _strlen(name);
+			valuelen = _strlen(value);
+			varlen = namelen + valuelen + 2;
+			envdata->envVar[k] = malloc(sizeof(char) * (varlen));
+			_strcpy(envdata->envVar[k], name);
+			_strcat(envdata->envVar[k], "=");
+			_strcat(envdata->envVar[k], value);
+			_strcat(envdata->envVar[k], "\0");
+			/*environ[k] = malloc(sizeof(char) * (varlen));*/
+			/*_strcpy(environ[k], name);*/
+			/*_strcat(environ[k], "=");*/
+			/*_strcat(environ[k], value);*/
+			/*_strcat(environ[k], "\0");*/
+			environ = envdata->envVar;
 			free(dupVar);
 			return;
 		}
@@ -114,12 +122,12 @@ void _setenv(char *name, char *value, env_t *envdata)
 	}
 
 	envdata->envVar = addenvMem(envdata->envVar, k, sizeof(char *) * (k + 2));
-/*	environ = addenvMem(environ, k, sizeof(char *) * (k + 2));*/
+	/*	environ = addenvMem(environ, k, sizeof(char *) * (k + 2));*/
 	namelen = _strlen(name);
 	valuelen = _strlen(value);
 	varlen = namelen + valuelen + 2;
 	envdata->envVar[k] = malloc(sizeof(char) * (varlen));
-/*	environ[k] = malloc(sizeof(char) * (varlen));*/
+	/*	environ[k] = malloc(sizeof(char) * (varlen));*/
 	_strcpy(envdata->envVar[k], name);
 	_strcat(envdata->envVar[k], "=");
 	_strcat(envdata->envVar[k], value);
@@ -130,7 +138,7 @@ void _setenv(char *name, char *value, env_t *envdata)
 	/*_strcat(environ[k], value);*/
 	/*_strcat(environ[k], "\0");*/
 	/*environ[k + 1] = NULL;*/
-environ = envdata->envVar;
+	environ = envdata->envVar;
 }
 
 /**
@@ -147,7 +155,7 @@ int _unset(char *name, env_t *envdata)
 
 	if (name == NULL)
 	{
-		//get_error(datash, -1);
+		/*get_error(datash, -1);*/
 		return (1);
 	}
 	m = -1;
@@ -163,7 +171,7 @@ int _unset(char *name, env_t *envdata)
 	}
 	if (m == -1)
 	{
-	/*	get_error(datash, -1);*/
+		/*	get_error(datash, -1);*/
 		return (1);
 	}
 	_environ = malloc(sizeof(char *) * (i));
