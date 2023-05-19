@@ -11,6 +11,26 @@ void _prompt(void)
 }
 
 /**
+ * comment - function to handle comment
+ *
+ * @str: command to check
+ */
+
+void comment(char *str)
+{
+	int i;
+
+	for (i = 0; str[i]; i++)
+	{
+		if (str[i] == '#')
+		{
+			if (str[(i - 1)] != '"' && str[(i - 1)] != '\'')
+				str[i] = '\0';
+		}
+	}
+}
+
+/**
  * main - entry point
  *
  * @argc: numbers of argument passed
@@ -25,7 +45,6 @@ int main(int argc, const char **argv)
 	size_t line_len = 0;
 	ssize_t num_read;
 	int i;
-	pid_t pid;
 
 	_prompt();
 	while ((num_read = get_line(&line, &line_len, stdin)) > 0)
@@ -33,6 +52,7 @@ int main(int argc, const char **argv)
 		cmd_arr = str_to_arr(line, ";\n");
 		for (i = 0; cmd_arr[i]; i++)
 		{
+			comment(cmd_arr[i]);
 			if (shell_logic(argv, cmd_arr[i]))
 				_puts("exit");
 		}
