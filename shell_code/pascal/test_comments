@@ -3,4 +3,5 @@ ls -a
 ## ls
 echo value
 echo $HOME
-mkdir comments ##/
+mkdir comments ##
+###  :%s/\s\+$//e

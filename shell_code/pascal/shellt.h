@@ -41,6 +41,7 @@ int _isalnun(int c);
 int _putchar(char c);
 char *_strncat(char *dest, char *src, int n);
 char *_getenv(char *name);
+void handlemultiReg(char **command);
 char *_strdup(char *str);
 void loadenv(env_t *envdata);
 int _unset(char *name, env_t *envdata);
@@ -67,4 +68,5 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 int _strcmp(char *s1, char *s2);
 int _strlen(char *s);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+
 #endif
