@@ -31,13 +31,14 @@ char *full_cmd(char *cmd)
  * @name: name of the program
  */
 
-void execve_func(char **cmd_arr, conat char *prog_name)
+void execve_func(char **cmd_arr, const char *prog_name)
 {
 	pid_t pid;
 
 	pid = fork();
 	if (pid == 0)
-	execve(cmd_arr[0], cmd_arr, NULL);
+	if (execve(cmd_arr[0], cmd_arr, NULL) == -1)
+		perror(prog_name);
 	else
 	wait(NULL);
 }
