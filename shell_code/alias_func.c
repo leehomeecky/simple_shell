@@ -263,7 +263,7 @@ void alias_func(char **cmdarr, const char *prgname)
 
 	for (i = 0; cmdarr[i]; i++)
 		j = j + _strlen(cmdarr[i]) + 1;
-	printf("%d \n", j);
+
 	command  = malloc(sizeof(char) * (j + 1));
 		_strcpy(command, cmdarr[0]);
 		for (i = 1; cmdarr[i]; i++)
@@ -271,11 +271,9 @@ void alias_func(char **cmdarr, const char *prgname)
 		_strcat(command, " ");
 		_strcat(command, cmdarr[i]);
 		}
-	/*	command[i + 1] = '\0';*/
+	
 		_strcat(command, "\0");
 
-	//	if (command[len - 1] == '\n')
-//			command[len - 1] = '\0';
 		commandArray = malloc(sizeof(char*) * _strlen(command));
 		i = 0;
 		while (command[i]) {
@@ -330,7 +328,8 @@ void alias_func(char **cmdarr, const char *prgname)
 			} else if (_strcmp(command, "exit") == 0) {
 	/*			break;*/
 			} else {
-				_writef("Unknown command: %s\n", command);
+	/*			_writef("Unknown command: %s\n", command);*/
+	perror(prgname);
 			}
 		}
 		free(commandArray);
