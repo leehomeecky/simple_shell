@@ -19,7 +19,7 @@
 typedef struct select_function
 {
 	char *cmd;
-	void (*cmdFunc)(char **cmd_arr);
+	void (*cmdFunc)(char **cmd_arr, const char *prog_name);
 } sltFunc;
 
 /**
@@ -49,11 +49,12 @@ void _prompt(void);
 char *full_cmd(char *cmd);
 char **shell_logic(const char **argv, char *cmd);
 char *str_cat(char *str1, char *str2);
-void execve_func(char **cmd_arr);
+void execve_func(char **cmd_arr, const char *prog_name);
 void remove_quotes(char *str, char quote);
 int count_quotes_int(char *str, char quote);
 arrQut *count_quotes_arr(char **cmd_arr);
-void echo_func(char **cmd_arr);
-void (*cmd_func(char *cmd))(char **cmd_arr);
+void echo_func(char **cmd_arr, const char *prog_name);
+void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name);
+void comment(char *str);
 
 #endif
