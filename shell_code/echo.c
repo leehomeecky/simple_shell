@@ -11,6 +11,8 @@ void remove_quotes(char *str, char quote)
 {
 	int i, j = 0;
 
+	if (quote == '\0')
+		return;
 	for (i = 0; str[i] != '\0'; i++)
 	{
 		if (str[i] == quote && (i == 0 || str[(i - 1)] != '\\'))
@@ -55,6 +57,8 @@ arrQut *count_quotes_arr(char **cmd_arr)
 
 	arrQut *arr_qut = (arrQut *)malloc(sizeof(arrQut));
 
+	if (arr_qut == NULL)
+		return (NULL);
 	arr_qut->quote = '\0';
 	arr_qut->len = 0;
 	for (i = 0; cmd_arr[i]; i++)
@@ -83,7 +87,7 @@ arrQut *count_quotes_arr(char **cmd_arr)
  * @cmd_arr: array of command and string to echo
  */
 
-void echo_func(char **cmd_arr)
+void echo_func(char **cmd_arr, const char *prog_name)
 {
 	char *line = NULL, *cp_line;
 	size_t line_len = 0, arr_len = 0, i;
@@ -105,7 +109,8 @@ void echo_func(char **cmd_arr)
 	}*/
 	for (i = 0; cmd_arr[i]; i++)
 		remove_quotes(cmd_arr[i], arr_qut->quote);
+	if (arr_qut)
 	free(arr_qut);
-	execve_func(cmd_arr);
+	execve_func(cmd_arr, prog_name);
 
 }
