@@ -85,6 +85,7 @@ arrQut *count_quotes_arr(char **cmd_arr)
  * echo_func - function to handle echo command
  *
  * @cmd_arr: array of command and string to echo
+ * @prog_name: program name
  */
 
 void echo_func(char **cmd_arr, const char *prog_name)
