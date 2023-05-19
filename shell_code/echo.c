@@ -90,24 +90,11 @@ arrQut *count_quotes_arr(char **cmd_arr)
 
 void echo_func(char **cmd_arr, const char *prog_name)
 {
-	char *line = NULL, *cp_line;
-	size_t line_len = 0, arr_len = 0, i;
+	int i;
+
 	arrQut *arr_qut;
 
-	for (i = 0; cmd_arr[i]; i++)
-		arr_len++;
 	arr_qut = count_quotes_arr(cmd_arr);
-	/*while (arr_qut->len % 2 == 1)
-	{
-		_puts("\n> ");
-		get_line(&line, &line_len, stdin);
-		cp_line = str_dup(line);
-		cmd_arr = _realloc(cmd_arr, (arr_len += 1));
-		cmd_arr[(arr_len = 1)] = cp_line;
-		cmd_arr[arr_len] = NULL;
-		arr_qut->len += count_quotes_int(cp_line, arr_qut->quote);
-		free(line);
-	}*/
 	for (i = 0; cmd_arr[i]; i++)
 		remove_quotes(cmd_arr[i], arr_qut->quote);
 	if (arr_qut)

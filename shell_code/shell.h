@@ -66,7 +66,7 @@ ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
 int str_len(char *str);
 char *str_dup(char *str);
 int str_cmp(char *str1, char *str2);
-void mem_cpy(void *dest, const void *src, size_t n);
+void mem_cpy(void *dest, const void *src, ssize_t n);
 void *_realloc(void *ptr, size_t size);
 char *str_chr(const char *s, char c);
 char *str_tok(char *str, const char *delim);

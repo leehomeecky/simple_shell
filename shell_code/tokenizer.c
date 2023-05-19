@@ -59,7 +59,7 @@ char **str_to_arr(char *cmd, const char *delim)
 	if (cpy_cmd == NULL)
 		return (NULL);
 	token = str_tok(cpy_cmd, delim);
-	for (arr_len = 0; token; arr_len++)
+	for (arr_len = 1; token; arr_len++)
 		token = str_tok(NULL, delim);
 	cmd_arr = (char **)malloc(sizeof(char *) * arr_len);
 	if (cmd_arr == NULL)

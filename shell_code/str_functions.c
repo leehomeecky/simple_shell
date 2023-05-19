@@ -70,7 +70,7 @@ int str_cmp(char *str1, char *str2)
  * @n: number of element to be copied from @src to @dest
  */
 
-void mem_cpy(void *dest, const void *src, size_t n)
+void mem_cpy(void *dest, const void *src, ssize_t n)
 {
 	char *d;
 	const char *s = src;

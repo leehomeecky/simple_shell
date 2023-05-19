@@ -14,8 +14,9 @@
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 {
 	char buffer[BUFFER_SIZE];
-	ssize_t num_read, i = 0, pos = 0;
-	char c, *new_lineptr;
+	ssize_t num_read, pos = 0;
+	size_t i = 0;
+	char c;
 
 	if (!*lineptr)
 	{
@@ -28,7 +29,7 @@ ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 	{
 	if (pos == 0)
 	{
-	/*fflush(stdout);*/
+	fflush(stream);
 	num_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
 	if (num_read == -1)
 		return (-1);
