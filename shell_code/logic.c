@@ -37,8 +37,10 @@ void execve_func(char **cmd_arr, const char *prog_name)
 
 	pid = fork();
 	if (pid == 0)
+	{
 	if (execve(cmd_arr[0], cmd_arr, NULL) == -1)
 		perror(prog_name);
+	}
 	else
 	wait(NULL);
 }
@@ -86,7 +88,7 @@ void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 char **shell_logic(const char **argv, char *cmd)
 {
 	char **cmd_arr, *delim = " \n", *cp_cmd, *alias_cmd = NULL;
-	void (*cmdFunc)(char **cmd_arr);
+	void (*cmdFunc)(char **cmd_arr, const char *prog_name);
 
 	cp_cmd = str_dup(cmd);
 	cmd_arr = str_to_arr(cp_cmd, delim);
@@ -102,7 +104,7 @@ char **shell_logic(const char **argv, char *cmd)
 	free(alias_cmd);
 	}
 	else
-	cmd_arr[0] = full_cmd(cmd_arr[0], );
+	cmd_arr[0] = full_cmd(cmd_arr[0]);
 	cmdFunc = cmd_func(cmd_arr[0]);
 	if (cmdFunc == NULL)
 	perror(argv[0]);
