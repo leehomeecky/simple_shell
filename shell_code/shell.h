@@ -96,7 +96,7 @@ int _isalnun(int c);
 int _putchar(char c);
 char *_strncat(char *dest, char *src, int n);
 char *_getenv(char *name);
-void handlemultiReg(char **command);
+void handlemultiReg(char **command, const char *prgname);
 char *_strdup(char *str);
 void loadenv(env_t *envdata);
 int _unset(char *name, env_t *envdata);

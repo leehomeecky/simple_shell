@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "shell.h"
-void handlemultiReg(char **command);
-void update_alias(char *aliasName, char *filename, char *newValue);
+void handlemultiReg(char **command, const char *prgname);
+void update_alias(char *aliasName, char *filename, char *newValue, const char *prgname);
 void process_command(const char *command);
 int convertStringToArray(char *inputString, char ***commandArray);
 /**
@@ -13,7 +13,7 @@ int convertStringToArray(char *inputString, char ***commandArray);
  * @newValue: =======
  * Return: ===========
  */
-void update_alias(char *aliasName, char *filename, char *newValue)
+void update_alias(char *aliasName, char *filename, char *newValue, const char *prgname)
 {
 	char line[1024];
 	size_t lineLength;
@@ -99,7 +99,8 @@ void update_alias(char *aliasName, char *filename, char *newValue)
 	newAliasFile = open(filename, O_WRONLY | O_APPEND);
 	if (newAliasFile == -1)
 	{
-		printf("Error opening file %s\n", filename);
+	/*	printf("Error opening file %s\n", filename);*/
+		perror(prgname);
 		return;
 	}
 
@@ -187,7 +188,7 @@ int convertStringToArray(char *inputString
  * @command: ===========
  * Return: =========
  */
-void handlemultiReg(char **command)
+void handlemultiReg(char **command, const char *prgname)
 {
 	int equals = 1;
 	char alias_name[1024];
@@ -215,7 +216,7 @@ quoteEnd = _strrchr(*command, '\'');
 	alias_name[equalsSign - (*command + 6)] = '\0';
 	_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1);
 	alias_value[quoteEnd - quoteStart - 1] = '\0';
-	update_alias(alias_name, ALIAS_FILE, alias_value); /*Update the alias*/
+	update_alias(alias_name, ALIAS_FILE, alias_value, prgname); /*Update the alias*/
 	}
 	else
 	{					/*_writef("Wrong Format\n");*/
@@ -288,7 +289,7 @@ void alias_func(char **cmdarr, const char *prgname)
 		{
 			/*removeExtraSpaces(command);*/
 			convertStringToArray(command, &commandArray);
-			handlemultiReg(commandArray);
+			handlemultiReg(commandArray, prgname);
 		}
 		else
 		{
@@ -315,7 +316,7 @@ void alias_func(char **cmdarr, const char *prgname)
 							alias_name[equalsSign - (command + 6)] = '\0';
 							_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1);
 							alias_value[quoteEnd - quoteStart - 1] = '\0';
-							update_alias(alias_name, ALIAS_FILE, alias_value); /* Update the alias*/
+							update_alias(alias_name, ALIAS_FILE, alias_value, prgname); /* Update the alias*/
 						}
 						else
 						{
