@@ -28,9 +28,10 @@ char *full_cmd(char *cmd)
  * execve_func - a function that runs the execve function
  *
  * @cmd_arr: array of command to run
+ * @name: name of the program
  */
 
-void execve_func(char **cmd_arr)
+void execve_func(char **cmd_arr, conat char *prog_name)
 {
 	pid_t pid;
 
@@ -100,12 +101,12 @@ char **shell_logic(const char **argv, char *cmd)
 	free(alias_cmd);
 	}
 	else
-	cmd_arr[0] = full_cmd(cmd_arr[0]);
+	cmd_arr[0] = full_cmd(cmd_arr[0], );
 	cmdFunc = cmd_func(cmd_arr[0]);
 	if (cmdFunc == NULL)
 	perror(argv[0]);
 	else
-	cmdFunc(cmd_arr);
+	cmdFunc(cmd_arr, argv[0]);
 	if (cp_cmd)
 	free(cp_cmd);
 	if (cmd_arr[0])
