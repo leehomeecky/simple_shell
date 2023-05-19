@@ -55,11 +55,12 @@ void execve_func(char **cmd_arr, const char *prog_name)
 
 void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 {
-	int i, len = 2;
+	int i, len = 3;
 
 	sltFunc slt_func[] = {
 				{"/bin/echo", echo_func},
 				{"/bin/alias", alias_func},
+				{"/bin/cd", cd_func},
 			};
 
 	if (access(cmd, X_OK) == 0)

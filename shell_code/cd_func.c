@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "shellt.h"
+#include "shell.h"
 
 #define MAX_COMMAND_LENGTH 1024
 #define MAX_TOKENS 256
@@ -170,60 +170,76 @@ int execute_command(char *command)
 		return (1);
 	}
 
-	pid_t pid = fork();
+/*	pid_t pid = fork();*/
 
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	} else if (pid == 0)
-	{
-		execvp(args[0], args);
-		perror("execvp");
-		exit(EXIT_FAILURE);
-	}
-	else
-	{
-		waitpid(pid, NULL, 0);
-	}
+/*	if (pid == -1)*/
+/*	{*/
+	/*	perror("fork");*/
+/*		exit(EXIT_FAILURE);*/
+/*	} else if (pid == 0)*/
+/*	{*/
+	/*	execvp(args[0], args);*/
+	/*	perror("execvp");*/
+	/*	exit(EXIT_FAILURE);*/
+/*	}*/
+/*	else*/
+/*	{*/
+	/*	waitpid(pid, NULL, 0);*/
+/*	}*/
 
 	return (1);
 }
 /**
- * main - ====
+ * cd_func -  ====
+ * @cmdarr: =======
+ * @prgname: ========
  * Return: =====
  */
-int main(void)
+/*int main(void)*/
+void cd_func(char **cmdarr, const char *prgname)
 {
 
-	while (1)
-	{
+//	while (1)
+//	{
 		/*  char command[MAX_COMMAND_LENGTH];*/
 		size_t  bufsize = 0;
 		char *command = NULL;
-		ssize_t len;
+		int i = 0;
+		int j = 0;
+//		ssize_t len;
 
-		_putchar('$');
-		_putchar(' ');
+//		_putchar('$');
+//		_putchar(' ');
 
-		len = getline(&command, &bufsize, stdin);
-		if (len == -1)
-			return (-1);
+//		len = getline(&command, &bufsize, stdin);
+//		if (len == -1)
+//			return (-1);
 		/*Remove the newline character if present*/
-		if (command[len - 1] == '\n')
-			command[len - 1] = '\0';
-
-		if (_strcmp(command, "\0") == 0)
+//		if (command[len - 1] == '\n')
+//			command[len - 1] = '\0';
+	_strcpy(cmdarr[0], "cd");
+	for (i = 0; cmdarr[i]; i++)
+		j = j + _strlen(cmdarr[i]) + 1;
+	
+	command  = malloc(sizeof(char) * (j + 1));
+	_strcpy(command, cmdarr[0]);
+	for (i = 1; cmdarr[i]; i++)
+	{
+	_strcat(command, " ");
+	_strcat(command, cmdarr[i]);
+	_strcat(command, "\0");
+	}
+	if (_strcmp(command, "\0") == 0)
 		{
-			break;
+	//		break;
 		}
 
 		if (execute_command(command) == 0)
 		{
 			_writef("Invalid command\n");
 		}
-	}
+//	}
 
-	return (0);
+//	return (0);
 }
 

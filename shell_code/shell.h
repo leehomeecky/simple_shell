@@ -78,6 +78,7 @@ char **shell_logic(const char **argv, char *cmd);
 char *str_cat(char *str1, char *str2);
 void execve_func(char **cmd_arr, const char *prog_name);
 void alias_func(char **cmdarr, const char *prgname);
+void cd_func(char **cmdarr, const char *prgname);
 void remove_quotes(char *str, char quote);
 int count_quotes_int(char *str, char quote);
 arrQut *count_quotes_arr(char **cmd_arr);
