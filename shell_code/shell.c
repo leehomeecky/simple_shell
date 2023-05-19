@@ -56,9 +56,11 @@ int main(int argc, const char **argv)
 			if (shell_logic(argv, cmd_arr[i]))
 				_puts("exit");
 		}
+		if (cmd_arr)
 		free(cmd_arr);
 		_prompt();
 	}
+	if (line)
 	free(line);
 	return (0);
 }
