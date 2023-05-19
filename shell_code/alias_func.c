@@ -175,6 +175,9 @@ int convertStringToArray(char *inputString
 
 	while ((token = _strtok3(NULL, delimiter)) != NULL)
 	{
+		if (token[0] == '\'')
+			continue;
+
 		length = _strlen(keyword) +  _strlen(token) + 1;
 		(*commandArray)[count] = malloc(length + 1);  /* Allocate memory for the command*/
 		/*_snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);*/
@@ -221,7 +224,8 @@ quoteEnd = _strrchr(*command, '\'');
 	alias_name[equalsSign - (*command + 6)] = '\0';
 	_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1);
 	alias_value[quoteEnd - quoteStart - 1] = '\0';
-	update_alias(alias_name, ALIAS_FILE, alias_value, prgname); /*Update the alias*/
+/*	if (_strchr(alias_value, '=') == NULL)*/
+		update_alias(alias_name, ALIAS_FILE, alias_value, prgname); /*Update the alias*/
 	}
 	else
 	{					/*_writef("Wrong Format\n");*/
@@ -318,7 +322,8 @@ void alias_func(char **cmdarr, const char *prgname)
 							alias_name[equalsSign - (command + 6)] = '\0';
 							_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1);
 							alias_value[quoteEnd - quoteStart - 1] = '\0';
-							update_alias(alias_name, ALIAS_FILE, alias_value, prgname); /* Update the alias*/
+	if (_strchr(alias_value, '=') == NULL)
+		update_alias(alias_name, ALIAS_FILE, alias_value, prgname); /* Update the alias*/
 						}
 						else
 						{
