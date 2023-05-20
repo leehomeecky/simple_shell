@@ -81,6 +81,8 @@ void _prompt(void);
 char *full_cmd(char *cmd);
 char **shell_logic(const char **argv, char *cmd);
 char *str_cat(char *str1, char *str2);
+int _atoi(char *str);
+void putchar_int(int val);
 void execve_func(char **cmd_arr, const char *prog_name);
 void alias_func(char **cmdarr, const char *prgname);
 void cd_func(char **cmdarr, const char *prgname);
