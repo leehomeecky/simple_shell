@@ -78,25 +78,17 @@ int main(int argc, const char **argv)
 			if (logic)
 			{
 				if (logic[1])
-				{
 				exit_val = _atoi(logic[1]);
+				else
+				exit_val = 0;
 				free(logic[0]);
 				free(logic);
 				free(cmd_arr);
 				free(line);
 				exit(exit_val);
-				}
-				else
-				break;
 			}
 		}
 		free(cmd_arr);
-		if (logic)
-		{
-		free(logic[0]);
-		free(logic);
-		break;
-		}
 		_prompt();
 	}
 	free(line);

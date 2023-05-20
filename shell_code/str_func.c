@@ -33,3 +33,16 @@ char *str_cat(char *str1, char *str2)
 	return (str);
 }
 
+/**
+ * putchar_int - a function that prints out integer value
+ *
+ * @val: integer value to be printed
+ */
+
+void putchar_int(int val)
+{
+	do {
+		_putchar((val % 10) + '0');
+		val /= 10;
+	} while (val > 0);
+}
