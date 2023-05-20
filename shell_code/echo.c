@@ -91,10 +91,22 @@ arrQut *count_quotes_arr(char **cmd_arr)
 void echo_func(char **cmd_arr, const char *prog_name)
 {
 	int i;
+	char var;
+	pid_t pid = getpid();
 
 	arrQut *arr_qut;
 
 	arr_qut = count_quotes_arr(cmd_arr);
+	if (arr_qut->quote == '\0' && cmd_arr[1][0] == '$')
+	{
+		if (cmd_arr[1][1] == '$')
+			putchar_int(pid);
+		if (cmd_arr[1][1] == '?')
+			putchar_int(WEXITSTATUS());
+		_puts("\n");
+		free(arr_qut);
+		return;
+	}
 	for (i = 0; cmd_arr[i]; i++)
 		remove_quotes(cmd_arr[i], arr_qut->quote);
 	if (arr_qut)

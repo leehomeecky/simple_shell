@@ -31,8 +31,6 @@ char *full_cmd(char *cmd)
  * @prog_name: name of the program
  */
 
-extern char** environ;
-
 void env_func(char **cmd_arr, const char *prog_name)
 {
 	char** env;
@@ -112,8 +110,12 @@ char **shell_logic(const char **argv, char *cmd)
 {
 	char **cmd_arr, *delim = " \n", *cp_cmd, *alias_cmd = NULL;
 	void (*cmdFunc)(char **cmd_arr, const char *prog_name);
-	
-	cp_cmd = str_dup(cmd);
+	int i;
+
+	for (i = 0; cmd[i]; i++)
+		if (cmd[i] != ' ')
+			break;
+	cp_cmd = str_dup(&(cmd[i]));
 	cmd_arr = str_to_arr(cp_cmd, delim);
 	if (str_cmp(cmd_arr[0], "exit") == 0)
 		return (cmd_arr);
