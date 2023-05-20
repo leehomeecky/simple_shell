@@ -1,0 +1,7 @@
+/bin/ls -al
+cd hkzxj
+echo kkasknksa
+pwd
+mkdir we
+rmdir we
+echo "last thing"

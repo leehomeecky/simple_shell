@@ -293,5 +293,6 @@ void alias_func(char **cmdarr, const char *prgname)
 		if (checks(cmd, equals, prgname) != 0)
 			_writef("%s: Unknown command: %s\n", prgname, cmd);
 	}
+	free(cmdArray);
 	free(cmd);
 }

@@ -8,9 +8,6 @@ void _freeEnv(env_t *e)
 {
 	unsigned int i;
 
-	if (e == NULL)
-		return;
-
 	for (i = 0; e->envVar[i]; i++)
 	{
 		free(e->envVar[i]);

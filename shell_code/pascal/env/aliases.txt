@@ -1,0 +1,6 @@
+alias b='b'
+alias a='apple'
+alias d='dog'
+alias c='cat'
+alias y2='y3'
+alias vix='blue'

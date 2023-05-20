@@ -204,8 +204,5 @@ void cd_func(char **cmdarr, const char *prgname)
 		{
 		_writef("%s: Invalid command\n", prgname);
 		}
-
-		free(command);
-	/*	free(cmdarr);*/
 }
 
