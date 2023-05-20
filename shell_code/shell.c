@@ -100,5 +100,7 @@ int main(int argc, const char **argv)
 		_prompt();
 	}
 	free(line);
+
+	_freeEnv(evload);
 	return (0);
 }

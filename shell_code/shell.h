@@ -28,8 +28,8 @@ extern char **environ;
 
 
 /**
- * struct select_function - structure to filter which command function to select
- *
+ * struct select_function - structure to filter
+ * which command function to select
  * @cmd: command to check
  * @cmdFunc: function to run the command
  */
@@ -55,12 +55,15 @@ typedef struct array_quote
 
 /**
  * struct env_t - env variables
- * @environ: pointer
+ * @envVar: pointer
  */
+
 typedef struct env_t
 {
 	char **envVar;
- } env_t;
+} env_t;
+
+env_t *evload;
 
 void _freeEnv(env_t *e);
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
@@ -99,6 +102,9 @@ int _putchar(char c);
 char *_strncat(char *dest, char *src, int n);
 char *_getenv(char *name);
 void handlemultiReg(char **command, const char *prgname);
+void callupdatealias(char *command, const char *prgname);
+void update_alias(char *aliasName, char *filename,
+		char *newValue, const char *prgname);
 char *_strdup(char *str);
 void loadenv(env_t *envdata);
 int _unset(char *name, env_t *envdata);
@@ -106,7 +112,7 @@ void _setenv(char *name, char *value, env_t *envdata);
 char **addenvMem(char **envptr, unsigned int sizeOld, unsigned int sizeNew);
 char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
-int _snprintf(char* buffer, size_t size, const char* format, ...);
+int _snprintf(char *buffer, size_t size, const char *format, ...);
 int _rename(const char *oldname, const char *newname);
 char *_strrchr(char *str, int character);
 char *_strstr(char *haystack, char *needle);

@@ -1,13 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "shell.h"
 
 void alias_func(char **cmdarr, const char *prgname);
 void handlemultiReg(char **command, const char *prgname);
-void update_alias(char *aliasName, char *filename, char *newValue, const char *prgname);
+void update_alias(char *a, char *f, char *new, const char *prgname);
 void process_command(const char *command);
 int convertStringToArray(char *inputString, char ***commandArray);
+int checks(char *cmd, int equals, const char *prgname);
 /**
  * update_alias - =============
  * @aliasName: ======
@@ -16,7 +14,8 @@ int convertStringToArray(char *inputString, char ***commandArray);
  * @prgname: ======
  * Return: ===========
  */
-void update_alias(char *aliasName, char *filename, char *newValue, const char *prgname)
+void update_alias(char *aliasName, char *filename,
+		char *newValue, const char *prgname)
 {
 	char line[1024];
 	size_t lineLength;
@@ -50,9 +49,11 @@ void update_alias(char *aliasName, char *filename, char *newValue, const char *p
 		linePtr = line;
 		lineEnd = line + bytesRead;
 
-		while (linePtr < lineEnd) {
+		while (linePtr < lineEnd)
+		{
 			lineBreak = _strchr(linePtr, '\n');
-			if (lineBreak == NULL) {
+			if (lineBreak == NULL)
+			{
 				lineBreak = lineEnd;
 			}
 
@@ -91,7 +92,8 @@ void update_alias(char *aliasName, char *filename, char *newValue, const char *p
 		/*remove(filename);*/
 		_rename(filename, "_temp");
 		/* Remove the original file*/
-		_rename("temp.txt","aliases.txt"); /* Rename the temporary file to the original filename*/
+	_rename("temp.txt", "aliases.txt");
+/* Rename the temporary file to the original filename*/
 	}
 	else
 	{
@@ -102,7 +104,7 @@ void update_alias(char *aliasName, char *filename, char *newValue, const char *p
 	newAliasFile = open(filename, O_WRONLY | O_APPEND);
 	if (newAliasFile == -1)
 	{
-	/*	printf("Error opening file %s\n", filename);*/
+		/*	printf("Error opening file %s\n", filename);*/
 		perror(prgname);
 		return;
 	}
@@ -121,7 +123,8 @@ void update_alias(char *aliasName, char *filename, char *newValue, const char *p
  * @command: =========
  * Return: =======
  */
-void process_command(const char* command) {
+void process_command(const char *command)
+{
 	const int maxArgs = 50;  /*Maximum number of arguments*/
 	char *args[100];     /*Array to store argument pointers*/
 	int numArgs = 0;         /*Number of arguments*/
@@ -129,7 +132,7 @@ void process_command(const char* command) {
 	int i;
 
 	/*Tokenize the command and store arguments in the array*/
-	token = _strtok3((char*)command, " ");
+	token = _strtok3((char *)command, " ");
 	while (token != NULL && numArgs < maxArgs)
 	{
 		args[numArgs] = _strdup(token);
@@ -162,14 +165,15 @@ void process_command(const char* command) {
 int convertStringToArray(char *inputString
 		, char ***commandArray)
 {
-	const char* delimiter = " \t\n";
+	const char *delimiter = " \t\n";
 	int count = 0;
 	int length;
 	char *keyword = "alias";
 	char *token = _strtok3(inputString, delimiter);
+
 	if (_strncmp(token, keyword, _strlen(keyword)) != 0)
 	{
-		return 0;
+		return (0);
 		/*Input string does not start with the keyword "alias"*/
 	}
 
@@ -179,8 +183,7 @@ int convertStringToArray(char *inputString
 			continue;
 
 		length = _strlen(keyword) +  _strlen(token) + 1;
-		(*commandArray)[count] = malloc(length + 1);  /* Allocate memory for the command*/
-		/*_snprintf((*commandArray)[count], length + 1, "%s %s", keyword, token);*/
+		(*commandArray)[count] = malloc(length + 1);
 		_strcpy((*commandArray)[count], keyword);
 		_strcat((*commandArray)[count], " ");
 		_strcat((*commandArray)[count], token);
@@ -198,55 +201,52 @@ int convertStringToArray(char *inputString
 void handlemultiReg(char **command, const char *prgname)
 {
 	int equals = 1;
-	char alias_name[1024];
-	char alias_value[1024];
-	char *equalsSign, *quoteEnd, *quoteStart;
-	
-	while(*command)
+
+	while (*command)
 	{
-	if (_strncmp(*command, "alias ", 6) == 0 && _strlen(*command) > 6 && equals == 0)
+		if (_strncmp(*command, "alias ", 6) == 0
+				&& _strlen(*command) > 6 && equals == 0)
+		{
+			process_command(*command);
+		}
+		else if (_strncmp(*command, "alias ", 6) == 0
+				&& _strlen(*command) > 7 && equals >= 1)
+		{
+			callupdatealias(*command, prgname);
+		}
+		else
+		{
+			_writef("Unknown command: %s\n", *command);
+		}
+		command++;
+	}
+}
+/**
+ * checks - ==========
+ * @cmd: =======
+ * @equals: =========
+ * @prgname: ========
+ * Return: int
+ */
+int checks(char *cmd, int equals, const char *prgname)
+{
+	if (_strcmp(cmd, "alias") == 0)
 	{
-	process_command(*command);
+		load_aliases();
+		return (0);
 	}
-	else if (_strncmp(*command, "alias ", 6) == 0
-			&& _strlen(*command) > 7 && equals >= 1)
+	else if ((_strncmp(cmd, "alias ", 6) == 0)
+			&&  _strlen(cmd) > 6 && equals == 0)
 	{
-	if (_strstr(*command, "alias") != NULL)
+		process_command(cmd);
+		return (0);
+	}
+	else if (_strncmp(cmd, "alias ", 6) == 0 && _strlen(cmd) > 7 && equals >= 1)
 	{
-equalsSign = _strchr(*command, '=');
-	if (equalsSign != NULL)
-	{
-quoteStart = _strchr(*command, '\'');
-quoteEnd = _strrchr(*command, '\'');
-	if (quoteStart != NULL && quoteEnd != NULL && quoteEnd > quoteStart)
-	{
-	_strncpy(alias_name, *command + 6, equalsSign - (*command + 6));
-	alias_name[equalsSign - (*command + 6)] = '\0';
-	_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1);
-	alias_value[quoteEnd - quoteStart - 1] = '\0';
-/*	if (_strchr(alias_value, '=') == NULL)*/
-		update_alias(alias_name, ALIAS_FILE, alias_value, prgname); /*Update the alias*/
+		callupdatealias(cmd, prgname);
+		return (0);
 	}
-	else
-	{					/*_writef("Wrong Format\n");*/
-	}
-	}
-	}
-	else
-	{
-	perror("Invalid alias format. Use: alias name='value'\n");
-	}
-	}
-else if (_strcmp(*command, "exit") == 0)
-	{
-/*	break;*/
-	}
-	else
-	{
-_writef("Unknown command: %s\n", *command);
-	}
-	command++;
-	}
+	return (-1);
 }
 
 /**
@@ -257,89 +257,42 @@ _writef("Unknown command: %s\n", *command);
  */
 void alias_func(char **cmdarr, const char *prgname)
 {
-		char *command = NULL;
-		int i = 0, j = 0;
-		int equals = 0;
-		char **commandArray;
-		char alias_name[1024];
-		char alias_value[1024];
-		char *equalsSign, *quoteEnd, *quoteStart;
+	char *cmd = NULL;
+	int i = 0, j = 0, equals = 0;
+	char **cmdArray;
 
 	_strcpy(cmdarr[0], "alias");
-
 	for (i = 0; cmdarr[i]; i++)
 		j = j + _strlen(cmdarr[i]) + 1;
 
-	command  = malloc(sizeof(char) * (j + 1));
-		_strcpy(command, cmdarr[0]);
-		for (i = 1; cmdarr[i]; i++)
-		{
-		_strcat(command, " ");
-		_strcat(command, cmdarr[i]);
-		}
-	
-		_strcat(command, "\0");
+	cmd  = malloc(sizeof(char) * (j + 1));
+	_strcpy(cmd, cmdarr[0]);
+	for (i = 1; cmdarr[i]; i++)
+	{
+		_strcat(cmd, " ");
+		_strcat(cmd, cmdarr[i]);
+	}
+	_strcat(cmd, "\0");
+	cmdArray = malloc(sizeof(char *) * _strlen(cmd));
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '=')
+			equals = equals +  1;
 
-		commandArray = malloc(sizeof(char*) * _strlen(command));
-		i = 0;
-		while (command[i]) {
-			if (command[i] == '=')
-			{
-				equals = equals +  1;
-			}
-			i++;
-		}
-		/*handle multi registrstion of alias*/
-		if (equals >= 2)
-		{
-			/*removeExtraSpaces(command);*/
-			convertStringToArray(command, &commandArray);
-			handlemultiReg(commandArray, prgname);
-		}
-		else
-		{
-			removeExtraSpaces(command);
-
-			if (_strcmp(command, "alias") == 0) {
-				load_aliases();
-			}
-			else if (_strncmp(command, "alias ", 6) == 0 &&  _strlen(command) > 6 && equals == 0)
-			{
-				process_command(command);
-			} else if (_strncmp(command, "alias ", 6) == 0
-					&& _strlen(command) > 7 && equals >= 1)
-			{
-				if (_strstr(command, "alias") != NULL)
-				{
-					equalsSign = _strchr(command, '=');
-					if (equalsSign != NULL)
-					{
-						quoteStart = _strchr(command, '\'');
-						quoteEnd = _strrchr(command, '\'');
-						if (quoteStart != NULL && quoteEnd != NULL && quoteEnd > quoteStart)
-						{
-							_strncpy(alias_name, command + 6, equalsSign - (command + 6));
-							alias_name[equalsSign - (command + 6)] = '\0';
-							_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1);
-							alias_value[quoteEnd - quoteStart - 1] = '\0';
-	if (_strchr(alias_value, '=') == NULL)
-		update_alias(alias_name, ALIAS_FILE, alias_value, prgname); /* Update the alias*/
-						}
-						else
-						{
-							/*	_writef("wrong format\n");*/
-						}
-					}
-				} else {
-					_writef("Invalid alias format. Use: alias name='value'\n");
-				}
-			} else if (_strcmp(command, "exit") == 0) {
-	/*			break;*/
-			} else {
-	/*			_writef("Unknown command: %s\n", command);*/
-	perror(prgname);
-			}
-		}
-		free(commandArray);
-		free(command);
+		i++;
+	}
+	if (equals >= 2)
+	{
+		convertStringToArray(cmd, &cmdArray);
+		handlemultiReg(cmdArray, prgname);
+	}
+	else
+	{
+		removeExtraSpaces(cmd);
+		if (checks(cmd, equals, prgname) != 0)
+			_writef("%s: Unknown command: %s\n", prgname, cmd);
+	}
+	free(cmdArray);
+	free(cmd);
 }
