@@ -119,7 +119,7 @@ char **shell_logic(const char **argv, char *cmd)
 	cmd_arr = str_to_arr(cp_cmd, delim);
 	if (str_cmp(cmd_arr[0], "exit") == 0)
 		return (cmd_arr);
-	/*alias_cmd = alias_functio(cmd_arr[0]);*/
+	alias_cmd = get_aliasValue(cmd_arr[0]);
 	if (alias_cmd != NULL)
 	{
 	cmd_arr[0] = full_cmd(alias_cmd);

@@ -101,8 +101,10 @@ void echo_func(char **cmd_arr, const char *prog_name)
 	{
 		if (cmd_arr[1][1] == '$')
 			putchar_int(pid);
-		if (cmd_arr[1][1] == '?')
-			putchar_int(WEXITSTATUS());
+		else if (cmd_arr[1][1] == '?')
+			putchar_int('0');
+		else
+			_puts(_getenv(&(cmd_arr[1][1])));
 		_puts("\n");
 		free(arr_qut);
 		return;
