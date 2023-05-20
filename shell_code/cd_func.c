@@ -87,12 +87,13 @@ void change_directory(char *path)
 {
 	char new_dir[502];
 	char current_dir[500];
-	env_t e;
 	env_t *ev;
+	env_t e;
 	char resolved_dir[MAX_COMMAND_LENGTH];
 
 	loadenv(&e);
 	ev = &e;
+	evload = &e;
 
 	if (path[0] == '/')
 	{

@@ -66,5 +66,7 @@ int main(int argc, const char **argv)
 	}
 	if (line)
 	free(line);
+
+	_freeEnv(evload);
 	return (0);
 }
