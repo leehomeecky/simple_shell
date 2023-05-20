@@ -17,7 +17,7 @@
 #include <stddef.h>
 #define MAX_COMMAND_LENGTH 1024
 #define MAX_ALIAS_NAME 50
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 100
 #define MAX_ALIAS_VALUE 100
 #define ALIAS_FILE "/root/aliases.txt"
 #define MAX_NUM_ARGS 100
