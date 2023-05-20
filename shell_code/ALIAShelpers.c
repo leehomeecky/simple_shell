@@ -204,3 +204,17 @@ void retrieve_alias(char *name)
 	/*============================*/
 	close(fileDescriptor);
 }
+
+void getaliasval_name(char *command){
+
+
+
+
+
+
+
+
+
+}
+	
+	
