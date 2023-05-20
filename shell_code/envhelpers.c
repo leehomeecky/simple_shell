@@ -186,7 +186,7 @@ int _unset(char *name, env_t *envdata)
 	_environ[j] = NULL;
 	free(envdata->envVar[m]);
 	free(envdata->envVar);
-	free(nametounset);
+	/*free(nametounset);*/
 	envdata->envVar = _environ;
 	environ = _environ;
 	return (1);
