@@ -110,7 +110,7 @@ void handlemultiReg(char **command, const char *prgname);
 void callupdatealias(char *command, const char *prgname);
 void update_alias(char *aliasName, char *filename,
 		char *newValue, const char *prgname);
-void alchecks(int aliasExists, char *filename, char *aN, char *nV, const char *p);
+void alchecks(int a, char *fn, char *aN, char *nV, const char *p);
 char *_strdup(char *str);
 void loadenv(env_t *envdata);
 int _unset(char *name, env_t *envdata);
