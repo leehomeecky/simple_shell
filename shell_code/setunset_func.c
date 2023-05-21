@@ -4,7 +4,7 @@ void setunset_func(char **cmdArray, const char *prgname);
 /**
  * isValidVariableName - =====
  * @name: =======
- * Return: ======
+ * Return: =====
  */
 int  isValidVariableName(char *name)
 {
