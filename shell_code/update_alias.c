@@ -21,7 +21,7 @@ int tempFile, file,  aliasExists = 0;
 	file = open(fn, O_CREAT | O_RDWR, 0666);
 	if (file == -1)
 	{
-		_writef("Error opening file %s\n", fn);
+		perror(p);
 		return;
 	}
 	tempFile = open("/root/temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
