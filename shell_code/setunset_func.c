@@ -1,5 +1,6 @@
 #include "shell.h"
-
+int  isValidVariableName(char *name);
+void setunset_func(char **cmdArray, const char *prgname);
 /**
  * isValidVariableName - =====
  * @name: =======
@@ -36,7 +37,7 @@ void setunset_func(char **cmdArray, const char *prgname)
 {
 	env_t e;
 	env_t *ev;
-	int i, j;
+	int i;
 
 	loadenv(&e);
 	ev = &e;
@@ -47,26 +48,36 @@ void setunset_func(char **cmdArray, const char *prgname)
 	else
 		_strcpy(cmdArray[0], "setenv");
 
+	_strcat(cmdArray[0], "\0");
+	for (i = 0; cmdArray[i]; )
+		i++;
 
-	for (i = 0; cmdArray[i]; i++)
-		j = j + _strlen(cmdArray[i]) + 1;
-
-	if (i  >  3)
+	if (i < 2 || i > 3)
 	{
-		_writef("%s: Not a valid command\n", prgname);
+		perror(prgname);
 		return;
 	}
-
-	else if (isValidVariableName(cmdArray[1]) == -1)
+	if (cmdArray[1])
 	{
-		_writef("hsh: %s: %s: Not a valid identifier\n", cmdArray[0], cmdArray[1]);
+		if (isValidVariableName(cmdArray[1]) == -1)
+		{
+			_writef("hsh: %s: %s: Not a valid identifier\n", cmdArray[0], cmdArray[1]);
+			return;
+		}
 	}
-	else if (_strcmp(cmdArray[0], "setenv") == 0)
-		_setenv(cmdArray[1], cmdArray[2], ev);
+	if ((i ==  3 && _strcmp(cmdArray[0], "setenv") == 0))
+	{
+		if (_strcmp(cmdArray[0], "setenv") == 0)
+		{
+			_setenv(cmdArray[1], cmdArray[2], ev);
+		}
+	}
+	else if ((i  ==  2 && _strcmp(cmdArray[0], "unsetenv") == 0))
+	{
+		if (_strcmp(cmdArray[0], "unsetenv") == 0)
+		{
+			_unset(cmdArray[1], ev);
+		}
+	}
 
-	/*	   perror("setenv: too many arguments");*/
-	else if (_strcmp(cmdArray[0], "unsetenv") == 0 && i == 2)
-		_unset(cmdArray[1], ev);
-	else
-		_writef("Not a valid command\n");
 }
