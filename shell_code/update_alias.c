@@ -1,13 +1,14 @@
+#include "shell.h"
+void update_alias(char *aN, char *fn, char *nV, const char *p);
 /**
  * update_alias - =============
- * @aliasName: ======
- * @filename: =======
- * @newValue: =======
- * @prgname: ======
+ * @aN: ======
+ * @fn: =======
+ * @nV: =======
+ * @p: ======
  * Return: ===========
  */
-void update_alias(char *aliasName, char *filename,
-		char *newValue, const char *prgname)
+void update_alias(char *aN, char *fn, char *nV, const char *p)
 {
 	char line[1024];
 	size_t lineLength;
@@ -16,16 +17,17 @@ char *aliasStart,  *lineBreak, *linePtr, *lineEnd, *equalsSign;
 	size_t aliasLength;
 int tempFile, file,  aliasExists = 0;
 	ssize_t bytesRead;
-	file = open(filename, O_CREAT | O_RDWR, 0666);
+
+	file = open(fn, O_CREAT | O_RDWR, 0666);
 	if (file == -1)
 	{
-		_writef("Error opening file %s\n", filename);
+		_writef("Error opening file %s\n", fn);
 		return;
 	}
 	tempFile = open("/root/temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (tempFile == -1)
 	{
-		perror(prgname);
+		perror(p);
 		close(file);
 		return;
 	}
@@ -51,7 +53,7 @@ int tempFile, file,  aliasExists = 0;
 	aliasLength = equalsSign - aliasStart;
 	_strncpy(alias, aliasStart, aliasLength);
 	alias[aliasLength] = '\0';
-	if (_strcmp(alias, aliasName) == 0)
+	if (_strcmp(alias, aN) == 0)
 	{
 	aliasExists = 1;
 	linePtr = lineBreak + 1;
@@ -66,5 +68,5 @@ int tempFile, file,  aliasExists = 0;
 	}
 	close(file);
 	close(tempFile);
-	alchecks(aliasExists, filename, aliasName, newValue, prgname);
+	alchecks(aliasExists, fn, aN, nV, p);
 }
