@@ -80,6 +80,61 @@ arrQut *count_quotes_arr(char **cmd_arr)
 
 }
 
+/**
+ * var_handler - a function that handles variable replacement
+*
+* @str: array of string to check
+*
+* Return: handled string
+*/
+
+char *var_handler(char *str)
+{
+	int i, j = 0, s_q = 0, d_q = 0, *p;
+	char *space;
+
+	space = (char *)malloc(BUFFER_SIZE);
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] == '\'')
+			p = &s_q;
+		else if (str[i] == '"')
+			p = &d_q;
+		if (str[i] == '\'' || str[i] == '"')
+			if (i > 0)
+			{
+			if (str[(i - 1)] != '\\')
+				(*p)++;
+			}
+			else
+				(*p)++;
+		if (str[i] == '$' && s_q % 2 == 0 &&  d_q % 2 == 0)
+		{
+			if (str[(i + 1)] == '$')
+			{
+			j += write_int(&(space[j]), getpid());
+			i++;
+			continue;
+			}
+			else if (str[(i + 1)] == '?')
+			{
+			j += write_int(&(space[j]), 0);
+			i++;
+			continue;
+			}
+			else if ((str[(i + 1)] >= 'a' && str[(i + 1)] <= 'z') ||
+			(str[(i + 1)] >= 'A' && str[(i + 1)] <= 'Z') || str[(i + 1)] >= '_')
+			{
+				j += write_str(&(space[j]), _getenv(&(str[(i + 1)])));
+				return (space);
+			}
+		}
+		space[j++] = str[i];
+	}
+	space[j] = '\0';
+	return (space);
+}
+
 
 /**
  * echo_func - function to handle echo command
@@ -97,22 +152,14 @@ void echo_func(char **cmd_arr, const char *prog_name)
 	arrQut *arr_qut;
 
 	arr_qut = count_quotes_arr(cmd_arr);
-	if (arr_qut->quote == '\0' && cmd_arr[1][0] == '$')
-	{
-		if (cmd_arr[1][1] == '$')
-			putchar_int(pid);
-		else if (cmd_arr[1][1] == '?')
-			putchar_int('0');
-		else
-			_puts(_getenv(&(cmd_arr[1][1])));
-		_puts("\n");
-		free(arr_qut);
-		return;
-	}
+	for (i = 1; cmd_arr[i]; i++)
+	cmd_arr[i] = var_handler(cmd_arr[i]);
 	for (i = 0; cmd_arr[i]; i++)
 		remove_quotes(cmd_arr[i], arr_qut->quote);
 	if (arr_qut)
 	free(arr_qut);
 	execve_func(cmd_arr, prog_name);
+	for (i = 1; cmd_arr[i]; i++)
+		free (cmd_arr[i]);
 
 }

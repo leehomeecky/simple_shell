@@ -34,15 +34,56 @@ char *str_cat(char *str1, char *str2)
 }
 
 /**
- * putchar_int - a function that prints out integer value
+ * write_int - a function that writes integer value to space
  *
- * @val: integer value to be printed
+ * @space: space to write to
+ * @val: integer value to be writen
+ *
+ * Return: number of value writen
  */
 
-void putchar_int(int val)
+int write_int(char *space, int val)
 {
+	int i = 0, j, k = 0;
+	char str;
+
 	do {
-		_putchar((val % 10) + '0');
+		*(space + i) = (val % 10) + '0';
 		val /= 10;
+		i++;
 	} while (val > 0);
+	for (j = (i - 1); k < j; j--)
+	{
+	str = *(space + k);
+	*(space + k) = *(space + j);
+	*(space + j) = str;
+	k++;
+	}
+	return (i);
+}
+
+
+/**
+ * write_str - a function that writes string to space
+ *
+ * @space: space to write to
+ * @str: string to be writen
+ *
+ * Return: number of value writen
+ */
+
+int write_str(char *space, char *str)
+{
+	int i = 0;
+
+	if (str != NULL)
+	{
+		while (str[i])
+		{
+		*(space + i) = str[i];
+		i++;
+		}
+	}
+	*(space + i) = '\0';
+	return (i);
 }
