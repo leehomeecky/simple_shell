@@ -8,7 +8,7 @@ int _unset(char *name, env_t *envdata);
 /**
  * _getenv - Getenv
  * @name: ===
- * Return: =====
+ * Return: ====
  */
 char *_getenv(char *name)
 {
