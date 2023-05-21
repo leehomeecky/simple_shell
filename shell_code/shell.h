@@ -24,6 +24,7 @@
 #define MAX_NUM_ARGS 100
 
 extern char **environ;
+int s_qu, d_qu;
 
 /*#define BUFFER_SIZE 100*/
 
@@ -92,7 +93,7 @@ void alias_func(char **cmdarr, const char *prgname);
 void cd_func(char **cmdarr, const char *prgname);
 void setunset_func(char **cmdArray, const char *prgname);
 void remove_quotes(char *str, char quote);
-int count_quotes_int(char *str, char quote);
+int check_quote(char *str, char quote, int pos);
 arrQut *count_quotes_arr(char **cmd_arr);
 void echo_func(char **cmd_arr, const char *prog_name);
 void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name);
