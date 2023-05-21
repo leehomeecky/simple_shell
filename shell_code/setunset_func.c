@@ -58,13 +58,13 @@ void setunset_func(char **cmdArray, const char *prgname)
 	{
 		if (isValidVariableName(cmdArray[1]) == -1)
 		{
-	_puts(prgname);
-	_puts(": ");
-	_puts(cmdArray[0]);
-	_puts(": '");
-	_puts(cmdArray[1]);
-	_puts("': not a valid identifier\n");
-/*	_freeEnv(&e);*/
+			_puts(prgname);
+			_puts(": ");
+			_puts(cmdArray[0]);
+			_puts(": '");
+			_puts(cmdArray[1]);
+			_puts("': not a valid identifier\n");
+			/*	_freeEnv(&e);*/
 			return;
 		}
 	}

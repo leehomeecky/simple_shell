@@ -16,6 +16,7 @@ char *_realpath(char *path, char *resolved_path, const char *p);
  * _realpath - ======
  * @path: ========
  * @resolved_path: ======
+ * @p: ========
  * Return: =====
  */
 char *_realpath(char *path, char *resolved_path, const char *p)
@@ -84,7 +85,7 @@ char *_realpath(char *path, char *resolved_path, const char *p)
  * @p: ===========
  * Return: =====
  */
-void change_directory(char *path,const char *p)
+void change_directory(char *path, const char *p)
 {
 	char new_dir[502];
 	char current_dir[500];
@@ -138,6 +139,7 @@ void change_directory(char *path,const char *p)
 /**
  * execute_command - =====
  * @command: ======
+ * @p: =====
  * Return: ====
  */
 int execute_command(char *command, const char *p)
