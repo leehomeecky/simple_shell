@@ -102,6 +102,7 @@ int main(int argc, const char **argv)
 	}
 	free(line);
 	_freeEnv(evload);
-	_freeEnv(setload);
+	if (setload)
+		_freeEnv(setload);
 	return (0);
 }

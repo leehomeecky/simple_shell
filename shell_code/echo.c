@@ -91,7 +91,7 @@ arrQut *count_quotes_arr(char **cmd_arr)
 void echo_func(char **cmd_arr, const char *prog_name)
 {
 	int i;
-	char var;
+/*	char var;*/
 	pid_t pid = getpid();
 
 	arrQut *arr_qut;

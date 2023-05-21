@@ -39,10 +39,7 @@ void setunset_func(char **cmdArray, const char *prgname)
 	env_t *ev;
 	int i;
 
-	loadenv(&e);
 	ev = &e;
-	setload = &e;
-
 	if (_strchr(cmdArray[0], 'u') != NULL)
 		_strcpy(cmdArray[0], "unsetenv");
 	else
@@ -61,7 +58,13 @@ void setunset_func(char **cmdArray, const char *prgname)
 	{
 		if (isValidVariableName(cmdArray[1]) == -1)
 		{
-			_writef("hsh: %s: %s: Not a valid identifier\n", cmdArray[0], cmdArray[1]);
+	_puts(prgname);
+	_puts(": ");
+	_puts(cmdArray[0]);
+	_puts(": '");
+	_puts(cmdArray[1]);
+	_puts("': not a valid identifier\n");
+/*	_freeEnv(&e);*/
 			return;
 		}
 	}
@@ -69,6 +72,8 @@ void setunset_func(char **cmdArray, const char *prgname)
 	{
 		if (_strcmp(cmdArray[0], "setenv") == 0)
 		{
+			loadenv(&e);
+			setload = &e;
 			_setenv(cmdArray[1], cmdArray[2], ev);
 		}
 	}
@@ -76,6 +81,8 @@ void setunset_func(char **cmdArray, const char *prgname)
 	{
 		if (_strcmp(cmdArray[0], "unsetenv") == 0)
 		{
+			loadenv(&e);
+			setload = &e;
 			_unset(cmdArray[1], ev);
 		}
 	}
