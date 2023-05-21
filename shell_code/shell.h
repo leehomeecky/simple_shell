@@ -138,5 +138,6 @@ char *_strtok3(char str[], const char *delim);
 void _writef(const char *format, ...);
 int _strcmp(char *s1, char *s2);
 int _strlen(char *s);
+char *get_aliasValue(char *name);
 
 #endif

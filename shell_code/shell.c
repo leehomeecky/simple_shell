@@ -38,14 +38,23 @@ int _atoi(char *str)
 
 void comment(char *str)
 {
-	int i;
+	int i, s_q = 0, d_q = 0;
 
 	for (i = 0; str[i]; i++)
 	{
-		if (str[i] == '#')
+		if (i > 0)
 		{
-			if (str[(i - 1)] != '"' && str[(i - 1)] != '\'')
-				str[i] = '\0';
+		if (str[i] == '\'' && str[(i - 1)] != '\\')
+			s_q++;
+		if (str[i] == '"' && str[(i - 1)] != '\\')
+			d_q++;
+		}
+		if (str[i] == '#' && s_q % 2 == 0 &&  d_q % 2 == 0)
+		{
+		if (i == 0)
+			str[i] = '\0';
+		else if (str[(i - 1)] == ' ' || str[(i - 1)] == ';')
+			str[i] = '\0';
 		}
 	}
 }
@@ -67,13 +76,14 @@ int main(int argc, const char **argv)
 	int i, exit_val;
 
 	if (argc > 0)
-	_prompt();
 	while ((num_read = get_line(&line, &line_len, stdin)) > 0)
 	{
+		comment(line);
 		cmd_arr = str_to_arr(line, dlim);
+		if (!cmd_arr)
+		continue;
 		for (i = 0; cmd_arr[i]; i++)
 		{
-			comment(cmd_arr[i]);
 			logic = shell_logic(argv, cmd_arr[i]);
 			if (logic)
 			{
@@ -89,7 +99,6 @@ int main(int argc, const char **argv)
 			}
 		}
 		free(cmd_arr);
-		_prompt();
 	}
 	free(line);
 	_freeEnv(evload);

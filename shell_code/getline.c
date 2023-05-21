@@ -18,6 +18,7 @@ ssize_t get_line(char **lineptr, size_t *n, FILE *stream)
 	size_t i = 0;
 	char c;
 
+	_prompt();
 	if (!*lineptr)
 	{
 	*lineptr = malloc(BUFFER_SIZE);
