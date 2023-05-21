@@ -67,6 +67,7 @@ typedef struct env_t
 
 env_t *evload;
 env_t *setload;
+env_t ess;
 
 void _freeEnv(env_t *e);
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
@@ -100,8 +101,7 @@ void comment(char *str);
 void removeExtraSpaces(char *str);
 void load_aliases(void);
 void save_alias(char *name, char *value);
-void retrieve_alias(char *name);
-void retrieve_alias(char *name);
+void retrieve_alias(char *name, const char *p);
 void removeExtraSpaces(char *str);
 void load_aliases(void);
 int _isalpha(int c);

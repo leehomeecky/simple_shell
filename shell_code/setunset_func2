@@ -4,7 +4,7 @@ void setunset_func(char **cmdArray, const char *prgname);
 /**
  * isValidVariableName - =====
  * @name: =======
- * Return: =====
+ * Return: ======
  */
 int  isValidVariableName(char *name)
 {
@@ -35,10 +35,20 @@ int  isValidVariableName(char *name)
  */
 void setunset_func(char **cmdArray, const char *prgname)
 {
+	env_t e;
 	env_t *ev;
 	int i;
 
-	ev = &ess;
+	if (!setload)                             {
+	loadenv(&e);
+	ev = &e;
+	setload = &e;
+	}
+	else
+	{
+	ev = setload;
+	}
+
 	if (_strchr(cmdArray[0], 'u') != NULL)
 		_strcpy(cmdArray[0], "unsetenv");
 	else
@@ -71,8 +81,6 @@ void setunset_func(char **cmdArray, const char *prgname)
 	{
 		if (_strcmp(cmdArray[0], "setenv") == 0)
 		{
-			loadenv(&ess);
-		/*	setload = &ess;*/
 			_setenv(cmdArray[1], cmdArray[2], ev);
 		}
 	}
@@ -80,10 +88,12 @@ void setunset_func(char **cmdArray, const char *prgname)
 	{
 		if (_strcmp(cmdArray[0], "unsetenv") == 0)
 		{
-			loadenv(&ess);
-		/*	setload = &ess;*/
 			_unset(cmdArray[1], ev);
 		}
+	}
+	else
+	{
+		_freeEnv(&e);
 	}
 
 }
