@@ -37,7 +37,7 @@ void setunset_func(char **cmdArray, const char *prgname)
 {
 	env_t e;
 	env_t *ev;
-	int i, j;
+	int i;
 
 	loadenv(&e);
 	ev = &e;
