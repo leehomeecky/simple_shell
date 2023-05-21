@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
  * _freeEnv - =======
- * @e: =========
+ * @e: ========
  * Return: no return
  */
 void _freeEnv(env_t *e)
