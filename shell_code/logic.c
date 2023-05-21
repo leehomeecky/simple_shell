@@ -33,7 +33,7 @@ char *full_cmd(char *cmd)
 
 void env_func(char **cmd_arr, const char *prog_name)
 {
-	char** env;
+	char **env;
 
 	if (cmd_arr && prog_name)
 		env = environ;
