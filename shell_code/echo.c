@@ -146,9 +146,6 @@ char *var_handler(char *str)
 void echo_func(char **cmd_arr, const char *prog_name)
 {
 	int i;
-	char var;
-	pid_t pid = getpid();
-
 	arrQut *arr_qut;
 
 	arr_qut = count_quotes_arr(cmd_arr);

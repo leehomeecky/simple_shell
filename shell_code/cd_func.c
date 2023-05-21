@@ -9,16 +9,17 @@
 #define MAX_COMMAND_LENGTH 1024
 #define MAX_TOKENS 256
 
-int execute_command(char *command);
-void change_directory(char *path);
-char *_realpath(char *path, char *resolved_path);
+int execute_command(char *command, const char *p);
+void change_directory(char *path, const char *p);
+char *_realpath(char *path, char *resolved_path, const char *p);
 /**
  * _realpath - ======
  * @path: ========
  * @resolved_path: ======
+ * @p: ========
  * Return: =====
  */
-char *_realpath(char *path, char *resolved_path)
+char *_realpath(char *path, char *resolved_path, const char *p)
 {
 	char temp[PATH_MAX];
 	/* char* token;*/
@@ -39,7 +40,7 @@ char *_realpath(char *path, char *resolved_path)
 		/* Handle relative paths*/
 		if (getcwd(temp, sizeof(temp)) == NULL)
 		{
-			perror("getcwd");
+			perror(p);
 			return (NULL);
 		}
 		_strncat(temp, "/", sizeof(temp) - _strlen(temp));
@@ -81,9 +82,10 @@ char *_realpath(char *path, char *resolved_path)
 /**
  * change_directory - ======
  * @path: =========
+ * @p: ===========
  * Return: =====
  */
-void change_directory(char *path)
+void change_directory(char *path, const char *p)
 {
 	char new_dir[502];
 	char current_dir[500];
@@ -104,7 +106,7 @@ void change_directory(char *path)
 		/* Relative path*/
 		if (getcwd(current_dir, sizeof(current_dir)) == NULL)
 		{
-			perror("getcwd");
+			perror(p);
 			return;
 		}
 		/*        snprintf(new_dir, sizeof(new_dir), "%s/%s", current_dir, path);*/
@@ -117,27 +119,30 @@ void change_directory(char *path)
 
 	if (chdir(new_dir) == -1)
 	{
-		perror("chdir");
+		perror(p);
 		return;
 	}
-	if (_realpath(new_dir, resolved_dir) == NULL)
+	if (_realpath(new_dir, resolved_dir, p) == NULL)
 	{
-		perror("realpath");
+		perror(p);
 		return;
 	}
 
 	/*Update PWD and OLDPWD environment variables*/
 	_setenv("OLDPWD", _getenv("PWD"), ev);
 	_setenv("PWD", resolved_dir, ev);
-	_writef("Changed directory to: %s\n", resolved_dir);
+	_puts("Changed directory to: ");
+	_puts(resolved_dir);
+	_puts("\n");
 }
 
 /**
  * execute_command - =====
  * @command: ======
+ * @p: =====
  * Return: ====
  */
-int execute_command(char *command)
+int execute_command(char *command, const char *p)
 {
 	char *args[MAX_COMMAND_LENGTH];
 	char *token;
@@ -155,18 +160,18 @@ int execute_command(char *command)
 	{
 		if (args[1] == NULL)
 		{
-			change_directory(_getenv("HOME"));
+			change_directory(_getenv("HOME"), p);
 		} else if (_strcmp(args[1], "-") == 0)
 		{
-			change_directory(_getenv("OLDPWD"));
+			change_directory(_getenv("OLDPWD"), p);
 		}
 		else if (_strcmp(args[1], "~") == 0)
 		{
-			change_directory(_getenv("HOME"));
+			change_directory(_getenv("HOME"), p);
 		}
 		else
 		{
-			change_directory(args[1]);
+			change_directory(args[1], p);
 		}
 		return (1);
 	}
@@ -200,9 +205,10 @@ void cd_func(char **cmdarr, const char *prgname)
 	/*exit*/
 		}
 
-		if (execute_command(command) == 0)
+		if (execute_command(command, prgname) == 0)
 		{
-		_writef("%s: Invalid command\n", prgname);
+		_puts(prgname);
+		_puts(": Invalid command\n");
 		}
 
 		free(command);
