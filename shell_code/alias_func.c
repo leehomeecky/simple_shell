@@ -2,7 +2,6 @@
 void alias_func(char **cmdarr, const char *prgname);
 void handlemultiReg(char **command, const char *prgname);
 void process_command(const char *command, const char *p);
-int convertStringToArray(char *inputString, char ***commandArray);
 int checks(char *cmd, int equals, const char *prgname);
 /**
  * alchecks - ================
@@ -52,6 +51,7 @@ void alchecks(int aliasExists,
 /**
  * process_command - =======
  * @command: =========
+ * @p: =====
  * Return: =======
  */
 void process_command(const char *command, const char *p)
@@ -88,47 +88,6 @@ void process_command(const char *command, const char *p)
 	}
 }
 /**
- * convertStringToArray - ======
- * @inputString: =========
- * @commandArray: ==========
- * Return: ============
- */
-int convertStringToArray(char *inputString
-		, char ***commandArray)
-{
-	const char *delimiter = " \t\n";
-	int count = 0;
-	int length;
-	char *keyword = "alias";
-	char *token = _strtok3(inputString, delimiter);
-
-	if (token == NULL)
-		return (0);
-	if (_strncmp(token, keyword, _strlen(keyword)) != 0)
-	{
-		return (0);
-		/*Input string does not start with the keyword "alias"*/
-	}
-
-	while ((token = _strtok3(NULL, delimiter)) != NULL)
-	{
-		if (token[0] == '\'')
-			continue;
-
-		length = _strlen(keyword) +  _strlen(token) + 1;
-		(*commandArray)[count] = malloc(length + 1);
-		if ((*commandArray)[count] == NULL)
-			return (-1);
-		
-		_strcpy((*commandArray)[count], keyword);
-		_strcat((*commandArray)[count], " ");
-		_strcat((*commandArray)[count], token);
-		_strcat((*commandArray)[count], "\0");
-		count++;
-	}
-	return (count);
-}
-/**
  * handlemultiReg - ==========
  * @command: ===========
  * @prgname: ======
@@ -138,8 +97,6 @@ void handlemultiReg(char **command, const char *prgname)
 {
 	int equals = 1;
 
-	if (*command == NULL)
-		return;
 	while (*command)
 	{
 		if (_strncmp(*command, "alias ", 6) == 0
@@ -190,7 +147,6 @@ int checks(char *cmd, int equals, const char *prgname)
 	}
 	return (-1);
 }
-
 /**
  * alias_func - =====
  * @cmdarr: ======
@@ -203,17 +159,10 @@ void alias_func(char **cmdarr, const char *prgname)
 	int i = 0, j = 0, equals = 0;
 	char **cmdArray;
 
-	if (!cmdarr[0])
-		return;
-
 	_strcpy(cmdarr[0], "alias");
 	for (i = 0; cmdarr[i]; i++)
 		j = j + _strlen(cmdarr[i]) + 1;
-
 	cmd  = malloc(sizeof(char) * (j + 1));
-	if (!cmd)
-		return;
-
 	_strcpy(cmd, cmdarr[0]);
 	for (i = 1; cmdarr[i]; i++)
 	{
@@ -222,20 +171,17 @@ void alias_func(char **cmdarr, const char *prgname)
 	}
 	_strcat(cmd, "\0");
 	cmdArray = malloc(sizeof(char *) * _strlen(cmd));
-	if (!cmdArray)
-		return;
 	i = 0;
 	while (cmd[i])
 	{
 		if (cmd[i] == '=')
 			equals = equals +  1;
-
 		i++;
 	}
 	if (equals >= 2)
 	{
 		convertStringToArray(cmd, &cmdArray);
-		handlemultiReg(cmdArray, prgname);
+	handlemultiReg(cmdArray, prgname);
 	}
 	else
 	{
@@ -243,9 +189,10 @@ void alias_func(char **cmdarr, const char *prgname)
 		if (checks(cmd, equals, prgname) != 0)
 		{
 		_puts(prgname);
-		_puts(": Unknown command: ");
+	_puts(": Unknown command: ");
 		_puts(cmd);
 		}
 	}
+/*	free(*cmdArray);*/
 	free(cmd);
 }

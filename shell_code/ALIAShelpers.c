@@ -76,7 +76,8 @@ void load_aliases(void)
 				line[lineLength] = '\0';
 
 				/* Null-terminate the line*/
-				_writef("%s\n", line);
+				_puts(line);
+				_puts("\n");
 				lineLength = 0;
 			}
 			else
@@ -139,9 +140,7 @@ void retrieve_alias(char *name, const char *p)
 	ssize_t bytesRead;
 	char line[BUFFER_SIZE];
 	int seen, i, fileDescriptor, lineLength = 0;
-	
-	if (name == NULL)
-		return;
+
 	fileDescriptor = open(ALIAS_FILE, O_CREAT | O_RDWR, 0666);
 	if (fileDescriptor == -1)
 	{
