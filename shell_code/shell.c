@@ -95,6 +95,8 @@ int main(int argc, const char **argv)
 				free(logic);
 				free(cmd_arr);
 				free(line);
+				_freeEnv(evload);
+				_freeEnv(&ess);
 				exit(exit_val);
 			}
 		}
