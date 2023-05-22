@@ -177,8 +177,7 @@ void retrieve_alias(char *name, const char *p)
 			* (_strlen(alias_name) +  4 + _strlen(alias_value)));
 	if (alias == NULL)
 		return;
-	if (alias_name && alias_value)
-	{
+
 	_strcpy(alias, alias_name);
 	_strcat(alias, "=");
 	_strcat(alias, "'");
@@ -187,7 +186,6 @@ void retrieve_alias(char *name, const char *p)
 	_strcat(alias, "\0");
 	puts(alias);
 	free(alias);
-	}
 	seen = 1;
 							}
 						}
