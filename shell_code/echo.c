@@ -137,20 +137,32 @@ char *var_handler(char *str)
 
 void echo_func(char **cmd_arr, const char *prog_name)
 {
-	int i;
+	int i, j = 0;
 	arrQut *arr_qut;
+	char **cp_arr;
 
 	s_qu = 0;
 	d_qu = 0;
 	arr_qut = count_quotes_arr(cmd_arr);
 	for (i = 1; cmd_arr[i]; i++)
-	cmd_arr[i] = var_handler(cmd_arr[i]);
+		cmd_arr[i] = var_handler(cmd_arr[i]);
+
 	for (i = 0; cmd_arr[i]; i++)
 		remove_quotes(cmd_arr[i], arr_qut->quote);
+
+	cp_arr = (char **)malloc((1 + arr_cnt(cmd_arr)) * sizeof(char *));
+	if (cp_arr == NULL)
+		return;
+	for (i = 0; cmd_arr[i]; i++)
+		if (cmd_arr[i][0] != '\0')
+		cp_arr[j++] = cmd_arr[i];
+	/*_puts(cp_arr[2]);*/
+	cp_arr[j] = NULL;
 	if (arr_qut)
 	free(arr_qut);
-	execve_func(cmd_arr, prog_name);
+	execve_func(cp_arr, prog_name);
 	for (i = 1; cmd_arr[i]; i++)
 		free(cmd_arr[i]);
+	free(cp_arr);
 
 }

@@ -77,4 +77,23 @@ char **str_to_arr(char *cmd, const char *delim)
 }
 
 
+/**
+ * arr_cnt - a function that count element of an array, but exempt an array
+ * with empty element
+ *
+ * @arr: array to be counted
+ *
+ * Return: number of element counted
+ */
 
+int arr_cnt(char **arr)
+{
+	int i, count = 0;
+
+	for (i = 0; arr[i]; i++)
+	{
+		if (arr[i][0] != '\0')
+			count++;
+	}
+	return (count);
+}

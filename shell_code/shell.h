@@ -87,6 +87,7 @@ char *str_cat(char *str1, char *str2);
 int _atoi(char *str);
 int write_int(char *space, int val);
 int write_str(char *space, char *str);
+int arr_cnt(char **arr);
 char *var_handler(char *str);
 void execve_func(char **cmd_arr, const char *prog_name);
 void alias_func(char **cmdarr, const char *prgname);
