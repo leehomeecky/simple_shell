@@ -86,7 +86,7 @@ int convertStringToArray(char *command, char ***commandArray)
 {
 	char alias_name[1024];
 	char alias_value[1024];
-	char *equalsSign, *quoteEnd, *quoteStart;
+	char *equalsSign, *quoteEnd, *quoteStart = NULL;
 	int length;
 	int i = 0, qc = 0, count = 0;
 	int ok;
@@ -94,7 +94,7 @@ int convertStringToArray(char *command, char ***commandArray)
 	command = command + 5;
 	while (*command != '\0')
 	{
-		if (*command == '=')
+		if (*command == '=' && quoteStart == NULL)
 		{
 			_strncpy(alias_name, command - i, i);
 			alias_name[i] = 0;
