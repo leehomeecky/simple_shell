@@ -100,9 +100,9 @@ char *var_handler(char *str)
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
-		s_qu += check_quote(str, '\'', i);
-		d_qu += check_quote(str, '"', i);
-		if (str[i] == '$' && s_qu % 2 == 0 &&  d_qu % 2 == 0)
+		s_qu.val += check_quote(str, '\'', i);
+		d_qu.val += check_quote(str, '"', i);
+		if (str[i] == '$' && s_qu.val % 2 == 0 &&  d_qu.val % 2 == 0)
 		{
 			if (str[(i + 1)] == '$')
 			{
@@ -141,8 +141,8 @@ void echo_func(char **cmd_arr, const char *prog_name)
 	arrQut *arr_qut;
 	char **cp_arr;
 
-	s_qu = 0;
-	d_qu = 0;
+	s_qu.val = 0;
+	d_qu.val = 0;
 	arr_qut = count_quotes_arr(cmd_arr);
 	for (i = 1; cmd_arr[i]; i++)
 		cmd_arr[i] = var_handler(cmd_arr[i]);
