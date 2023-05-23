@@ -129,6 +129,7 @@ void save_alias(char *name, char *value)
 /**
  * retrieve_alias - ==========
  * @name: =============
+ * @p: ============
  * Return: void
  */
 void retrieve_alias(char *name, const char *p)
