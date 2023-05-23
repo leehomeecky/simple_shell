@@ -84,7 +84,8 @@ void process_command(const char *command, const char *p)
 	/*Free the dynamically allocated argument pointers*/
 	for (i = 0; i < numArgs; i++)
 	{
-		free(args[i]);
+		if (args[i] != NULL)
+			free(args[i]);
 	}
 }
 /**
