@@ -53,14 +53,14 @@ char *_realpath(char *path, char *resolved_path, const char *p)
 	while (result != NULL)
 	{
 		/* Handle "."*/
-		if (_strcmp(result, ".") == 0)
+		if (str_cmp(result, ".") == 0)
 		{
 			result = _strtok3(NULL, delimiter);
 			continue;
 		}
 
 		/*( Handle ".."*/
-		if (_strcmp(result, "..") == 0)
+		if (str_cmp(result, "..") == 0)
 		{
 			last_slash = _strrchr(resolved_path, '/');
 			if (last_slash != NULL)
@@ -156,16 +156,16 @@ int execute_command(char *command, const char *p)
 	}
 	args[i] = NULL;
 
-	if (_strcmp(args[0], "cd") == 0)
+	if (str_cmp(args[0], "cd") == 0)
 	{
 		if (args[1] == NULL)
 		{
 			change_directory(_getenv("HOME"), p);
-		} else if (_strcmp(args[1], "-") == 0)
+		} else if (str_cmp(args[1], "-") == 0)
 		{
 			change_directory(_getenv("OLDPWD"), p);
 		}
-		else if (_strcmp(args[1], "~") == 0)
+		else if (str_cmp(args[1], "~") == 0)
 		{
 			change_directory(_getenv("HOME"), p);
 		}

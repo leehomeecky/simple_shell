@@ -103,7 +103,7 @@ void _setenv(char *name, char *value, env_t *envdata)
 	{
 		dupVar = _strdup(envdata->envVar[k]);
 		var = _strtok3(dupVar, "=");
-		if (_strcmp(var, name) == 0)
+		if (str_cmp(var, name) == 0)
 		{
 			free(envdata->envVar[k]);
 			/*free(environ[k]);*/
@@ -159,7 +159,7 @@ int _unset(char *name, env_t *envdata)
 	{
 		dupvar = _strdup(envdata->envVar[i]);
 		nametounset = _strtok3(dupvar, "=");
-		if (_strcmp(nametounset, name) == 0)
+		if (str_cmp(nametounset, name) == 0)
 		{
 			m = i;
 		}

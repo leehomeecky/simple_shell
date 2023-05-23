@@ -170,7 +170,7 @@ void retrieve_alias(char *name, const char *p)
 	_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1);
 	alias_value[quoteEnd - quoteStart - 1] = '\0';
 	/* Perform the comparison and write to stdout*/
-	if (_strcmp(alias_name, name) == 0)
+	if (str_cmp(alias_name, name) == 0)
 	{
 	alias = malloc(sizeof(char)
 			* (str_len(alias_name) +  4 + str_len(alias_value)));
