@@ -13,7 +13,7 @@ int execute_command(char *command, const char *p);
 void change_directory(char *path, const char *p);
 char *_realpath(char *path, char *resolved_path, const char *p);
 /**
- * _realpath - ======
+ * _realpath - =====
  * @path: ========
  * @resolved_path: ======
  * @p: ========
