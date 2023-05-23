@@ -2,7 +2,7 @@
 void removeExtraSpaces(char *str);
 void load_aliases(void);
 void save_alias(char *name, char *value);
-void retrieve_alias(char *name);
+void retrieve_alias(char *name, const char *p);
 /**
  * removeExtraSpaces - =========
  * @str: =====
@@ -76,7 +76,8 @@ void load_aliases(void)
 				line[lineLength] = '\0';
 
 				/* Null-terminate the line*/
-				_writef("%s\n", line);
+				_puts(line);
+				_puts("\n");
 				lineLength = 0;
 			}
 			else
@@ -105,7 +106,7 @@ void save_alias(char *name, char *value)
 	fileDescriptor = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fileDescriptor < 0)
 	{
-		_writef("Error opening the file.\n");
+/*		_writef("Error opening the file.\n");*/
 		return;
 	}
 
@@ -130,7 +131,7 @@ void save_alias(char *name, char *value)
  * @name: =============
  * Return: void
  */
-void retrieve_alias(char *name)
+void retrieve_alias(char *name, const char *p)
 {
 	char alias_name[MAX_ALIAS_NAME];
 	char alias_value[MAX_ALIAS_VALUE];
@@ -139,7 +140,7 @@ void retrieve_alias(char *name)
 	ssize_t bytesRead;
 	char line[BUFFER_SIZE];
 	int seen, i, fileDescriptor, lineLength = 0;
-	/*	fileDescriptor = open(ALIAS_FILE,O_CREAT | O_RDONLY, 0666);*/
+
 	fileDescriptor = open(ALIAS_FILE, O_CREAT | O_RDWR, 0666);
 	if (fileDescriptor == -1)
 	{
@@ -173,7 +174,10 @@ void retrieve_alias(char *name)
 	{
 	alias = malloc(sizeof(char)
 			* (_strlen(alias_name) +  4 + _strlen(alias_value)));
-	_strcat(alias, alias_name);
+	if (alias == NULL)
+		return;
+
+	_strcpy(alias, alias_name);
 	_strcat(alias, "=");
 	_strcat(alias, "'");
 	_strcat(alias, alias_value);
@@ -197,7 +201,10 @@ void retrieve_alias(char *name)
 	}
 	if (seen != 1)
 	{
-		_writef("bash: alias: %s: not foubd\n", name);
+		_puts(p);
+		_puts(": alias: ");
+		_puts(name);
+		_puts(": not foubd\n");
 	}
 	/*============================*/
 	close(fileDescriptor);
@@ -237,6 +244,7 @@ void callupdatealias(char *command, const char *prgname)
 	}
 	else
 	{
-		perror("Invalid alias format. Use: alias name='value'\n");
+		_puts(prgname);
+		_puts(": Invalid alias format. Use: alias name='value'\n");
 	}
 }

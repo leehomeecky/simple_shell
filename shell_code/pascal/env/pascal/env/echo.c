@@ -25,22 +25,27 @@ void remove_quotes(char *str, char quote)
 
 
 /**
- * count_quotes_int - function to count quote in string
+ * check_quote - function to if its a valid quote
  *
- * @str: string to check
+ * @str: caracter to check
  * @quote: type of quote to check
+ * @pos: position of quote in string
  *
- * Return: numbers of quote found
+ * Return: 1 if valid quote || zero if not
  */
 
-int count_quotes_int(char *str, char quote)
+int check_quote(char *str, char quote, int pos)
 {
-	int i, count = 0;
-
-	for (i = 0; str[i]; i++)
-		if (str[i] == quote && str[(i - 1)] != '\\')
-			count++;
-	return (count);
+	if (str[pos] == quote)
+	{
+		if (pos > 0)
+		{
+			if (str[(pos - 1)] == '\\')
+				return (0);
+		}
+		return (1);
+	}
+	return (0);
 }
 
 /**
@@ -80,6 +85,48 @@ arrQut *count_quotes_arr(char **cmd_arr)
 
 }
 
+/**
+ * var_handler - a function that handles variable replacement
+*
+* @str: array of string to check
+*
+* Return: handled string
+*/
+
+char *var_handler(char *str)
+{
+	int i, j = 0;
+	char *space = (char *)malloc(BUFFER_SIZE);
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		s_qu += check_quote(str, '\'', i);
+		d_qu += check_quote(str, '"', i);
+		if (str[i] == '$' && s_qu % 2 == 0 &&  d_qu % 2 == 0)
+		{
+			if (str[(i + 1)] == '$')
+			{
+			j += write_int(&(space[j]), getpid());
+			i++;
+			continue;
+			}
+			else if (str[(i + 1)] == '?')
+			{
+			j += write_int(&(space[j]), 0);
+			i++;
+			continue;
+			}
+			else if ((str[(i + 1)] >= 'a' && str[(i + 1)] <= 'z') ||
+			(str[(i + 1)] >= 'A' && str[(i + 1)] <= 'Z') || str[(i + 1)] >= '_')
+			if (write_str(&(space[j]), _getenv(&(str[(i + 1)]))) >= 0)
+				return (space);
+		}
+		space[j++] = str[i];
+	}
+	space[j] = '\0';
+	return (space);
+}
+
 
 /**
  * echo_func - function to handle echo command
@@ -90,15 +137,32 @@ arrQut *count_quotes_arr(char **cmd_arr)
 
 void echo_func(char **cmd_arr, const char *prog_name)
 {
-	int i;
-
+	int i, j = 0;
 	arrQut *arr_qut;
+	char **cp_arr;
 
+	s_qu = 0;
+	d_qu = 0;
 	arr_qut = count_quotes_arr(cmd_arr);
+	for (i = 1; cmd_arr[i]; i++)
+		cmd_arr[i] = var_handler(cmd_arr[i]);
+
 	for (i = 0; cmd_arr[i]; i++)
 		remove_quotes(cmd_arr[i], arr_qut->quote);
+
+	cp_arr = (char **)malloc((1 + arr_cnt(cmd_arr)) * sizeof(char *));
+	if (cp_arr == NULL)
+		return;
+	for (i = 0; cmd_arr[i]; i++)
+		if (cmd_arr[i][0] != '\0')
+		cp_arr[j++] = cmd_arr[i];
+	/*_puts(cp_arr[2]);*/
+	cp_arr[j] = NULL;
 	if (arr_qut)
 	free(arr_qut);
-	execve_func(cmd_arr, prog_name);
+	execve_func(cp_arr, prog_name);
+	for (i = 1; cmd_arr[i]; i++)
+		free(cmd_arr[i]);
+	free(cp_arr);
 
 }

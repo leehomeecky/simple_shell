@@ -1,0 +1,7 @@
+ls -a
+## ls
+## ls
+echo value
+echo $HOME
+mkdir comments ##
+###  :%s/\s\+$//e

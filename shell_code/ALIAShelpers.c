@@ -11,7 +11,7 @@ void retrieve_alias(char *name, const char *p);
 void removeExtraSpaces(char *str)
 {
 	int i, j;
-	int len = _strlen(str);
+	int len = str_len(str);
 
 	/*Remove leading spaces*/
 	while (len > 0 && str[0] == ' ')
@@ -106,15 +106,15 @@ void save_alias(char *name, char *value)
 	fileDescriptor = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fileDescriptor < 0)
 	{
-/*		_writef("Error opening the file.\n");*/
+
 		return;
 	}
 
 	/*Write the formatted string to the file*/
 	write(fileDescriptor, "alias ", 6);
-	write(fileDescriptor, name, _strlen(name));
+	write(fileDescriptor, name, str_len(name));
 	write(fileDescriptor, "='", 2);
-	write(fileDescriptor, value, _strlen(value));
+	write(fileDescriptor, value, str_len(value));
 	write(fileDescriptor, "'\n", 2);
 
 	/*Close the file*/
@@ -173,7 +173,7 @@ void retrieve_alias(char *name, const char *p)
 	if (_strcmp(alias_name, name) == 0)
 	{
 	alias = malloc(sizeof(char)
-			* (_strlen(alias_name) +  4 + _strlen(alias_value)));
+			* (str_len(alias_name) +  4 + str_len(alias_value)));
 	if (alias == NULL)
 		return;
 

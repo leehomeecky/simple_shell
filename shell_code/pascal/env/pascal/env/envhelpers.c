@@ -8,7 +8,7 @@ int _unset(char *name, env_t *envdata);
 /**
  * _getenv - Getenv
  * @name: ===
- * Return: =====
+ * Return: ====
  */
 char *_getenv(char *name)
 {
@@ -68,6 +68,9 @@ void loadenv(env_t *envdata)
 {
 	unsigned int j;
 
+	if (!envdata)
+		return;
+
 	for (j = 0; environ[j]; )
 		j++;
 
@@ -92,6 +95,9 @@ void _setenv(char *name, char *value, env_t *envdata)
 {
 	int k, namelen, valuelen, varlen;
 	char *dupVar, *var;
+
+	if (name == NULL || value == NULL || envdata == NULL)
+		return;
 
 	for (k = 0; envdata->envVar[k]; k++)
 	{
@@ -186,7 +192,7 @@ int _unset(char *name, env_t *envdata)
 	_environ[j] = NULL;
 	free(envdata->envVar[m]);
 	free(envdata->envVar);
-	free(nametounset);
+	/*free(nametounset);*/
 	envdata->envVar = _environ;
 	environ = _environ;
 	return (1);

@@ -12,12 +12,12 @@ int _unset(char *name, env_t *envdata);
  */
 char *_getenv(char *name)
 {
-	size_t namelen = _strlen(name);
+	size_t namelen = str_len(name);
 	char **var;
 
 	for (var = environ; *var != NULL; ++var)
 	{
-		if (strncmp(name, *var, namelen) == 0 && (*var)[namelen] == '=')
+		if (_strncmp(name, *var, namelen) == 0 && (*var)[namelen] == '=')
 		{
 			return (*var + namelen + 1);
 		}
@@ -107,19 +107,14 @@ void _setenv(char *name, char *value, env_t *envdata)
 		{
 			free(envdata->envVar[k]);
 			/*free(environ[k]);*/
-			namelen = _strlen(name);
-			valuelen = _strlen(value);
+			namelen = str_len(name);
+			valuelen = str_len(value);
 			varlen = namelen + valuelen + 2;
 			envdata->envVar[k] = malloc(sizeof(char) * (varlen));
 			_strcpy(envdata->envVar[k], name);
 			_strcat(envdata->envVar[k], "=");
 			_strcat(envdata->envVar[k], value);
 			_strcat(envdata->envVar[k], "\0");
-			/*environ[k] = malloc(sizeof(char) * (varlen));*/
-			/*_strcpy(environ[k], name);*/
-			/*_strcat(environ[k], "=");*/
-			/*_strcat(environ[k], value);*/
-			/*_strcat(environ[k], "\0");*/
 			environ = envdata->envVar;
 			free(dupVar);
 			return;
@@ -129,8 +124,8 @@ void _setenv(char *name, char *value, env_t *envdata)
 
 	envdata->envVar = addenvMem(envdata->envVar, k, sizeof(char *) * (k + 2));
 	/*	environ = addenvMem(environ, k, sizeof(char *) * (k + 2));*/
-	namelen = _strlen(name);
-	valuelen = _strlen(value);
+	namelen = str_len(name);
+	valuelen = str_len(value);
 	varlen = namelen + valuelen + 2;
 	envdata->envVar[k] = malloc(sizeof(char) * (varlen));
 	/*	environ[k] = malloc(sizeof(char) * (varlen));*/
@@ -139,11 +134,6 @@ void _setenv(char *name, char *value, env_t *envdata)
 	_strcat(envdata->envVar[k], value);
 	_strcat(envdata->envVar[k], "\0");
 	envdata->envVar[k + 1] = NULL;
-	/*_strcpy(environ[k], name);*/
-	/*_strcat(environ[k], "=");*/
-	/*_strcat(environ[k], value);*/
-	/*_strcat(environ[k], "\0");*/
-	/*environ[k + 1] = NULL;*/
 	environ = envdata->envVar;
 }
 
@@ -161,7 +151,7 @@ int _unset(char *name, env_t *envdata)
 
 	if (name == NULL)
 	{
-		/*get_error(datash, -1);*/
+		/*error section*/
 		return (1);
 	}
 	m = -1;
@@ -177,7 +167,7 @@ int _unset(char *name, env_t *envdata)
 	}
 	if (m == -1)
 	{
-		/*	get_error(datash, -1);*/
+		/*error*/
 		return (1);
 	}
 	_environ = malloc(sizeof(char *) * (i));

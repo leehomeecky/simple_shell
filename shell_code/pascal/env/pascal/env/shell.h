@@ -1,5 +1,6 @@
 #ifndef SHELL_H
 #define SHELL_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -17,12 +18,13 @@
 #include <stddef.h>
 #define MAX_COMMAND_LENGTH 1024
 #define MAX_ALIAS_NAME 50
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 100
 #define MAX_ALIAS_VALUE 100
 #define ALIAS_FILE "/root/aliases.txt"
 #define MAX_NUM_ARGS 100
 
 extern char **environ;
+int s_qu, d_qu;
 
 /*#define BUFFER_SIZE 100*/
 
@@ -65,6 +67,7 @@ typedef struct env_t
 
 env_t *evload;
 env_t *setload;
+env_t ess;
 
 void _freeEnv(env_t *e);
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
@@ -81,12 +84,17 @@ void _prompt(void);
 char *full_cmd(char *cmd);
 char **shell_logic(const char **argv, char *cmd);
 char *str_cat(char *str1, char *str2);
+int _atoi(char *str);
+int write_int(char *space, int val);
+int write_str(char *space, char *str);
+int arr_cnt(char **arr);
+char *var_handler(char *str);
 void execve_func(char **cmd_arr, const char *prog_name);
 void alias_func(char **cmdarr, const char *prgname);
 void cd_func(char **cmdarr, const char *prgname);
 void setunset_func(char **cmdArray, const char *prgname);
 void remove_quotes(char *str, char quote);
-int count_quotes_int(char *str, char quote);
+int check_quote(char *str, char quote, int pos);
 arrQut *count_quotes_arr(char **cmd_arr);
 void echo_func(char **cmd_arr, const char *prog_name);
 void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name);
@@ -94,8 +102,7 @@ void comment(char *str);
 void removeExtraSpaces(char *str);
 void load_aliases(void);
 void save_alias(char *name, char *value);
-void retrieve_alias(char *name);
-void retrieve_alias(char *name);
+void retrieve_alias(char *name, const char *p);
 void removeExtraSpaces(char *str);
 void load_aliases(void);
 int _isalpha(int c);
@@ -107,6 +114,7 @@ void handlemultiReg(char **command, const char *prgname);
 void callupdatealias(char *command, const char *prgname);
 void update_alias(char *aliasName, char *filename,
 		char *newValue, const char *prgname);
+void alchecks(int a, char *fn, char *aN, char *nV, const char *p);
 char *_strdup(char *str);
 void loadenv(env_t *envdata);
 int _unset(char *name, env_t *envdata);
@@ -131,8 +139,10 @@ char *_strchr(char *str, char ch);
 char *_strtok(char *str, char *delimiters);
 int strcmp_chars(char str[], const char *delim);
 char *_strtok3(char str[], const char *delim);
-void _writef(const char *format, ...);
+/*void _writef(const char *format, ...);*/
 int _strcmp(char *s1, char *s2);
 int _strlen(char *s);
+char *get_aliasValue(char *name);
+int convertStringToArray(char *inputString, char ***commandArray);
 
 #endif
