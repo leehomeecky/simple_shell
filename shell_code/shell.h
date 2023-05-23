@@ -65,8 +65,8 @@ typedef struct env_t
 	char **envVar;
 } env_t;
 
-env_t *evload;
-env_t *setload;
+
+env_t cdss;
 env_t ess;
 
 void _freeEnv(env_t *e);

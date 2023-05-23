@@ -43,8 +43,8 @@ char *_realpath(char *path, char *resolved_path, const char *p)
 			perror(p);
 			return (NULL);
 		}
-		_strncat(temp, "/", sizeof(temp) - _strlen(temp));
-		_strncat(temp, path, sizeof(temp) - _strlen(temp));
+		_strncat(temp, "/", sizeof(temp) - str_len(temp));
+		_strncat(temp, path, sizeof(temp) - str_len(temp));
 	}
 
 	resolved_path[0] = '\0';  /* Initialize resolved_path as an empty string*/
@@ -72,8 +72,8 @@ char *_realpath(char *path, char *resolved_path, const char *p)
 		}
 
 		/* Append the directory or filename to the resolved path*/
-		_strncat(resolved_path, "/", PATH_MAX - _strlen(resolved_path));
-		_strncat(resolved_path, result, PATH_MAX - _strlen(resolved_path));
+		_strncat(resolved_path, "/", PATH_MAX - str_len(resolved_path));
+		_strncat(resolved_path, result, PATH_MAX - str_len(resolved_path));
 		result = _strtok3(NULL, delimiter);
 	}
 	return (resolved_path);
@@ -90,12 +90,12 @@ void change_directory(char *path, const char *p)
 	char new_dir[502];
 	char current_dir[500];
 	env_t *ev;
-	env_t e;
+/*	env_t e;*/
 	char resolved_dir[MAX_COMMAND_LENGTH];
 
-	loadenv(&e);
-	ev = &e;
-	evload = &e;
+	loadenv(&cdss);
+	ev = &cdss;
+/*	evload = &e;*/
 
 	if (path[0] == '/')
 	{
@@ -191,7 +191,7 @@ void cd_func(char **cmdarr, const char *prgname)
 		int j = 0;
 	_strcpy(cmdarr[0], "cd");
 	for (i = 0; cmdarr[i]; i++)
-		j = j + _strlen(cmdarr[i]) + 1;
+		j = j + str_len(cmdarr[i]) + 1;
 	command  = malloc(sizeof(char) * (j + 1));
 	_strcpy(command, cmdarr[0]);
 	for (i = 1; cmdarr[i]; i++)

@@ -8,7 +8,9 @@ void _freeEnv(env_t *e)
 {
 	unsigned int i;
 
-	if (!e)
+	if (e == NULL)
+		return;
+	if (e->envVar == NULL)
 		return;
 
 	for (i = 0; e->envVar[i]; i++)
