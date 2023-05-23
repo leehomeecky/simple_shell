@@ -24,8 +24,6 @@
 #define MAX_NUM_ARGS 100
 
 extern char **environ;
-int s_qu, d_qu;
-
 /*#define BUFFER_SIZE 100*/
 
 
@@ -65,7 +63,17 @@ typedef struct env_t
 	char **envVar;
 } env_t;
 
+/**
+ * struct quote_num - used by echo to keep the number of quote counted
+ * @val: value of the counted quote
+ */
 
+typedef struct quote_num
+{
+	int val;
+} Qnum;
+
+Qnum s_qu, d_qu;
 env_t cdss;
 env_t ess;
 
