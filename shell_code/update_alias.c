@@ -126,7 +126,7 @@ int convertStringToArray(char *command, char ***commandArray)
 				_strncpy(alias_value, quoteStart + 1, quoteEnd - quoteStart - 1);
 				alias_value[quoteEnd - quoteStart - 1] = '\0';
 
-				length = _strlen(alias_name) +  _strlen(alias_value) + 10;
+				length = str_len(alias_name) +  str_len(alias_value) + 10;
 				(*commandArray)[count] = malloc(length + 1);
 				_strcpy((*commandArray)[count], "alias ");
 				_strcat((*commandArray)[count], alias_name);

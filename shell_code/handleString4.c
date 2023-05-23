@@ -95,7 +95,7 @@ char *_strtok3(char str[], const char *delim)
 		if (strcmp_chars(str, delim))
 			return (NULL);
 		splitted = str; /*Store first address*/
-		i = _strlen(str);
+		i = str_len(str);
 		str_end = &str[i]; /*Store last address*/
 	}
 	str_start = splitted;

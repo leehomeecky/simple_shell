@@ -39,9 +39,9 @@ void alchecks(int aliasExists,
 	}
 
 	write(newAliasFile, "alias ", 6);
-	write(newAliasFile, aN, _strlen(aN));
+	write(newAliasFile, aN, str_len(aN));
 	write(newAliasFile, "='", 2);
-	write(newAliasFile, nV, _strlen(nV));
+	write(newAliasFile, nV, str_len(nV));
 	write(newAliasFile, "'\n", 2);
 
 	close(newAliasFile);
@@ -100,12 +100,12 @@ void handlemultiReg(char **command, const char *prgname)
 	while (*command)
 	{
 		if (_strncmp(*command, "alias ", 6) == 0
-				&& _strlen(*command) > 6 && equals == 0)
+				&& str_len(*command) > 6 && equals == 0)
 		{
 			process_command(*command, prgname);
 		}
 		else if (_strncmp(*command, "alias ", 6) == 0
-				&& _strlen(*command) > 7 && equals >= 1)
+				&& str_len(*command) > 7 && equals >= 1)
 		{
 			callupdatealias(*command, prgname);
 		}
@@ -135,12 +135,12 @@ int checks(char *cmd, int equals, const char *prgname)
 		return (0);
 	}
 	else if ((_strncmp(cmd, "alias ", 6) == 0)
-			&&  _strlen(cmd) > 6 && equals == 0)
+			&&  str_len(cmd) > 6 && equals == 0)
 	{
 		process_command(cmd, prgname);
 		return (0);
 	}
-	else if (_strncmp(cmd, "alias ", 6) == 0 && _strlen(cmd) > 7 && equals >= 1)
+	else if (_strncmp(cmd, "alias ", 6) == 0 && str_len(cmd) > 7 && equals >= 1)
 	{
 		callupdatealias(cmd, prgname);
 		return (0);
@@ -161,7 +161,7 @@ void alias_func(char **cmdarr, const char *prgname)
 
 	_strcpy(cmdarr[0], "alias");
 	for (i = 0; cmdarr[i]; i++)
-		j = j + _strlen(cmdarr[i]) + 1;
+		j = j + str_len(cmdarr[i]) + 1;
 	cmd  = malloc(sizeof(char) * (j + 1));
 	_strcpy(cmd, cmdarr[0]);
 	for (i = 1; cmdarr[i]; i++)
@@ -170,7 +170,7 @@ void alias_func(char **cmdarr, const char *prgname)
 		_strcat(cmd, cmdarr[i]);
 	}
 	_strcat(cmd, "\0");
-	cmdArray = malloc(sizeof(char *) * _strlen(cmd));
+	cmdArray = malloc(sizeof(char *) * str_len(cmd));
 	i = 0;
 	while (cmd[i])
 	{

@@ -1,22 +1,5 @@
 #include "shell.h"
 /**
- * _strlen - =======
- * @s: ========
- * Return: ============
- */
-int _strlen(char *s)
-{
-	int i = 0;
-
-	if (!s)
-		return (0);
-
-	while (*s++)
-		i++;
-	return (i);
-}
-
-/**
  * _strcmp - ===============
  * @s1: =============
  * @s2: ==============
