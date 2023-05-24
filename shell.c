@@ -76,7 +76,7 @@ int main(int argc, const char **argv)
 	int i, exit_val;
 
 	if (argc > 0)
-	while ((num_read = get_line(&line, &line_len, stdin)) > 0)
+	while ((num_read = getline(&line, &line_len, stdin)) > 0)
 	{
 		comment(line);
 		cmd_arr = str_to_arr(line, dlim);
