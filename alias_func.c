@@ -22,8 +22,8 @@ void alchecks(int aliasExists,
 		/*remove(filename);*/
 		_rename(filename, "_temp");
 		/* Remove the original file*/
-	_rename("temp.txt", "aliases.txt");
-/* Rename the temporary file to the original filename*/
+		_rename("temp.txt", "aliases.txt");
+		/* Rename the temporary file to the original filename*/
 	}
 	else
 	{
@@ -34,7 +34,7 @@ void alchecks(int aliasExists,
 	newAliasFile = open(filename, O_WRONLY | O_APPEND);
 	if (newAliasFile == -1)
 	{
-	perror(p);
+		perror(p);
 		return;
 	}
 
@@ -84,7 +84,7 @@ void process_command(const char *command, const char *p)
 	/*Free the dynamically allocated argument pointers*/
 	for (i = 0; i < numArgs; i++)
 	{
-			free(args[i]);
+		free(args[i]);
 	}
 }
 /**
@@ -111,7 +111,7 @@ void handlemultiReg(char **command, const char *prgname)
 		}
 		else
 		{
-		perror(prgname);
+			perror(prgname);
 		}
 		command++;
 	}
@@ -179,7 +179,7 @@ void alias_func(char **cmdarr, const char *prgname)
 	if (equals >= 2)
 	{
 		convertStringToArray(cmd, &cmdArray);
-	handlemultiReg(cmdArray, prgname);
+		handlemultiReg(cmdArray, prgname);
 	}
 	else
 	{
@@ -189,6 +189,6 @@ void alias_func(char **cmdarr, const char *prgname)
 			perror(prgname);
 		}
 	}
-/*	free(*cmdArray);*/
+	/*	free(*cmdArray);*/
 	free(cmd);
 }
