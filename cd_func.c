@@ -162,6 +162,12 @@ int execute_command(char *command, const char *p)
 		{
 			change_directory(_getenv("OLDPWD"), p);
 		}
+		else if (str_cmp(args[1]
+, "--") == 0)
+		{
+			change_directory(_getenv("HOME"), p);
+
+		}
 		else if (str_cmp(args[1], "~") == 0)
 		{
 			change_directory(_getenv("HOME"), p);
