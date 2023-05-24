@@ -73,6 +73,8 @@ char *_strdup(char *str)
 int _strncmp(char *s1, char *s2, size_t n)
 {
 
+	if (s1 == NULL || s2 == NULL)
+		return (-1);
 	while (*s1 && *s2 && n > 0)
 	{
 		if (*s1 != *s2)

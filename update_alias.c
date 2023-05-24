@@ -25,7 +25,7 @@ void update_alias(char *aN, char *fn, char *nV, const char *p)
 		perror(p);
 		return;
 	}
-	tempFile = open("/root/temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	tempFile = open("temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (tempFile == -1)
 	{
 		perror(p);

@@ -20,9 +20,9 @@ void alchecks(int aliasExists,
 	if (aliasExists)
 	{
 		/*remove(filename);*/
-		_rename(filename, "/root/_temp");
+		_rename(filename, "_temp");
 		/* Remove the original file*/
-	_rename("/root/temp.txt", "/root/aliases.txt");
+	_rename("temp.txt", "aliases.txt");
 /* Rename the temporary file to the original filename*/
 	}
 	else
