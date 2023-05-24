@@ -59,7 +59,7 @@ void execve_func(char **cmd_arr, const char *prog_name)
 	pid = fork();
 	if (pid == 0)
 	{
-	if (execve(cmd_arr[0], cmd_arr, environ) == -1)
+	if (execve(cmd_arr[0], cmd_arr, NULL) == -1)
 		perror(prog_name);
 	}
 	else
