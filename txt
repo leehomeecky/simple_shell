@@ -14,3 +14,4 @@ echo $me
 echo $$
 echo $?
 echo $$$?$me
+echo my pid is $$
