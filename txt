@@ -13,3 +13,4 @@ echo "we are 'we see'"
 echo $me
 echo $$
 echo $?
+echo $$$?$me
