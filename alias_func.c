@@ -112,9 +112,7 @@ void handlemultiReg(char **command, const char *prgname)
 		}
 		else
 		{
-		_puts("Unknown command: ");
-		_puts(*command);
-		_puts("\n");
+			perror(prgname);
 		}
 		command++;
 	}
@@ -190,8 +188,6 @@ void alias_func(char **cmdarr, const char *prgname)
 		if (checks(cmd, equals, prgname) != 0)
 		{
 		_puts(prgname);
-	_puts(": Unknown command: ");
-		_puts(cmd);
 		}
 	}
 /*	free(*cmdArray);*/
