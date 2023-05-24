@@ -108,7 +108,7 @@ void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 
 char **shell_logic(const char **argv, char *cmd)
 {
-	char **cmd_arr, *delim = " \t\n", *cp_cmd, *alias_cmd = NULL;
+	char **cmd_arr, *delim = " \n", *cp_cmd, *alias_cmd = NULL;
 	void (*cmdFunc)(char **cmd_arr, const char *prog_name);
 	int i;
 
