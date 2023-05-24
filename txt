@@ -10,3 +10,4 @@ setenv me meecky
 echo $me
 unsetenv me
 echo "we are 'we see'"
+echo $me
