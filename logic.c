@@ -76,7 +76,7 @@ void execve_func(char **cmd_arr, const char *prog_name)
 
 void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 {
-	int i, len = 1;
+	int i, len = 0;
 
 	sltFunc slt_func[] = {
 				{"/bin/echo", echo_func},
@@ -84,7 +84,7 @@ void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 				{"/bin/cd", cd_func},
 				{"/bin/env", env_func},
 				{"/bin/setenv", setunset_func},
-				"/bin/unsetenv", setunset_func},
+				{"/bin/unsetenv", setunset_func},
 			};
 
 	for (i = 0; i < len; i++)
