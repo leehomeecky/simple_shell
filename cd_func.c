@@ -131,9 +131,6 @@ void change_directory(char *path, const char *p)
 	/*Update PWD and OLDPWD environment variables*/
 	_setenv("OLDPWD", _getenv("PWD"), ev);
 	_setenv("PWD", resolved_dir, ev);
-	_puts("Changed directory to: ");
-	_puts(resolved_dir);
-	_puts("\n");
 }
 
 /**
