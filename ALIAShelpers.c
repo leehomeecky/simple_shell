@@ -246,7 +246,6 @@ void callupdatealias(char *command, const char *prgname)
 	}
 	else
 	{
-		_puts(prgname);
-		_puts(": Invalid alias format. Use: alias name='value'\n");
+		perror(prgname);
 	}
 }

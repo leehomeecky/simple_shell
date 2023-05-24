@@ -84,7 +84,6 @@ void process_command(const char *command, const char *p)
 	/*Free the dynamically allocated argument pointers*/
 	for (i = 0; i < numArgs; i++)
 	{
-		if (args[i] != NULL)
 			free(args[i]);
 	}
 }
@@ -112,7 +111,7 @@ void handlemultiReg(char **command, const char *prgname)
 		}
 		else
 		{
-			perror(prgname);
+		perror(prgname);
 		}
 		command++;
 	}
@@ -187,7 +186,7 @@ void alias_func(char **cmdarr, const char *prgname)
 		removeExtraSpaces(cmd);
 		if (checks(cmd, equals, prgname) != 0)
 		{
-		_puts(prgname);
+			perror(prgname);
 		}
 	}
 /*	free(*cmdArray);*/
