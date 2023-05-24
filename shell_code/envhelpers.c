@@ -126,7 +126,7 @@ void _setenv(char *name, char *value, env_t *envdata)
 			free(dupVar);
 			return;
 		}
-		free(var);
+	/*	free(var);*/
 	}
 	envdata->envVar = addenvMem(envdata->envVar, k, sizeof(char *) * (k + 2));
 	/*	environ = addenvMem(environ, k, sizeof(char *) * (k + 2));*/
@@ -188,7 +188,7 @@ int _unset(char *name, env_t *envdata)
 			j++;
 		}
 	}
-	envdata->envVar[j] = NULL;
+	envdata->envVar[j] = envdata->envVar[i];
 	/*free(nametounset);*/
 	free(envdata->envVar[m]);
 	/*free(envdata->envVar);*/
