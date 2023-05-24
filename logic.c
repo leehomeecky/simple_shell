@@ -59,7 +59,7 @@ void execve_func(char **cmd_arr, const char *prog_name)
 	pid = fork();
 	if (pid == 0)
 	{
-	if (execve(cmd_arr[0], cmd_arr, environ) == -1)
+	if (execve(cmd_arr[0], cmd_arr, NULL) == -1)
 		perror(prog_name);
 	}
 	else
@@ -76,7 +76,7 @@ void execve_func(char **cmd_arr, const char *prog_name)
 
 void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 {
-	int i, len = 0;
+	int i, len = 6;
 
 	sltFunc slt_func[] = {
 				{"/bin/echo", echo_func},
@@ -108,7 +108,7 @@ void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 
 char **shell_logic(const char **argv, char *cmd)
 {
-	char **cmd_arr, *delim = "\n", *cp_cmd, *alias_cmd = NULL;
+	char **cmd_arr, *delim = " \n", *cp_cmd, *alias_cmd = NULL;
 	void (*cmdFunc)(char **cmd_arr, const char *prog_name);
 	int i;
 
@@ -119,21 +119,21 @@ char **shell_logic(const char **argv, char *cmd)
 	cmd_arr = str_to_arr(cp_cmd, delim);
 	if (str_cmp(cmd_arr[0], "exit") == 0)
 		return (cmd_arr);
-	/*alias_cmd = get_aliasValue(cmd_arr[0]);*/
+	alias_cmd = get_aliasValue(cmd_arr[0]);
 	if (alias_cmd != NULL)
 	{
 	cmd_arr[0] = full_cmd(alias_cmd);
 	free(alias_cmd);
 	}
-	/*else*/
-	/*cmd_arr[0] = full_cmd(cmd_arr[0]);*/
+	else
+	cmd_arr[0] = full_cmd(cmd_arr[0]);
 	cmdFunc = cmd_func(cmd_arr[0]);
 	if (cmdFunc == NULL)
 	perror(argv[0]);
 	else
 	cmdFunc(cmd_arr, argv[0]);
 	free(cp_cmd);
-	/*free(cmd_arr[0]);*/
+	free(cmd_arr[0]);
 	free(cmd_arr);
 	return (NULL);
 
