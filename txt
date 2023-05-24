@@ -16,3 +16,4 @@ echo $?
 echo $$$?$me
 echo my pid is $$
 alias l='ls'
+alias
