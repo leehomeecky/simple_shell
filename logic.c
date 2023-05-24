@@ -91,10 +91,10 @@ void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 	if (str_cmp(cmd, (slt_func + i)->cmd) == 0)
 	return ((slt_func + i)->cmdFunc);
 
-	/*if (access(cmd, X_OK) == 0)*/
+	if (access(cmd, X_OK) == 0)
 		return (execve_func);
 
-	/*return (NULL);*/
+	return (NULL);
 }
 
 /**
