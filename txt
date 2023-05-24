@@ -1,5 +1,6 @@
 /bin/ls -al
 cd ../
+cd /simple_shell
 echo kkasknksa
 pwd
 mkdir we
