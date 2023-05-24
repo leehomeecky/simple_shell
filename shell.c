@@ -70,7 +70,7 @@ void comment(char *str)
 
 int main(int argc, const char **argv)
 {
-	char *line = NULL, *dlim = "\n", **cmd_arr, **logic;
+	char *line = NULL, *dlim = ";\n", **cmd_arr, **logic;
 	size_t line_len = 0;
 	ssize_t num_read;
 	int i, exit_val;
