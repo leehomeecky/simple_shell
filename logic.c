@@ -76,7 +76,7 @@ void execve_func(char **cmd_arr, const char *prog_name)
 
 void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 {
-	int i, len = 0;
+	int i, len = 1;
 
 	sltFunc slt_func[] = {
 				{"/bin/echo", echo_func},
