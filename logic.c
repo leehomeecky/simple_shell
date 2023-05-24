@@ -76,15 +76,15 @@ void execve_func(char **cmd_arr, const char *prog_name)
 
 void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 {
-	int i, len = 1;
+	int i, len = 0;
 
 	sltFunc slt_func[] = {
 				{"/bin/echo", echo_func},
-				/*{"/bin/alias", alias_func},*/
-				/*{"/bin/cd", cd_func},*/
-				/*{"/bin/env", env_func},*/
-				/*{"/bin/setenv", setunset_func},*/
-				/*"/bin/unsetenv", setunset_func},*/
+				{"/bin/alias", alias_func},
+				{"/bin/cd", cd_func},
+				{"/bin/env", env_func},
+				{"/bin/setenv", setunset_func},
+				"/bin/unsetenv", setunset_func},
 			};
 
 	for (i = 0; i < len; i++)
@@ -108,7 +108,7 @@ void (*cmd_func(char *cmd))(char **cmd_arr, const char *prog_name)
 
 char **shell_logic(const char **argv, char *cmd)
 {
-	char **cmd_arr, *delim = "\n", *cp_cmd, *alias_cmd = NULL;
+	char **cmd_arr, *delim = " \n", *cp_cmd, *alias_cmd = NULL;
 	void (*cmdFunc)(char **cmd_arr, const char *prog_name);
 	int i;
 
