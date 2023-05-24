@@ -76,8 +76,7 @@ typedef struct quote_num
 Qnum s_qu, d_qu;
 env_t cdss;
 env_t ess;
-env_t addenv;
-env_t unset;
+
 
 void _freeEnv(env_t *e);
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
