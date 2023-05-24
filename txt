@@ -12,3 +12,4 @@ unsetenv me
 echo "we are 'we see'"
 echo $me
 echo $$
+echo $?
