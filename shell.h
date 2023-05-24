@@ -153,5 +153,6 @@ char *_strtok3(char str[], const char *delim);
 int _strcmp(char *s1, char *s2);
 char *get_aliasValue(char *name);
 int convertStringToArray(char *inputString, char ***commandArray);
+void loadcdenv(env_t *envdata);
 
 #endif

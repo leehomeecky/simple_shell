@@ -93,7 +93,7 @@ void change_directory(char *path, const char *p)
 /*	env_t e;*/
 	char resolved_dir[MAX_COMMAND_LENGTH];
 
-	loadenv(&cdss);
+	loadcdenv(&cdss);
 	ev = &cdss;
 /*	evload = &e;*/
 

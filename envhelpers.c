@@ -37,9 +37,6 @@ char **addenvMem(char **envptr, unsigned int sizeOld, unsigned int sizeNew)
 {
 	unsigned int i;
 	char **_envptr;
-	env_t *ec;
-
-	ec = &ess;
 
 	if (envptr == NULL)
 		return (malloc(sizeof(char *) * sizeNew));
@@ -55,11 +52,9 @@ char **addenvMem(char **envptr, unsigned int sizeOld, unsigned int sizeNew)
 	for (i = 0; i < sizeOld; i++)
 	{
 	_envptr[i] = envptr[i];
-
 	}
 	free(envptr);
 
-	ec->envVar = _envptr;
 	return (_envptr);
 }
 
@@ -83,7 +78,7 @@ void loadenv(env_t *envdata)
 	envdata->envVar = malloc(sizeof(char *) * (j + 1));
 	for (j = 0; environ[j]; j++)
 	{
-		envdata->envVar[j] = str_dup(environ[j]);
+		envdata->envVar[j] = _strdup(environ[j]);
 		/*	printf("%s \n",  envdata->envVar[j]);*/
 	}
 	envdata->envVar[j] = NULL;
@@ -102,13 +97,15 @@ void _setenv(char *name, char *value, env_t *envdata)
 {
 	int k, namelen, valuelen, varlen;
 	char *dupVar, *var;
+	env_t *ec;
 
+	ec = &ess;
 	if (name == NULL || value == NULL || envdata == NULL)
 		return;
 
 	for (k = 0; envdata->envVar[k]; k++)
 	{
-		dupVar = str_dup(envdata->envVar[k]);
+		dupVar = _strdup(envdata->envVar[k]);
 		var = _strtok3(dupVar, "=");
 		if (str_cmp(var, name) == 0)
 		{
@@ -123,6 +120,7 @@ void _setenv(char *name, char *value, env_t *envdata)
 			_strcat(envdata->envVar[k], value);
 			_strcat(envdata->envVar[k], "\0");
 			environ = envdata->envVar;
+			ec->envVar = envdata->envVar;
 			free(dupVar);
 			return;
 		}
@@ -140,6 +138,7 @@ void _setenv(char *name, char *value, env_t *envdata)
 	_strcat(envdata->envVar[k], "\0");
 	envdata->envVar[k + 1] = NULL;
 	environ = envdata->envVar;
+	ec->envVar = envdata->envVar;
 }
 
 
@@ -151,13 +150,11 @@ void _setenv(char *name, char *value, env_t *envdata)
  */
 int _unset(char *name, env_t *envdata)
 {
-/*	char **_environ;*/
-/*	env_t *_environ;*/
+;
 	char *dupvar, *nametounset;
 	int m, i, j;
 
 
-/*	_environ = &unset;*/
 	if (name == NULL)
 	{
 		/*error section*/
@@ -179,7 +176,6 @@ int _unset(char *name, env_t *envdata)
 		/*error*/
 		return (1);
 	}
-/*	_environ->envVar = malloc(sizeof(char *) * (i));*/
 	for (i = j = 0; envdata->envVar[i]; i++)
 	{
 		if (i != m)
@@ -188,7 +184,7 @@ int _unset(char *name, env_t *envdata)
 			j++;
 		}
 	}
-	envdata->envVar[j] = NULL;
+	envdata->envVar[j] = envdata->envVar[i];
 	/*free(nametounset);*/
 	free(envdata->envVar[m]);
 	/*free(envdata->envVar);*/
