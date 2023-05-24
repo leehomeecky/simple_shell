@@ -18,3 +18,4 @@ echo my pid is $$
 alias l='ls'
 alias
 l -al1
+env
