@@ -37,7 +37,9 @@ char **addenvMem(char **envptr, unsigned int sizeOld, unsigned int sizeNew)
 {
 	unsigned int i;
 	char **_envptr;
-
+	env_t *ec;
+	
+	ec = &ess;
 
 	if (envptr == NULL)
 		return (malloc(sizeof(char *) * sizeNew));
@@ -45,15 +47,19 @@ char **addenvMem(char **envptr, unsigned int sizeOld, unsigned int sizeNew)
 	if (sizeNew == sizeOld)
 		return (envptr);
 
+
 	_envptr = malloc(sizeof(char *) * sizeNew);
 	if (_envptr == NULL)
 		return (NULL);
 
 	for (i = 0; i < sizeOld; i++)
-		_envptr[i] = envptr[i];
-
+	{
+	_envptr[i] = envptr[i];
+	
+	}
 	free(envptr);
 
+	ec->envVar = _envptr;
 	return (_envptr);
 }
 
@@ -68,8 +74,8 @@ void loadenv(env_t *envdata)
 {
 	unsigned int j;
 
-	if (!envdata)
-		return;
+	if (envdata->envVar == NULL)
+	{
 
 	for (j = 0; environ[j]; )
 		j++;
@@ -77,10 +83,11 @@ void loadenv(env_t *envdata)
 	envdata->envVar = malloc(sizeof(char *) * (j + 1));
 	for (j = 0; environ[j]; j++)
 	{
-		envdata->envVar[j] = _strdup(environ[j]);
+		envdata->envVar[j] = str_dup(environ[j]);
 		/*	printf("%s \n",  envdata->envVar[j]);*/
 	}
 	envdata->envVar[j] = NULL;
+	}
 }
 
 
@@ -101,7 +108,7 @@ void _setenv(char *name, char *value, env_t *envdata)
 
 	for (k = 0; envdata->envVar[k]; k++)
 	{
-		dupVar = _strdup(envdata->envVar[k]);
+		dupVar = str_dup(envdata->envVar[k]);
 		var = _strtok3(dupVar, "=");
 		if (str_cmp(var, name) == 0)
 		{
@@ -121,14 +128,12 @@ void _setenv(char *name, char *value, env_t *envdata)
 		}
 		free(var);
 	}
-
 	envdata->envVar = addenvMem(envdata->envVar, k, sizeof(char *) * (k + 2));
 	/*	environ = addenvMem(environ, k, sizeof(char *) * (k + 2));*/
 	namelen = str_len(name);
 	valuelen = str_len(value);
 	varlen = namelen + valuelen + 2;
 	envdata->envVar[k] = malloc(sizeof(char) * (varlen));
-	/*	environ[k] = malloc(sizeof(char) * (varlen));*/
 	_strcpy(envdata->envVar[k], name);
 	_strcat(envdata->envVar[k], "=");
 	_strcat(envdata->envVar[k], value);
@@ -136,6 +141,7 @@ void _setenv(char *name, char *value, env_t *envdata)
 	envdata->envVar[k + 1] = NULL;
 	environ = envdata->envVar;
 }
+
 
 /**
  * _unset - =======
@@ -145,10 +151,13 @@ void _setenv(char *name, char *value, env_t *envdata)
  */
 int _unset(char *name, env_t *envdata)
 {
-	char **_environ;
+/*	char **_environ;*/
+//	env_t *_environ;
 	char *dupvar, *nametounset;
 	int m, i, j;
 
+
+//	_environ = &unset;
 	if (name == NULL)
 	{
 		/*error section*/
@@ -170,20 +179,20 @@ int _unset(char *name, env_t *envdata)
 		/*error*/
 		return (1);
 	}
-	_environ = malloc(sizeof(char *) * (i));
+//	_environ->envVar = malloc(sizeof(char *) * (i));
 	for (i = j = 0; envdata->envVar[i]; i++)
 	{
 		if (i != m)
 		{
-			_environ[j] = envdata->envVar[i];
+			envdata->envVar[j] = envdata->envVar[i];
 			j++;
 		}
 	}
-	_environ[j] = NULL;
-	free(envdata->envVar[m]);
-	free(envdata->envVar);
+	envdata->envVar[j] = NULL;
 	/*free(nametounset);*/
-	envdata->envVar = _environ;
-	environ = _environ;
+	free(envdata->envVar[m]);
+	/*free(envdata->envVar);*/
+	envdata->envVar = envdata->envVar;
+	environ = envdata->envVar;
 	return (1);
 }

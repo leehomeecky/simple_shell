@@ -97,6 +97,7 @@ int main(int argc, const char **argv)
 				free(line);
 				_freeEnv(&cdss);
 				_freeEnv(&ess);
+
 				exit(exit_val);
 			}
 		}
