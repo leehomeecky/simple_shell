@@ -6,3 +6,4 @@ mkdir we
 rmdir we
 echo "last thing"
 setenv me meecky
+echo $me
