@@ -1,5 +1,5 @@
 /bin/ls -al
-cd hkzxj
+cd ../
 echo kkasknksa
 pwd
 mkdir we
